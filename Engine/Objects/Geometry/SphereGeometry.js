@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const SphereGeometry = (
     radius = 1,
     segments = {

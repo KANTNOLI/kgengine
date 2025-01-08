@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const IcosahedronGeometry = (
     radius = 1,
     detail = 0

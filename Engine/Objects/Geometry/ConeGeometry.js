@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const ConeGeometry = (
     radius = 1,
     height = 2,

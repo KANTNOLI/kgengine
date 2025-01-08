@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const DodecahedronGeometry = (
     radius = 1,
     detail = 0

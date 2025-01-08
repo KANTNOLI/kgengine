@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const LatheGeometry = (
     points = [new THREE.Vector2(0, 0), new THREE.Vector2(1, 1)],
     segments = 12,

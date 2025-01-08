@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const TetrahedronGeometry = (
     radius = 1,
     detail = 0

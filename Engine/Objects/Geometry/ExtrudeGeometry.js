@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const ExtrudeGeometry = (
     shape = new THREE.Shape(),
     options = {

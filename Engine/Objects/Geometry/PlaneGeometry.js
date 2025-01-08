@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const PlaneGeometry = (
     size = {
       width: 1,

@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const TubeGeometry = (
     path = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 1)]),
     tubularSegments = 64,

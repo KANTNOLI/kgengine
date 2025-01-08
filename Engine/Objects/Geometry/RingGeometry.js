@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const RingGeometry = (
     innerRadius = 0.5,
     outerRadius = 1,

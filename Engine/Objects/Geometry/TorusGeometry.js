@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const TorusGeometry = (
     radius = 1,
     tube = 0.4,

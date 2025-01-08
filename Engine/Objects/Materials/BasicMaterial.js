@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const BasicMaterial = (
   visual = {
     color: 0xffffff,
@@ -9,6 +11,8 @@ export const BasicMaterial = (
     specularMap: null,
     alphaMap: null,
     envMap: null,
+    opacity: 1,
+    transparent: false,
   },
   additional = {
     combine: THREE.MultiplyOperation,
@@ -18,31 +22,76 @@ export const BasicMaterial = (
   admin = {
     wireframe: false,
     wireframeLinewidth: 1,
+    fog: true,
+    depthTest: true,
+    depthWrite: true,
+    alphaTest: 0,
+    premultipliedAlpha: false,
+    polygonOffset: false,
+    polygonOffsetFactor: 0,
+    polygonOffsetUnits: 0,
+    dithering: false,
+    side: THREE.FrontSide,
+    shadowSide: null,
+    vertexColors: false,
+    blending: THREE.NormalBlending,
+    blendSrc: THREE.SrcAlphaFactor,
+    blendDst: THREE.OneMinusSrcAlphaFactor,
+    blendEquation: THREE.AddEquation,
+    blendSrcAlpha: null,
+    blendDstAlpha: null,
+    blendEquationAlpha: null,
+    colorWrite: true,
+    precision: null,
   },
   animate = {
     skinning: false,
     morphTargets: false,
+    morphNormals: false,
+    flatShading: false,
   }
 ) => {
   return new THREE.MeshBasicMaterial({
-    color: visual.color, // Цвет материала, значение по умолчанию 0xffffff (белый)
-    map: visual.map, // Текстура объекта, значение по умолчанию null
-    lightMap: visual.lightMap, // Текстура световой карты, значение по умолчанию null
-    lightMapIntensity: visual.lightMapIntensity, // Интенсивность световой карты, значение по умолчанию 1
-    aoMap: visual.aoMap, // Текстура карты окружающего освещения, значение по умолчанию null
-    aoMapIntensity: visual.aoMapIntensity, // Интенсивность окружающего освещения, значение по умолчанию 1
-    specularMap: visual.specularMap, // Текстура карты бликов, значение по умолчанию null
-    alphaMap: visual.alphaMap, // Текстура альфа-карты, значение по умолчанию null
-    envMap: visual.envMap, // Текстура окружающей среды, значение по умолчанию null
-
-    combine: additional.combine, // Режим комбинирования с envMap, значение по умолчанию THREE.MultiplyOperation
-    reflectivity: additional.reflectivity, // Коэффициент отражения, значение по умолчанию 1
-    refractionRatio: additional.refractionRatio, // Коэффициент преломления, значение по умолчанию 0.98
-
-    wireframe: admin.wireframe, // Режим каркаса, значение по умолчанию false
-    wireframeLinewidth: admin.wireframeLinewidth, // Ширина линий каркаса, значение по умолчанию 1
-
-    skinning: animate.skinning, // Включение скининга, значение по умолчанию false
-    morphTargets: animate.morphTargets, // Включение морфинг-целей, значение по умолчанию false
+    color: visual.color,
+    map: visual.map,
+    lightMap: visual.lightMap,
+    lightMapIntensity: visual.lightMapIntensity,
+    aoMap: visual.aoMap,
+    aoMapIntensity: visual.aoMapIntensity,
+    specularMap: visual.specularMap,
+    alphaMap: visual.alphaMap,
+    envMap: visual.envMap,
+    opacity: visual.opacity,
+    transparent: visual.transparent,
+    combine: additional.combine,
+    reflectivity: additional.reflectivity,
+    refractionRatio: additional.refractionRatio,
+    wireframe: admin.wireframe,
+    wireframeLinewidth: admin.wireframeLinewidth,
+    fog: admin.fog,
+    depthTest: admin.depthTest,
+    depthWrite: admin.depthWrite,
+    alphaTest: admin.alphaTest,
+    premultipliedAlpha: admin.premultipliedAlpha,
+    polygonOffset: admin.polygonOffset,
+    polygonOffsetFactor: admin.polygonOffsetFactor,
+    polygonOffsetUnits: admin.polygonOffsetUnits,
+    dithering: admin.dithering,
+    side: admin.side,
+    shadowSide: admin.shadowSide,
+    vertexColors: admin.vertexColors,
+    blending: admin.blending,
+    blendSrc: admin.blendSrc,
+    blendDst: admin.blendDst,
+    blendEquation: admin.blendEquation,
+    blendSrcAlpha: admin.blendSrcAlpha,
+    blendDstAlpha: admin.blendDstAlpha,
+    blendEquationAlpha: admin.blendEquationAlpha,
+    colorWrite: admin.colorWrite,
+    precision: admin.precision,
+    skinning: animate.skinning,
+    morphTargets: animate.morphTargets,
+    morphNormals: animate.morphNormals,
+    flatShading: animate.flatShading,
   });
 };

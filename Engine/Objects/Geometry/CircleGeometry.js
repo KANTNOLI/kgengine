@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const CircleGeometry = (
     radius = 1,
     segments = {

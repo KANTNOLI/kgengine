@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const BoxGeometry = (
     size = {
       width: 1,

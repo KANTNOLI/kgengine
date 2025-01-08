@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const PolyhedronGeometry = (
     vertices = [0,0,0, 1,1,1, -1,-1,-1],
     indices = [0,1,2, 1,2,3],

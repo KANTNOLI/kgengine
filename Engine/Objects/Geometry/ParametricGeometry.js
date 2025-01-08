@@ -1,3 +1,5 @@
+import * as THREE from "three";
+
 export const ParametricGeometry = (
     func = (u, v) => new THREE.Vector3(u, v, Math.sin(u * Math.PI)),
     slices = 10,
