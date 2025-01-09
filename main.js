@@ -13,6 +13,7 @@ import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
 import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
 import { LambertMaterial } from "./Engine/Objects/Materials/LambertMaterial.js";
 import { PhongMaterial } from "./Engine/Objects/Materials/PhongMaterial.js";
+import { PhysicalMaterial } from "./Engine/Objects/Materials/PhysicalMaterial.js";
 
 // дефолтные переменные для рендера сцены и картинки + камера с ее управлением
 const visualEngine = DefaultViEnConfig();
@@ -23,9 +24,8 @@ const playerControlls = DefaultOrbitControll(visualEngine, camera, {
   max: 360,
 });
 
-AmbientLightCfg(scene, {intensity: 0.1})
-const light = DirectionalLightCfg(scene, { x: 1, y: 2, z: 1 });
-light.lookAt(new THREE.Vector3(0, 0, 0));
+const light1 = DirectionalLightCfg(scene, { x: 1, y: 2, z: 1 });
+const light2 = DirectionalLightCfg(scene, { x: -1, y: -2, z: -1 });
 ShadowCfg(scene);
 
 // const Box = new THREE.Mesh(
@@ -45,12 +45,17 @@ ShadowCfg(scene);
 
 const Box = new THREE.Mesh(
   BoxGeometry({ width: 1, height: 1, depth: 1 }),
-  PhongMaterial({
+  PhysicalMaterial({
     color: 0x911211,
+    metalness: 1,
+    sheen: 1,
+    iridescence: 0.5,
   })
 );
-
 scene.add(Box);
+
+light1.lookAt(Box.position);
+light2.lookAt(Box.position);
 
 const animate = (time) => {
   playerControlls.update();

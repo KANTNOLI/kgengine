@@ -37,7 +37,7 @@ export const LambertMaterial = (
 
     fog: CustomParams.fog,
     map: CustomParams.map,
-    envMap: CustomParams.envMap,
+    envMap: CustomParams.envMap, 
     alphaMap: CustomParams.alphaMap,
     combine: CustomParams.combine,
     reflectivity: CustomParams.reflectivity,
