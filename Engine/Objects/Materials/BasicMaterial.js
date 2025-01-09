@@ -9,6 +9,7 @@ export const BasicMaterial = (
     color: 0x121212,
     visible: true,
     transparent: {
+      active: false,
       opacity: 0.5,
     },
     admin: {
@@ -33,7 +34,7 @@ export const BasicMaterial = (
   new THREE.MeshBasicMaterial({
     color: basicParams.color,
     visible: basicParams.visible,
-    transparent: typeof basicParams.transparent === "object",
+    transparent: basicParams.transparent.active,
     opacity: basicParams.transparent.opacity,
 
     fog: CustomParams.fog,
