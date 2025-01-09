@@ -8,6 +8,7 @@ import { CameraLimitSquare } from "./Engine/Cameras/CameraLimitSquare.js";
 import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
 import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
 import { LambertMaterial } from "./Engine/Objects/Materials/LambertMaterial.js";
+import { PhongMaterial } from "./Engine/Objects/Materials/PhongMaterial.js";
 import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
 import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
 
@@ -23,11 +24,25 @@ const light = DirectionalLightCfg(scene, { x: 1, y: 0, z: 1 });
 light.lookAt(new THREE.Vector3(0, 0, 0));
 ShadowCfg(scene);
 
+// const Box = new THREE.Mesh(
+//   BoxGeometry({ width: 1, height: 1, depth: 1 }),
+//   BasicMaterial({
+//     color: 0x911211,
+//     opacity: 0.8,
+//   })
+// );
+
+// const Box = new THREE.Mesh(
+//   BoxGeometry({ width: 1, height: 1, depth: 1 }),
+//   LambertMaterial({
+//     color: 0x911211,
+//   })
+// );
+
 const Box = new THREE.Mesh(
   BoxGeometry({ width: 1, height: 1, depth: 1 }),
-  BasicMaterial({
+  PhongMaterial({
     color: 0x911211,
-    opacity: 0.2,
   })
 );
 

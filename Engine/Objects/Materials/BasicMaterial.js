@@ -34,11 +34,6 @@ export const BasicMaterial = (
     transparent: basicParams.opacity < 1,
     opacity: basicParams.opacity,
 
-    alphaTest: admin.alphaTest,
-    alphaHash: admin.alphaHash,
-    depthTest: admin.depthTest,
-    depthWrite: admin.depthWrite,
-
     fog: CustomParams.fog,
     map: CustomParams.map,
     envMap: CustomParams.envMap,
@@ -48,4 +43,9 @@ export const BasicMaterial = (
     refractionRatio: CustomParams.refractionRatio,
     wireframe: CustomParams.wireframe,
     vertexColors: CustomParams.vertexColors,
+
+    alphaTest: admin.alphaTest,
+    alphaHash: admin.alphaHash,
+    depthTest: admin.depthTest,
+    depthWrite: admin.depthWrite,
   });
