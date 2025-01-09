@@ -14,6 +14,7 @@ import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
 import { LambertMaterial } from "./Engine/Objects/Materials/LambertMaterial.js";
 import { PhongMaterial } from "./Engine/Objects/Materials/PhongMaterial.js";
 import { PhysicalMaterial } from "./Engine/Objects/Materials/PhysicalMaterial.js";
+import { StandardMaterial } from "./Engine/Objects/Materials/StandardMaterial.js";
 
 // дефолтные переменные для рендера сцены и картинки + камера с ее управлением
 const visualEngine = DefaultViEnConfig();
@@ -28,28 +29,11 @@ const light1 = DirectionalLightCfg(scene, { x: 1, y: 2, z: 1 });
 const light2 = DirectionalLightCfg(scene, { x: -1, y: -2, z: -1 });
 ShadowCfg(scene);
 
-// const Box = new THREE.Mesh(
-//   BoxGeometry({ width: 1, height: 1, depth: 1 }),
-//   BasicMaterial({
-//     color: 0x911211,
-//     opacity: 0.8,
-//   })
-// );
-
-// const Box = new THREE.Mesh(
-//   BoxGeometry({ width: 1, height: 1, depth: 1 }),
-//   LambertMaterial({
-//     color: 0x911211,
-//   })
-// );
-
 const Box = new THREE.Mesh(
   BoxGeometry({ width: 1, height: 1, depth: 1 }),
-  PhysicalMaterial({
+  StandardMaterial({
     color: 0x911211,
     metalness: 1,
-    sheen: 1,
-    iridescence: 0.5,
   })
 );
 scene.add(Box);
