@@ -8,16 +8,7 @@ export const BasicMaterial = (
   basicParams = {
     color: 0x121212,
     visible: true,
-    transparent: {
-      active: false,
-      opacity: 0.5,
-    },
-    admin: {
-      alphaTest: 0,
-      alphaHash: false,
-      depthTest: true,
-      depthWrite: true,
-    },
+    opacity: 1,
   },
   CustomParams = {
     fog: true,
@@ -29,13 +20,24 @@ export const BasicMaterial = (
     refractionRatio: 0.5,
     wireframe: false,
     vertexColors: false,
+  },
+  admin = {
+    alphaTest: 0,
+    alphaHash: false,
+    depthTest: false,
+    depthWrite: false,
   }
 ) =>
   new THREE.MeshBasicMaterial({
     color: basicParams.color,
     visible: basicParams.visible,
-    transparent: basicParams.transparent.active,
-    opacity: basicParams.transparent.opacity,
+    transparent: basicParams.opacity < 1,
+    opacity: basicParams.opacity,
+
+    alphaTest: admin.alphaTest,
+    alphaHash: admin.alphaHash,
+    depthTest: admin.depthTest,
+    depthWrite: admin.depthWrite,
 
     fog: CustomParams.fog,
     map: CustomParams.map,

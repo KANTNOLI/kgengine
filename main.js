@@ -23,18 +23,15 @@ const light = DirectionalLightCfg(scene, { x: 1, y: 0, z: 1 });
 light.lookAt(new THREE.Vector3(0, 0, 0));
 ShadowCfg(scene);
 
-const Box1 = new THREE.Mesh(
+const Box = new THREE.Mesh(
   BoxGeometry({ width: 1, height: 1, depth: 1 }),
-  BasicMaterial({ color: 0xffff2f, opacity: 0.5, transparent: true })
+  BasicMaterial({
+    color: 0x911211,
+    opacity: 0.2,
+  })
 );
 
-// const Box2 = new THREE.Mesh(
-//   BoxGeometry({ width: 1, height: 1, depth: 1 }, { depthSegments: 10 }),
-//   LambertMaterial({ color: 0xffff2f, opacity: 0.5, transparent: true })
-// );
-
-scene.add(Box1);
-//scene.add(Box2);
+scene.add(Box);
 
 const animate = (time) => {
   playerControlls.update();
