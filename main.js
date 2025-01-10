@@ -33,30 +33,40 @@ const playerControlls = DefaultOrbitControll(visualEngine, camera, {
 const light1 = DirectionalLightCfg(
   scene,
   { x: 1, y: 1, z: 1 },
-  { intensity: 1 }
+  { intensity: 0.5 }
 );
-const light2 = DirectionalLightCfg(scene, { x: -1, y: -1, z: -1 });
+// const light2 = DirectionalLightCfg(
+//   scene,
+//   { x: -1, y: -1, z: -1 },
+//   { intensity: 0.2 }
+// );
+light1.lookAt(0, 0, 0);
+//light2.lookAt(0, 0, 0);
+
 ShadowCfg(scene);
 
-TextOnGeometry(
+let text = "none";
+
+await TextOnGeometry(
   "Hello World!",
-  { size: 0.5, depth: 0.05, curveSegments: 15 },
-  {},
+  { size: 0.5, depth: 0.05, curveSegments: 1 },
+  { bevelSegments: 1 },
   (geometry) => {
     let textMesh = new THREE.Mesh(
       geometry,
-      PhongMaterial({ color: 0xffffff, opacity: 1 }, { side: THREE.DoubleSide })
+      PhongMaterial({ color: 0xffffff, opacity: 1 })
     );
     scene.add(textMesh);
     textMesh.position.set(-2, 0, 0);
-
+    text = textMesh;
     textMesh.castShadow = true;
     textMesh.receiveShadow = true;
   }
 );
 
-light1.lookAt(0, 0, 0);
-light2.lookAt(0, 0, 0);
+setInterval(() => {
+  console.log(text);
+}, 1000);
 
 const animate = (time) => {
   playerControlls.update();
