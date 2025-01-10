@@ -35,7 +35,7 @@ const playerControlls = DefaultOrbitControll(visualEngine, camera, {
 const light1 = DirectionalLightCfg(
   scene,
   { x: 5, y: 5, z: 10 },
-  { color: 0xffffff, intensity: 0.2 }
+  { color: 0xffffff, intensity: 500 }
 );
 
 // const lhelp = new THREE.DirectionalLightHelper(light1);
@@ -52,15 +52,22 @@ ShadowCfg(scene);
 
 let text = "none";
 
-let temp = new THREE.TextureLoader().load("./Engine/Assets/Textures/metal.jpg");
-temp.anisotropy = visualEngine.capabilities.getMaxAnisotropy()
+let texture1 = new THREE.TextureLoader().load(
+  "./Engine/Assets/Textures/metalMap.jpg"
+);
+let texture2 = new THREE.TextureLoader().load(
+  "./Engine/Assets/Textures/metalNormal.jpg"
+);
+let texture3 = new THREE.TextureLoader().load(
+  "./Engine/Assets/Textures/metalRoughness.jpg"
+);
 
 await TextOnGeometry(
   "Hello World!",
   {
     size: 0.5,
     depth: 0.05,
-    curveSegments: 14,
+    curveSegments: 30,
     path: "./Engine/Assets/Fonts/default.json",
   },
   { bevelSegments: 1 },
@@ -70,11 +77,11 @@ await TextOnGeometry(
       StandardMaterial(
         {
           color: 0xffffff,
-          roughness: 0.5,
-          metalness: 0.5,
+          metalness: 1,
+          roughnessMap: texture3,
         },
         {
-          map: temp,
+          map: texture1,
         }
       )
     );
