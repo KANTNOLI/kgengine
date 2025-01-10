@@ -4,6 +4,7 @@ export const StandardMaterial = (
   basicParams = {
     color: 0x121212,
     emissive: 0x121212,
+    emissiveIntensity: 0.2,
     roughness: 0,
     roughnessMap: null,
     metalness: 0,
@@ -11,12 +12,15 @@ export const StandardMaterial = (
     visible: true,
     opacity: 1,
   },
-  CustomParams = { 
+  CustomParams = {
     side: THREE.FrontSide,
     fog: true,
     map: null,
     envMap: null,
     alphaMap: null,
+    normalMap: null,
+    displacementMap: null,
+    displacementScale: 0.1,
     combine: THREE.AddOperation,
     reflectivity: 0.5,
     refractionRatio: 0.5,
@@ -34,10 +38,12 @@ export const StandardMaterial = (
   return new THREE.MeshStandardMaterial({
     color: basicParams.color,
     emissive: basicParams.emissive,
+    emissiveIntensity: basicParams.emissiveIntensity,
     roughness: basicParams.roughness,
     roughnessMap: basicParams.metalnessMap,
     metalness: basicParams.metalness,
     metalnessMap: basicParams.metalnessMap,
+
     visible: basicParams.visible,
     transparent: basicParams.opacity < 1,
     opacity: basicParams.opacity,
@@ -46,6 +52,9 @@ export const StandardMaterial = (
     map: CustomParams.map,
     envMap: CustomParams.envMap,
     alphaMap: CustomParams.alphaMap,
+    normalMap: CustomParams.normalMap,
+    displacementMap: CustomParams.displacementMap,
+    displacementScale: CustomParams.displacementScale,
     combine: CustomParams.combine,
     reflectivity: CustomParams.reflectivity,
     refractionRatio: CustomParams.refractionRatio,

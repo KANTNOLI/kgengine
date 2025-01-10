@@ -6,7 +6,7 @@ export const DefaultCameraSettings = (
     fov: 75,
     aspect: window.innerWidth / window.innerHeight,
     near: 0.01,
-    far: 25,
+    far: 1000,
   }
 ) => {
   // { x: 0.10, y: 1.25, z: 1.50 }  - WHITE

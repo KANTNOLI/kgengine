@@ -6,8 +6,10 @@ import { DefaultViEnConfig } from "./Engine/VisualEngineConfigs/DefaultViEnConfi
 import { CameraLimitSquare } from "./Engine/Cameras/CameraLimitSquare.js";
 
 import { PointLightCfg } from "./Engine/Lighting/PointLightCfg.js";
+import { SpotLightCfg } from "./Engine/Lighting/SpotLightCfg.js";
 import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
 import { AmbientLightCfg } from "./Engine/Lighting/AmbientLightCfg.js";
+import { HemisphereLightCfg } from "./Engine/Lighting/HemisphereLightCfg.js";
 import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
 
 import { ModelsLoader } from "./Engine/OtherScripts/ModelsLoader.js";
@@ -24,7 +26,7 @@ import { StandardMaterial } from "./Engine/Objects/Materials/StandardMaterial.js
 const visualEngine = DefaultViEnConfig();
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x111111);
-const camera = DefaultCameraSettings({ x: 0, y: 1, z: 5 }, { far: 1000 });
+const camera = DefaultCameraSettings({ x: 0, y: 0.5, z: 2 });
 const playerControlls = DefaultOrbitControll(visualEngine, camera, {
   min: 0,
   max: 360,
@@ -32,35 +34,57 @@ const playerControlls = DefaultOrbitControll(visualEngine, camera, {
 
 const light1 = DirectionalLightCfg(
   scene,
-  { x: 1, y: 1, z: 1 },
-  { intensity: 0.5 }
+  { x: 5, y: 5, z: 10 },
+  { color: 0xffffff, intensity: 0.2 }
 );
+
+// const lhelp = new THREE.DirectionalLightHelper(light1);
+// scene.add(lhelp);
+
 // const light2 = DirectionalLightCfg(
 //   scene,
 //   { x: -1, y: -1, z: -1 },
 //   { intensity: 0.2 }
 // );
-light1.lookAt(0, 0, 0);
 //light2.lookAt(0, 0, 0);
 
 ShadowCfg(scene);
 
 let text = "none";
 
+let temp = new THREE.TextureLoader().load("./Engine/Assets/Textures/metal.jpg");
+temp.anisotropy = visualEngine.capabilities.getMaxAnisotropy()
+
 await TextOnGeometry(
   "Hello World!",
-  { size: 0.5, depth: 0.05, curveSegments: 1 },
+  {
+    size: 0.5,
+    depth: 0.05,
+    curveSegments: 14,
+    path: "./Engine/Assets/Fonts/default.json",
+  },
   { bevelSegments: 1 },
   (geometry) => {
     let textMesh = new THREE.Mesh(
       geometry,
-      PhongMaterial({ color: 0xffffff, opacity: 1 })
+      StandardMaterial(
+        {
+          color: 0xffffff,
+          roughness: 0.5,
+          metalness: 0.5,
+        },
+        {
+          map: temp,
+        }
+      )
     );
     scene.add(textMesh);
-    textMesh.position.set(-2, 0, 0);
+    textMesh.position.set(-2.2, 0, 0);
     text = textMesh;
     textMesh.castShadow = true;
     textMesh.receiveShadow = true;
+
+    light1.lookAt(5, 5, 10);
   }
 );
 

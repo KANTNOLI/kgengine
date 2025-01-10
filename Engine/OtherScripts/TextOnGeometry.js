@@ -6,7 +6,7 @@ import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 export const TextOnGeometry = async (
   text = "Hello World",
   defaultParam = {
-    path: "/Engine/Assets/Fonts/default.json",
+    path: "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
     size: 0.5,
     depth: 0.5,
     curveSegments: 12,
@@ -22,7 +22,9 @@ export const TextOnGeometry = async (
 ) => {
   const textLoad = new FontLoader();
   textLoad.load(
-    "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
+    defaultParam.path
+      ? defaultParam.path
+      : "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
     (font) => {
       let geometry = new TextGeometry(text, {
         font: font,
