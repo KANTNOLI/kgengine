@@ -3,14 +3,27 @@ import { LoadingProcess } from "./LoadingProcess.js";
 
 export const ModelsLoader = async (
   scene,
-  path = "models/error.glb",
-  position = { x: 0, y: 0, z: 0 },
-  shadow = { casting: false, receiving: false },
-  scale = { width: 1, height: 1, length: 1 },
+  deafultParam = {
+    path: "../Assets/Models/default.glb",
+  },
+  visualParam = {
+    PosX: 0,
+    PosY: 0,
+    PosZ: 0,
+
+    scaleWidth: 1,
+    scaleHeight: 1,
+    scaleLength: 1,
+
+    rotateX: 0,
+    rotateY: 0,
+    rotateZ: 0,
+
+    shadowCasting: true,
+    castingReceiving: true,
+  },
   looksAt = null,
   controll = null,
-  rotation = null,
-  state = null
 ) => {
   const modelsLoader = new GLTFLoader();
 
@@ -57,11 +70,6 @@ export const ModelsLoader = async (
 
     scene.add(model.scene);
 
-    if (state) {
-      setTimeout(() => {
-        LoadingProcess(state);
-      }, 1000);
-    }
     return model;
   });
 };
