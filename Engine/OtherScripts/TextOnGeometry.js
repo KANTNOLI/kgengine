@@ -4,29 +4,27 @@ import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
 
 export const TextOnGeometry = async (
+  text = "Hello World",
   defaultParam = {
-    text: "Hello World",
     path: "/Engine/Assets/Fonts/default.json",
-    size: 80,
-    depth: 5,
+    size: 0.5,
+    depth: 0.5,
     curveSegments: 12,
   },
   CustomParam = {
     bevelEnabled: true,
-    bevelThickness: 10,
-    bevelSize: 8,
+    bevelThickness: 0.1,
+    bevelSize: 0.1,
     bevelOffset: 0,
     bevelSegments: 5,
   },
   callback
 ) => {
   const textLoad = new FontLoader();
-  console.log(1);
   textLoad.load(
     "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json",
     (font) => {
-      console.log(2);
-      let geometry = new TextGeometry("ad", {
+      let geometry = new TextGeometry(text, {
         font: font,
         size: defaultParam.size,
         depth: defaultParam.depth,
@@ -38,7 +36,6 @@ export const TextOnGeometry = async (
         bevelSegments: CustomParam.bevelSegments,
       });
 
-      console.log(3);
       callback(geometry);
       return geometry;
     }

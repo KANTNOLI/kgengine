@@ -10,7 +10,7 @@ export const PhongMaterial = (
     opacity: 1,
   },
   CustomParams = {
-    side: THREE.FrontSide,
+    side: THREE.DoubleSide,
     fog: true,
     map: null,
     envMap: null,
@@ -25,8 +25,8 @@ export const PhongMaterial = (
   admin = {
     alphaTest: 0,
     alphaHash: false,
-    depthTest: false,
-    depthWrite: false,
+    depthTest: true,
+    depthWrite: true,
   }
 ) => {
   return new THREE.MeshPhongMaterial({

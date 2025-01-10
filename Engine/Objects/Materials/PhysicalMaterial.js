@@ -39,8 +39,8 @@ export const PhysicalMaterial = (
   admin = {
     alphaTest: 0,
     alphaHash: false,
-    depthTest: false,
-    depthWrite: false,
+    depthTest: true,
+    depthWrite: true,
   }
 ) => {
   return new THREE.MeshPhysicalMaterial({

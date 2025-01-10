@@ -11,7 +11,7 @@ export const StandardMaterial = (
     visible: true,
     opacity: 1,
   },
-  CustomParams = {
+  CustomParams = { 
     side: THREE.FrontSide,
     fog: true,
     map: null,
@@ -27,8 +27,8 @@ export const StandardMaterial = (
   admin = {
     alphaTest: 0,
     alphaHash: false,
-    depthTest: false,
-    depthWrite: false,
+    depthTest: true,
+    depthWrite: true,
   }
 ) => {
   return new THREE.MeshStandardMaterial({

@@ -24,8 +24,8 @@ export const BasicMaterial = (
   admin = {
     alphaTest: 0,
     alphaHash: false,
-    depthTest: false,
-    depthWrite: false,
+    depthTest: true,
+    depthWrite: true,
   }
 ) =>
   new THREE.MeshBasicMaterial({
