@@ -12,7 +12,7 @@ import { AmbientLightCfg } from "./Engine/Lighting/AmbientLightCfg.js";
 import { HemisphereLightCfg } from "./Engine/Lighting/HemisphereLightCfg.js";
 import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
 
-import { ModelsLoader } from "./Engine/OtherScripts/ModelsLoader.js";
+import { CreateModels } from "./Engine/OtherScripts/ModelsLoader.js";
 
 import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
 import { TextOnGeometry } from "./Engine/OtherScripts/TextOnGeometry.js";
@@ -39,23 +39,30 @@ const light1 = DirectionalLightCfg(
 );
 AmbientLightCfg(scene, { intensity: 0.1 });
 
-ModelsLoader(
-  (model) => {
-    scene.add(model);
-  },
-  "./Engine/Assets/Models/default.glb",
-  {
-    PosX: 0,
-    PosY: 1,
-    PosZ: -1,
-    scaleWidth: 0.1,
-    scaleHeight: 0.1,
-    scaleLength: 0.1,
-  },
-  null,
-  playerControlls
-);
+// ModelsLoader(
+//   (model) => {
+//     scene.add(model);
+//   },
+//   "./Engine/Assets/Models/default.glb",
+//   {
+//     PosX: 0,
+//     PosY: 1,
+//     PosZ: -1,
+//     scaleWidth: 0.1,
+//     scaleHeight: 0.1,
+//     scaleLength: 0.1,
+//   },
+//   null,
+//   playerControlls
+// );
 
+let model = new CreateModels(null, null, null, {
+  width: 0.1,
+  height: 0.1,
+  length: 0.1,
+});
+console.log(model);
+model.addScene(scene);
 ShadowCfg(scene);
 
 let texture1 = new THREE.TextureLoader().load(
