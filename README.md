@@ -3,6 +3,7 @@
 ## Честно говоря, я даже не знаю как описать этот проект. В идеале мне бы хотелось реализовать **удобный движок или апи для создания 3D сайтов или даже игр**, скорее даже второе
 
 > At the moment, I am describing the Three library at a high level.js, so that in the future it would be easier for me to work with it to draw something, because it is now the most relevant for 3D page rendering and is actively supported!
+
 > На данный момент я описываю высокоуровнево  библиотеку Three.js, чтобы в дальнейшем мне было легче с ней работать для отрисовки чего либо, т.к. она сейчас самая актуальная для 3D отрисовки страницы и активно поддерживается! 
 
 # **Immediate plans | Ближайшие планы**
