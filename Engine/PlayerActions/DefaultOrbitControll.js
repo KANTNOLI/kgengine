@@ -9,18 +9,6 @@ export const DefaultOrbitControll = (
     max: 70,
   }
 ) => {
-  
-  if (!(renderer instanceof THREE.WebGLRenderer)) {
-    console.error(`DefaultOrbitControll error: renderer is not WebGLRenderer!`);
-    alert("Fatal error! Look client console");
-    return -1;
-  } else if (!(camera instanceof THREE.PerspectiveCamera)) {
-    console.error(`DefaultOrbitControll error: scene is not PerspectiveCamera!`);
-    alert("Fatal error! Look client console");
-    return -1;
-  }
-
-  // эта штука позв крутить камеру во круг доски
   const action = new OrbitControls(camera, renderer.domElement);
   action.enableDamping = true;
   action.dampingFactor = 0.25;

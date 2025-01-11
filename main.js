@@ -40,19 +40,36 @@ const light1 = DirectionalLightCfg(
 );
 AmbientLightCfg(scene, { intensity: 0.1 });
 
-let model = new CreateModel(null, {}, null, {
-  width: 0.1,
-  height: 0.1,
-  length: 0.1,
+let model = new CreateModel(null, {
+  posY: 1,
+  scaleWidth: 0.1,
+  scaleHeight: 0.1,
+  scaleLength: 0.1,
 });
-model.addScene(scene);
-model.setOrbitControll(playerControlls);
-model.setObjectLook(light1);
+model.addToScene(scene);
+
+playerControlls.target.copy({
+  x: model.position.posX,
+  y: model.position.posY,
+  z: model.position.posZ,
+});
+
+// setTimeout(() => {
+//   model.updatePosition({ posX: 0 });
+// }, 3000);
 
 ShadowCfg(scene);
 
-let text = new CreateText("Hi world", "./Engine/Assets/Fonts/default.json");
-text.addScene(scene);
+let text = new CreateText(
+  "Hi world",
+  "./Engine/Assets/Fonts/default.json",
+  null,
+  { x: -1.3, y: 0 },
+  {
+    bevelEnabled: false,
+  }
+);
+text.addToScene(scene);
 
 const animate = (time) => {
   playerControlls.update();

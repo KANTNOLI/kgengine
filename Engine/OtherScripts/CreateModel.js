@@ -2,59 +2,62 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoadingProcess } from "./LoadingProcess.js";
 
+const DEGREE = Math.PI / 180;
+
 export class CreateModel {
   model = null;
   path = "./Engine/Assets/Models/default.glb";
   position = {
-    x: 0,
-    y: 0,
-    z: 0,
-  };
-  rotate = {
-    x: 0,
-    y: 0,
-    z: 0,
-  };
-  scale = {
-    width: 1,
-    height: 1,
-    length: 1,
+    posX: 0,
+    posY: 0,
+    posZ: 0,
+    rotateX: 0,
+    rotateY: 0,
+    rotateZ: 0,
+    scaleWidth: 1,
+    scaleHeight: 1,
+    scaleLength: 1,
   };
   shadow = {
     shadowCasting: true,
     shadowReceiving: true,
   };
 
-  constructor(path, position, rotate, scale, shadow) {
+  constructor(path, position, shadow) {
     this.path = path || this.path;
-    this.position = { ...this.position, ...position }; // {a: 1} = {a: 1, a:2 + b:2} = {a:2, b:2}
-    this.rotate = { ...this.rotate, ...rotate };
-    this.scale = { ...this.scale, ...scale };
+    this.position = { ...this.position, ...position };
     this.shadow = { ...this.shadow, ...shadow };
 
+    console.log( this.position);
+
     this.modelLoadig();
+  }
+
+  setNodeParam(callback) {
+    this.model.traverse((node) => {
+      callback(node);
+    });
   }
 
   modelLoadig() {
     const modelsLoader = new GLTFLoader();
 
     modelsLoader.load(this.path, (model) => {
-      const DEGREE = Math.PI / 180;
       this.model = model.scene;
 
       if (this.model) {
-        this.model.position.x = this.position.x;
-        this.model.position.y = this.position.y;
-        this.model.position.z = this.position.z;
+        this.model.position.x = this.position.posX;
+        this.model.position.y = this.position.posY;
+        this.model.position.z = this.position.posZ;
 
-        this.model.rotation.x = DEGREE * this.rotate.x;
-        this.model.rotation.y = DEGREE * this.rotate.y;
-        this.model.rotation.z = DEGREE * this.rotate.z;
+        this.model.rotation.x = DEGREE * this.position.rotateX;
+        this.model.rotation.y = DEGREE * this.position.rotateY;
+        this.model.rotation.z = DEGREE * this.position.rotateZ;
 
         this.model.scale.set(
-          this.scale.width,
-          this.scale.height,
-          this.scale.length
+          this.position.scaleWidth,
+          this.position.scaleHeight,
+          this.position.scaleLength
         );
       } else {
         console.log("this.model error! Check all data");
@@ -69,13 +72,7 @@ export class CreateModel {
     });
   }
 
-  setNodeParam(callback) {
-    this.model.traverse((node) => {
-      callback(node);
-    });
-  }
-
-  addScene(scene) {
+  addToScene(scene) {
     setInterval(() => {
       if (this.model) {
         scene.add(this.model);
@@ -84,24 +81,36 @@ export class CreateModel {
     }, 500);
   }
 
-  setObjectLook(object) {
-    setInterval(() => {
-      if (this.model) {
-        object.lookAt(this.model.position);
-        return 1;
-      }
-    }, 500);
+  updatePosition(position) {
+    this.position = { ...this.position, ...position };
+
+    if (this.model) {
+      this.model.position.x = this.position.posX;
+      this.model.position.y = this.position.posY;
+      this.model.position.z = this.position.posZ;
+
+      this.model.rotation.x = DEGREE * this.position.rotateX;
+      this.model.rotation.y = DEGREE * this.position.rotateY;
+      this.model.rotation.z = DEGREE * this.position.rotateZ;
+
+      this.model.scale.set(
+        this.position.scaleWidth,
+        this.position.scaleHeight,
+        this.position.scaleLength
+      );
+    } else {
+      console.log("this.model error! Check all data");
+    }
   }
 
-  setOrbitControll(controll) {
-    setInterval(() => {
-      if (this.model) {
-        controll.target.copy(this.model.position);
-        return 1;
-      }
-    }, 500);
+  switchingShadow() {
+    if (this.model) {
+      this.setNodeParam((node) => {
+        if (node.isMesh) {
+          node.castShadow = !this.shadow.shadowCasting;
+          node.receiveShadow = !this.shadow.shadowReceiving;
+        }
+      });
+    }
   }
 }
-
-// look at
-// comtroll

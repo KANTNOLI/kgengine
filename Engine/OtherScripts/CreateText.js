@@ -74,7 +74,7 @@ export class CreateText {
     });
   }
 
-  addScene(scene) {
+  addToScene(scene) {
     setInterval(() => {
       if (this.textObject) {
         scene.add(this.textObject);
