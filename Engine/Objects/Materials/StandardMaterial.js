@@ -3,8 +3,8 @@ import * as THREE from "three";
 export const StandardMaterial = (
   basicParams = {
     color: 0x121212,
-    emissive: 0x121212,
-    emissiveIntensity: 0.2,
+    emissive: 0xc45151,
+    emissiveIntensity: 0,
     roughness: 0,
     roughnessMap: null,
     metalness: 0,

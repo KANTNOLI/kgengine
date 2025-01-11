@@ -1,11 +1,10 @@
+import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoadingProcess } from "./LoadingProcess.js";
 
 export const ModelsLoader = async (
-  scene,
-  deafultParam = {
-    path: "../Assets/Models/default.glb",
-  },
+  callback,
+  path = null,
   visualParam = {
     PosX: 0,
     PosY: 0,
@@ -20,56 +19,74 @@ export const ModelsLoader = async (
     rotateZ: 0,
 
     shadowCasting: true,
-    castingReceiving: true,
+    shadowReceiving: true,
   },
   looksAt = null,
-  controll = null,
+  controll = null
 ) => {
   const modelsLoader = new GLTFLoader();
 
   //"models/chessboard.glb",
-  modelsLoader.load(path, (model) => {
-    //x: 0.115, y: -0.0777, z: 0.115
-    model.scene.position.x = position.x;
-    model.scene.position.y = position.y;
-    model.scene.position.z = position.z;
+  modelsLoader.load(
+    path ? path : "/Engine/Assets/Models/default.glb",
+    (model) => {
+      //x: 0.115, y: -0.0777, z: 0.115
+      if (visualParam.PosX || visualParam.PosY || visualParam.PosZ) {
+        model.scene.position.x = visualParam.PosX;
+        model.scene.position.y = visualParam.PosY;
+        model.scene.position.z = visualParam.PosZ;
+      }
+      //width: 1, height: 0.5, length:
+      if (
+        visualParam.scaleWidth != 1 ||
+        visualParam.scaleHeight != 1 ||
+        visualParam.scaleLength != 1
+      ) {
+        model.scene.scale.set(
+          visualParam.scaleWidth,
+          visualParam.scaleHeight,
+          visualParam.scaleLength
+        );
+      }
 
-    //width: 1, height: 0.5, length:
-    model.scene.scale.set(scale.width, scale.height, scale.length);
+      if (visualParam.shadowCasting || visualParam.shadowReceiving) {
+        model.scene.traverse((node) => {
+          if (node.isMesh) {
+            node.castShadow = visualParam.shadowCasting; // отбрасывание тени = casting shadow
+            node.receiveShadow = visualParam.shadowReceiving; // получение тени = receiving shadow
+          }
+        });
+      }
 
-    if (typeof shadow === "object") {
-      model.scene.traverse((node) => {
-        if (node.isMesh) {
-          node.castShadow = shadow.casting; // отбрасывание тени = casting shadow
-          node.receiveShadow = shadow.receiving; // получение тени = receiving shadow
-        }
-      });
+      // если мы получили массив элементов рендера, которые должны смотреть на модель, то парсим
+      if (Array.isArray(looksAt)) {
+        looksAt.map((object, id) => {
+          //console.log(object);
+          object.isObject3D
+            ? object.lookAt(model.scene.position)
+            : console.error(
+                `ModelsLoader error: element = ${id} id, is not object!`
+              );
+        });
+      }
+
+      if (controll) {
+        controll.target.copy(model.scene.position);
+      }
+
+      if (visualParam.rotateX) {
+        model.scene.rotation.x = (Math.PI / 180) * visualParam.rotateX;
+      }
+
+      if (visualParam.rotateY) {
+        model.scene.rotation.y = (Math.PI / 180) * visualParam.rotateY;
+      }
+
+      if (visualParam.rotateZ) {
+        model.scene.rotation.z = (Math.PI / 180) * visualParam.rotateZ;
+      }
+
+      callback(model.scene);
     }
-
-    // если мы получили массив элементов рендера, которые должны смотреть на модель, то парсим
-    if (Array.isArray(looksAt)) {
-      looksAt.map((object, id) => {
-        //console.log(object);
-        object.isObject3D
-          ? object.lookAt(model.scene.position)
-          : console.error(
-              `ModelsLoader error: element = ${id} id, is not object!`
-            );
-      });
-    }
-
-    if (controll) {
-      controll.target.copy(model.scene.position);
-    }
-
-    if (rotation) {
-      model.scene.rotation.x = (Math.PI / 180) * rotation.x;
-      model.scene.rotation.y = (Math.PI / 180) * rotation.y;
-      model.scene.rotation.z = (Math.PI / 180) * rotation.z;
-    }
-
-    scene.add(model.scene);
-
-    return model;
-  });
+  );
 };

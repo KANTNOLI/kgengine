@@ -25,8 +25,8 @@ import { StandardMaterial } from "./Engine/Objects/Materials/StandardMaterial.js
 // дефолтные переменные для рендера сцены и картинки + камера с ее управлением
 const visualEngine = DefaultViEnConfig();
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x111111);
-const camera = DefaultCameraSettings({ x: 0, y: 0.5, z: 2 });
+scene.background = new THREE.Color(0x1d2226);
+const camera = DefaultCameraSettings({ x: 0, y: 0.5, z: 3 });
 const playerControlls = DefaultOrbitControll(visualEngine, camera, {
   min: 0,
   max: 360,
@@ -34,43 +34,46 @@ const playerControlls = DefaultOrbitControll(visualEngine, camera, {
 
 const light1 = DirectionalLightCfg(
   scene,
-  { x: 5, y: 5, z: 10 },
-  { color: 0xffffff, intensity: 500 }
+  { x: 0, y: 3, z: 10 },
+  { color: 0xffffff, intensity: 3 }
 );
+AmbientLightCfg(scene, { intensity: 0.1 });
 
-// const lhelp = new THREE.DirectionalLightHelper(light1);
-// scene.add(lhelp);
-
-// const light2 = DirectionalLightCfg(
-//   scene,
-//   { x: -1, y: -1, z: -1 },
-//   { intensity: 0.2 }
-// );
-//light2.lookAt(0, 0, 0);
+ModelsLoader(
+  (model) => {
+    scene.add(model);
+  },
+  "./Engine/Assets/Models/default.glb",
+  {
+    PosX: 0,
+    PosY: 1,
+    PosZ: -1,
+    scaleWidth: 0.1,
+    scaleHeight: 0.1,
+    scaleLength: 0.1,
+  },
+  null,
+  playerControlls
+);
 
 ShadowCfg(scene);
 
-let text = "none";
-
 let texture1 = new THREE.TextureLoader().load(
   "./Engine/Assets/Textures/metalMap.jpg"
-);
-let texture2 = new THREE.TextureLoader().load(
-  "./Engine/Assets/Textures/metalNormal.jpg"
 );
 let texture3 = new THREE.TextureLoader().load(
   "./Engine/Assets/Textures/metalRoughness.jpg"
 );
 
-await TextOnGeometry(
+TextOnGeometry(
   "Hello World!",
   {
     size: 0.5,
     depth: 0.05,
-    curveSegments: 30,
+    curveSegments: 15,
     path: "./Engine/Assets/Fonts/default.json",
   },
-  { bevelSegments: 1 },
+  {},
   (geometry) => {
     let textMesh = new THREE.Mesh(
       geometry,
@@ -78,26 +81,16 @@ await TextOnGeometry(
         {
           color: 0xffffff,
           metalness: 1,
-          roughnessMap: texture3,
         },
-        {
-          map: texture1,
-        }
+        {}
       )
     );
     scene.add(textMesh);
     textMesh.position.set(-2.2, 0, 0);
-    text = textMesh;
     textMesh.castShadow = true;
     textMesh.receiveShadow = true;
-
-    light1.lookAt(5, 5, 10);
   }
 );
-
-setInterval(() => {
-  console.log(text);
-}, 1000);
 
 const animate = (time) => {
   playerControlls.update();
