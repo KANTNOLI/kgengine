@@ -2,8 +2,9 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoadingProcess } from "./LoadingProcess.js";
 
-export class CreateModels {
+export class CreateModel {
   model = null;
+  modelCreate = false;
   path = "./Engine/Assets/Models/default.glb";
   position = {
     x: 0,
@@ -32,12 +33,11 @@ export class CreateModels {
     this.scale = { ...this.scale, ...scale };
     this.shadow = { ...this.shadow, ...shadow };
 
+    this.modelCreate = true;
     this.modelLoadig();
   }
 
   modelLoadig() {
-    console.log(2131);
-
     const modelsLoader = new GLTFLoader();
 
     modelsLoader.load(this.path, (model) => {
@@ -78,14 +78,42 @@ export class CreateModels {
   }
 
   addScene(scene) {
-    setTimeout(() => {
-      if (this.model) {
-        scene.add(this.model);
-      } else {
-        console.log(this.model);
-        console.log("error add model to scene");
-      }
-    }, 1000);
+    if (this.modelCreate) {
+      setInterval(() => {
+        if (this.model) {
+          scene.add(this.model);
+          return 1;
+        }
+      }, 500);
+    } else {
+      console.log("Need create model");
+    }
+  }
+
+  setObjectLook(object) {
+    if (this.modelCreate) {
+      setInterval(() => {
+        if (this.model) {
+          object.lookAt(this.model.position);
+          return 1;
+        }
+      }, 500);
+    } else {
+      console.log("Need create model");
+    }
+  }
+
+  setOrbitControll(controll) {
+    if (this.modelCreate) {
+      setInterval(() => {
+        if (this.model) {
+          controll.target.copy(this.model.position);
+          return 1;
+        }
+      }, 500);
+    } else {
+      console.log("Need create model");
+    }
   }
 }
 
