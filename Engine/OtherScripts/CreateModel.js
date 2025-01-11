@@ -2,45 +2,8 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoadingProcess } from "./LoadingProcess.js";
 
-/**
- * @typedef {Object} Position
- * @property {number} x
- * @property {number} y
- * @property {number} z
- */
-
-/**
- * @typedef {Object} Rotate
- * @property {number} x
- * @property {number} y
- * @property {number} z
- */
-
-/**
- * @typedef {Object} Scale
- * @property {number} width
- * @property {number} height
- * @property {number} length
- */
-
-/**
- * @typedef {Object} Shadow
- * @property {boolean} shadowCasting
- * @property {boolean} shadowReceiving
- */
-
-/**
- * @class CreateModels
- * @param {string} [path]
- * @param {Position} [position]
- * @param {Rotate} [rotate]
- * @param {Scale} [scale]
- * @param {Shadow} [shadow]
- */
-
 export class CreateModel {
   model = null;
-  modelCreate = false;
   path = "./Engine/Assets/Models/default.glb";
   position = {
     x: 0,
@@ -69,7 +32,6 @@ export class CreateModel {
     this.scale = { ...this.scale, ...scale };
     this.shadow = { ...this.shadow, ...shadow };
 
-    this.modelCreate = true;
     this.modelLoadig();
   }
 
@@ -114,42 +76,30 @@ export class CreateModel {
   }
 
   addScene(scene) {
-    if (this.modelCreate) {
-      setInterval(() => {
-        if (this.model) {
-          scene.add(this.model);
-          return 1;
-        }
-      }, 500);
-    } else {
-      console.log("Need create model");
-    }
+    setInterval(() => {
+      if (this.model) {
+        scene.add(this.model);
+        return 1;
+      }
+    }, 500);
   }
 
   setObjectLook(object) {
-    if (this.modelCreate) {
-      setInterval(() => {
-        if (this.model) {
-          object.lookAt(this.model.position);
-          return 1;
-        }
-      }, 500);
-    } else {
-      console.log("Need create model");
-    }
+    setInterval(() => {
+      if (this.model) {
+        object.lookAt(this.model.position);
+        return 1;
+      }
+    }, 500);
   }
 
   setOrbitControll(controll) {
-    if (this.modelCreate) {
-      setInterval(() => {
-        if (this.model) {
-          controll.target.copy(this.model.position);
-          return 1;
-        }
-      }, 500);
-    } else {
-      console.log("Need create model");
-    }
+    setInterval(() => {
+      if (this.model) {
+        controll.target.copy(this.model.position);
+        return 1;
+      }
+    }, 500);
   }
 }
 

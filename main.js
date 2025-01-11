@@ -21,6 +21,7 @@ import { LambertMaterial } from "./Engine/Objects/Materials/LambertMaterial.js";
 import { PhongMaterial } from "./Engine/Objects/Materials/PhongMaterial.js";
 import { PhysicalMaterial } from "./Engine/Objects/Materials/PhysicalMaterial.js";
 import { StandardMaterial } from "./Engine/Objects/Materials/StandardMaterial.js";
+import { CreateText } from "./Engine/OtherScripts/CreateText.js";
 
 // дефолтные переменные для рендера сцены и картинки + камера с ее управлением
 const visualEngine = DefaultViEnConfig();
@@ -34,55 +35,24 @@ const playerControlls = DefaultOrbitControll(visualEngine, camera, {
 
 const light1 = DirectionalLightCfg(
   scene,
-  { x: 0, y: 3, z: 10 },
-  { color: 0xffffff, intensity: 3 }
+  { x: 0, y: 1, z: 10 },
+  { color: 0xffffff, intensity: 1 }
 );
 AmbientLightCfg(scene, { intensity: 0.1 });
 
-let model = new CreateModel(null, { y: 2 }, null, {
+let model = new CreateModel(null, {}, null, {
   width: 0.1,
   height: 0.1,
   length: 0.1,
 });
 model.addScene(scene);
 model.setOrbitControll(playerControlls);
-//model.setObjectLook(camera);
+model.setObjectLook(light1);
 
 ShadowCfg(scene);
 
-let texture1 = new THREE.TextureLoader().load(
-  "./Engine/Assets/Textures/metalMap.jpg"
-);
-let texture3 = new THREE.TextureLoader().load(
-  "./Engine/Assets/Textures/metalRoughness.jpg"
-);
-
-// TextOnGeometry(
-//   "Hello World!",
-//   {
-//     size: 0.5,
-//     depth: 0.05,
-//     curveSegments: 15,
-//     path: "./Engine/Assets/Fonts/default.json",
-//   },
-//   {},
-//   (geometry) => {
-//     let textMesh = new THREE.Mesh(
-//       geometry,
-//       StandardMaterial(
-//         {
-//           color: 0xffffff,
-//           metalness: 1,
-//         },
-//         {}
-//       )
-//     );
-//     scene.add(textMesh);
-//     textMesh.position.set(-2.2, 0, 0);
-//     textMesh.castShadow = true;
-//     textMesh.receiveShadow = true;
-//   }
-// );
+let text = new CreateText("Hi world", "./Engine/Assets/Fonts/default.json");
+text.addScene(scene);
 
 const animate = (time) => {
   playerControlls.update();
