@@ -23,14 +23,15 @@
 **Example using the last function | Пример использование последний функций**
 
 ```javascript
-let model = new CreateModel(null, { y: 1 }, null, {
-  width: 0.1,
-  height: 0.1,
-  length: 0.1,
+ text + model.addToScene(scene) // add to actual scene (PROMISE)  
+ text + model.updatePosition(position) // Update position realTime (rotate, positions...)
+ text + model.switchingShadow(void) // switch shadow mode on\off  
+ text.updateText(text, visual, path); // Update text realTime (Font, style and text)
 });
 model.addScene(scene);
 model.setOrbitControll(playerControlls);
 model.setObjectLook(light);
 ```
 
-![image](https://github.com/user-attachments/assets/b877391b-a89c-4888-bc8a-df4d4f0f7028)
+![image](https://github.com/user-attachments/assets/ed097fbc-0ad2-43fa-a540-fa0ea2d09448)
+
