@@ -2,6 +2,42 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { LoadingProcess } from "./LoadingProcess.js";
 
+/**
+ * @typedef {Object} Position
+ * @property {number} x
+ * @property {number} y
+ * @property {number} z
+ */
+
+/**
+ * @typedef {Object} Rotate
+ * @property {number} x
+ * @property {number} y
+ * @property {number} z
+ */
+
+/**
+ * @typedef {Object} Scale
+ * @property {number} width
+ * @property {number} height
+ * @property {number} length
+ */
+
+/**
+ * @typedef {Object} Shadow
+ * @property {boolean} shadowCasting
+ * @property {boolean} shadowReceiving
+ */
+
+/**
+ * @class CreateModels
+ * @param {string} [path]
+ * @param {Position} [position]
+ * @param {Rotate} [rotate]
+ * @param {Scale} [scale]
+ * @param {Shadow} [shadow]
+ */
+
 export class CreateModel {
   model = null;
   modelCreate = false;

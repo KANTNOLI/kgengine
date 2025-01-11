@@ -15,7 +15,7 @@ import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
 import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
 
 import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
-import { TextOnGeometry } from "./Engine/OtherScripts/TextOnGeometry.js";
+//import { TextOnGeometry } from "./Engine/OtherScripts/CreateText.js";
 import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
 import { LambertMaterial } from "./Engine/Objects/Materials/LambertMaterial.js";
 import { PhongMaterial } from "./Engine/Objects/Materials/PhongMaterial.js";
@@ -57,32 +57,32 @@ let texture3 = new THREE.TextureLoader().load(
   "./Engine/Assets/Textures/metalRoughness.jpg"
 );
 
-TextOnGeometry(
-  "Hello World!",
-  {
-    size: 0.5,
-    depth: 0.05,
-    curveSegments: 15,
-    path: "./Engine/Assets/Fonts/default.json",
-  },
-  {},
-  (geometry) => {
-    let textMesh = new THREE.Mesh(
-      geometry,
-      StandardMaterial(
-        {
-          color: 0xffffff,
-          metalness: 1,
-        },
-        {}
-      )
-    );
-    scene.add(textMesh);
-    textMesh.position.set(-2.2, 0, 0);
-    textMesh.castShadow = true;
-    textMesh.receiveShadow = true;
-  }
-);
+// TextOnGeometry(
+//   "Hello World!",
+//   {
+//     size: 0.5,
+//     depth: 0.05,
+//     curveSegments: 15,
+//     path: "./Engine/Assets/Fonts/default.json",
+//   },
+//   {},
+//   (geometry) => {
+//     let textMesh = new THREE.Mesh(
+//       geometry,
+//       StandardMaterial(
+//         {
+//           color: 0xffffff,
+//           metalness: 1,
+//         },
+//         {}
+//       )
+//     );
+//     scene.add(textMesh);
+//     textMesh.position.set(-2.2, 0, 0);
+//     textMesh.castShadow = true;
+//     textMesh.receiveShadow = true;
+//   }
+// );
 
 const animate = (time) => {
   playerControlls.update();
