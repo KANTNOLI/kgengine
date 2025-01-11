@@ -62,9 +62,9 @@ ShadowCfg(scene);
 
 let text = new CreateText(
   "Hi world",
-  "./Engine/Assets/Fonts/default.json",
   null,
-  { x: -1.3, y: 0 },
+  "./Engine/Assets/Fonts/default.json",
+  { posX: -1.3, posY: 0 },
   {
     bevelEnabled: false,
   }
