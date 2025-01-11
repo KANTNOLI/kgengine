@@ -99,9 +99,10 @@ export class CreateText {
     }, 500);
   }
 
-  updateText(visual, path) {
+  updateText(text, visual, path) {
     const textLoad = new FontLoader();
 
+    this.text = text || this.text;
     this.path = path || this.path;
     this.visual = { ...this.visual, ...visual };
 
@@ -119,7 +120,7 @@ export class CreateText {
       });
 
       this.textObject.geometry.dispose();
-      this.textObject.geometry = newGeometry; 
+      this.textObject.geometry = newGeometry;
     });
   }
 

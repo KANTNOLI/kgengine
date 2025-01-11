@@ -71,6 +71,12 @@ let text = new CreateText(
 );
 text.addToScene(scene);
 
+let a = 0;
+setInterval(() => {
+  text.updateText(`test ${a}`);
+  a += 1;
+}, 100);
+
 const animate = (time) => {
   playerControlls.update();
   visualEngine.render(scene, camera);
