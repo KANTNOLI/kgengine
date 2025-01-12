@@ -54,7 +54,7 @@ export class CreateText {
     const textLoad = new FontLoader();
 
     textLoad.load(this.path, (font) => {
-      let geometry = new TextGeometry(this.text, {
+      let geometry = new TextGeometry(this.text, { 
         font: font,
         size: this.visual.size,
         depth: this.visual.depth,

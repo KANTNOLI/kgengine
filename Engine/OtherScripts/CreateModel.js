@@ -56,7 +56,7 @@ export class CreateModel {
 
         this.model.scale.set(
           this.position.scaleWidth,
-          this.position.scaleHeight,
+          this.position.scaleHeight, 
           this.position.scaleLength
         );
       } else {

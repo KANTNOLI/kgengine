@@ -62,7 +62,7 @@ ShadowCfg(scene);
 
 let text = new CreateText(
   "Hi world",
-  null,
+  null, 
   "./Engine/Assets/Fonts/default.json",
   { posX: -1.3, posY: 0 },
   {
