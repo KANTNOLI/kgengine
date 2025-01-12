@@ -115,54 +115,63 @@ export class CreateText {
     this.path = path || this.path;
     this.visual = { ...this.visual, ...visual };
 
-    textLoad.load(this.path, (font) => {
-      let newGeometry = new TextGeometry(this.text, {
-        font: font,
-        size: this.visual.size,
-        depth: this.visual.depth,
-        curveSegments: this.visual.curveSegments,
-        bevelEnabled: this.visual.bevelEnabled,
-        bevelThickness: this.visual.bevelThickness,
-        bevelSize: this.visual.bevelSize,
-        bevelOffset: this.visual.bevelOffset,
-        bevelSegments: this.visual.bevelSegments,
-      });
+    setInterval(() => {
+      if (this.textObject) {
+        textLoad.load(this.path, (font) => {
+          let newGeometry = new TextGeometry(this.text, {
+            font: font,
+            size: this.visual.size,
+            depth: this.visual.depth,
+            curveSegments: this.visual.curveSegments,
+            bevelEnabled: this.visual.bevelEnabled,
+            bevelThickness: this.visual.bevelThickness,
+            bevelSize: this.visual.bevelSize,
+            bevelOffset: this.visual.bevelOffset,
+            bevelSegments: this.visual.bevelSegments,
+          });
 
-      this.textObject.geometry.dispose();
-      this.textObject.geometry = newGeometry;
-    });
+          this.textObject.geometry.dispose();
+          this.textObject.geometry = newGeometry;
+        });
+        return 1;
+      }
+    }, 500);
   }
 
   updatePosition(position) {
     this.position = { ...this.position, ...position };
 
-    if (this.model) {
-      this.textObject.position.x = this.position.posX;
-      this.textObject.position.y = this.position.posY;
-      this.textObject.position.z = this.position.posZ;
+    setInterval(() => {
+      if (this.textObject) {
+        this.textObject.position.x = this.position.posX;
+        this.textObject.position.y = this.position.posY;
+        this.textObject.position.z = this.position.posZ;
 
-      this.textObject.rotation.x = DEGREE * this.position.rotateX;
-      this.textObject.rotation.y = DEGREE * this.position.rotateY;
-      this.textObject.rotation.z = DEGREE * this.position.rotateZ;
+        this.textObject.rotation.x = DEGREE * this.position.rotateX;
+        this.textObject.rotation.y = DEGREE * this.position.rotateY;
+        this.textObject.rotation.z = DEGREE * this.position.rotateZ;
 
-      this.textObject.scale.set(
-        this.position.scaleWidth,
-        this.position.scaleHeight,
-        this.position.scaleLength
-      );
-    } else {
-      console.log("this.model error! Check all data");
-    }
+        this.textObject.scale.set(
+          this.position.scaleWidth,
+          this.position.scaleHeight,
+          this.position.scaleLength
+        );
+        return 1;
+      }
+    }, 500);
   }
 
   switchingShadow() {
-    if (this.textObject) {
-      this.setNodeParam((node) => {
-        if (node.isMesh) {
-          this.textObject.castShadow = !this.shadow.shadowCasting;
-          this.textObject.receiveShadow = !this.shadow.shadowReceiving;
-        }
-      });
-    }
+    setInterval(() => {
+      if (this.textObject) {
+        this.setNodeParam((node) => {
+          if (node.isMesh) {
+            this.textObject.castShadow = !this.shadow.shadowCasting;
+            this.textObject.receiveShadow = !this.shadow.shadowReceiving;
+          }
+        });
+        return 1;
+      }
+    }, 500);
   }
 }

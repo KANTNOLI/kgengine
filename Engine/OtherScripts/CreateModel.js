@@ -93,33 +93,37 @@ export class CreateModel {
   updatePosition(position) {
     this.position = { ...this.position, ...position };
 
-    if (this.model) {
-      this.model.position.x = this.position.posX;
-      this.model.position.y = this.position.posY;
-      this.model.position.z = this.position.posZ;
+    setInterval(() => {
+      if (this.model) {
+        this.model.position.x = this.position.posX;
+        this.model.position.y = this.position.posY;
+        this.model.position.z = this.position.posZ;
 
-      this.model.rotation.x = DEGREE * this.position.rotateX;
-      this.model.rotation.y = DEGREE * this.position.rotateY;
-      this.model.rotation.z = DEGREE * this.position.rotateZ;
+        this.model.rotation.x = DEGREE * this.position.rotateX;
+        this.model.rotation.y = DEGREE * this.position.rotateY;
+        this.model.rotation.z = DEGREE * this.position.rotateZ;
 
-      this.model.scale.set(
-        this.position.scaleWidth,
-        this.position.scaleHeight,
-        this.position.scaleLength
-      );
-    } else {
-      console.log("this.model error! Check all data");
-    }
+        this.model.scale.set(
+          this.position.scaleWidth,
+          this.position.scaleHeight,
+          this.position.scaleLength
+        );
+        return 1;
+      }
+    }, 500);
   }
 
   switchingShadow() {
-    if (this.model) {
-      this.setNodeParam((node) => {
-        if (node.isMesh) {
-          node.castShadow = !this.shadow.shadowCasting;
-          node.receiveShadow = !this.shadow.shadowReceiving;
-        }
-      });
-    }
+    setInterval(() => {
+      if (this.model) {
+        this.setNodeParam((node) => {
+          if (node.isMesh) {
+            node.castShadow = !this.shadow.shadowCasting;
+            node.receiveShadow = !this.shadow.shadowReceiving;
+          }
+        });
+        return 1;
+      }
+    }, 500);
   }
 }
