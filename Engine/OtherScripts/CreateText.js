@@ -99,6 +99,15 @@ export class CreateText {
     }, 500);
   }
 
+  customEdit(callback) {
+    setInterval(() => {
+      if (this.textObject) {
+        callback(this.textObject);
+        return 1;
+      }
+    }, 500);
+  }
+
   updateText(text, visual, path) {
     const textLoad = new FontLoader();
 

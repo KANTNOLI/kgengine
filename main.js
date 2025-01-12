@@ -71,11 +71,9 @@ let text = new CreateText(
 );
 text.addToScene(scene);
 
-let a = 0;
-setInterval(() => {
-  text.updateText(`test ${a}`);
-  a += 1;
-}, 100);
+setTimeout(() => {
+  text.updateText("100");
+}, 1000);
 
 const animate = (time) => {
   playerControlls.update();

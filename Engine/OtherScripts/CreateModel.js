@@ -28,7 +28,7 @@ export class CreateModel {
     this.position = { ...this.position, ...position };
     this.shadow = { ...this.shadow, ...shadow };
 
-    console.log( this.position);
+    console.log(this.position);
 
     this.modelLoadig();
   }
@@ -76,6 +76,15 @@ export class CreateModel {
     setInterval(() => {
       if (this.model) {
         scene.add(this.model);
+        return 1;
+      }
+    }, 500);
+  }
+
+  customEdit(callback) {
+    setInterval(() => {
+      if (this.model) {
+        callback(this.model);
         return 1;
       }
     }, 500);
