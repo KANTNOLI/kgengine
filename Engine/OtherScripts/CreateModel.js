@@ -33,9 +33,21 @@ export class CreateModel {
     this.modelLoadig();
   }
 
+  intervalSnippet(callback) {
+    let waitLoading = setInterval(() => {
+      if (this.model) {
+        callback();
+        clearInterval(waitLoading);
+        console.log("inter model");
+      }
+    }, 1000);
+  }
+
   setNodeParam(callback) {
-    this.model.traverse((node) => {
-      callback(node);
+    this.intervalSnippet(() => {
+      this.model.traverse((node) => {
+        callback(node);
+      });
     });
   }
 
@@ -56,7 +68,7 @@ export class CreateModel {
 
         this.model.scale.set(
           this.position.scaleWidth,
-          this.position.scaleHeight, 
+          this.position.scaleHeight,
           this.position.scaleLength
         );
       } else {
@@ -73,57 +85,45 @@ export class CreateModel {
   }
 
   addToScene(scene) {
-    setInterval(() => {
-      if (this.model) {
-        scene.add(this.model);
-        return 1;
-      }
-    }, 500);
+    this.intervalSnippet(() => {
+      scene.add(this.model);
+    });
   }
 
   customEdit(callback) {
-    setInterval(() => {
-      if (this.model) {
-        callback(this.model);
-        return 1;
-      }
-    }, 500);
+    this.intervalSnippet(() => {
+      callback(this.model);
+    });
   }
 
   updatePosition(position) {
     this.position = { ...this.position, ...position };
 
-    setInterval(() => {
-      if (this.model) {
-        this.model.position.x = this.position.posX;
-        this.model.position.y = this.position.posY;
-        this.model.position.z = this.position.posZ;
+    this.intervalSnippet(() => {
+      this.model.position.x = this.position.posX;
+      this.model.position.y = this.position.posY;
+      this.model.position.z = this.position.posZ;
 
-        this.model.rotation.x = DEGREE * this.position.rotateX;
-        this.model.rotation.y = DEGREE * this.position.rotateY;
-        this.model.rotation.z = DEGREE * this.position.rotateZ;
+      this.model.rotation.x = DEGREE * this.position.rotateX;
+      this.model.rotation.y = DEGREE * this.position.rotateY;
+      this.model.rotation.z = DEGREE * this.position.rotateZ;
 
-        this.model.scale.set(
-          this.position.scaleWidth,
-          this.position.scaleHeight,
-          this.position.scaleLength
-        );
-        return 1;
-      }
-    }, 500);
+      this.model.scale.set(
+        this.position.scaleWidth,
+        this.position.scaleHeight,
+        this.position.scaleLength
+      );
+    });
   }
 
   switchingShadow() {
-    setInterval(() => {
-      if (this.model) {
-        this.setNodeParam((node) => {
-          if (node.isMesh) {
-            node.castShadow = !this.shadow.shadowCasting;
-            node.receiveShadow = !this.shadow.shadowReceiving;
-          }
-        });
-        return 1;
-      }
-    }, 500);
+    this.intervalSnippet(() => {
+      this.setNodeParam((node) => {
+        if (node.isMesh) {
+          node.castShadow = !this.shadow.shadowCasting;
+          node.receiveShadow = !this.shadow.shadowReceiving;
+        }
+      });
+    });
   }
 }

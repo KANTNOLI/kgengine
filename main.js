@@ -54,25 +54,19 @@ playerControlls.target.copy({
   z: model.position.posZ,
 });
 
-// setTimeout(() => {
-//   model.updatePosition({ posX: 0 });
-// }, 3000);
-
 ShadowCfg(scene);
 
 let text = new CreateText(
-  "Hi world",
-  null, 
-  "./Engine/Assets/Fonts/default.json",
+  "switchingShadow",
+  null,
+  null,
   { posX: -1.3, posY: 0 },
   {
     bevelEnabled: false,
   }
 );
 text.addToScene(scene);
-
-text.updateText("100");
-text.updateText("1020");
+text.updateText("switching shadow?");
 
 const animate = (time) => {
   playerControlls.update();

@@ -50,11 +50,21 @@ export class CreateText {
     this.textLoading();
   }
 
+  intervalSnippet(callback) {
+    let waitLoading = setInterval(() => {
+      if (this.textObject) {
+        callback();
+        clearInterval(waitLoading);
+        console.log("inter text");
+      }
+    }, 1000);
+  }
+
   textLoading() {
     const textLoad = new FontLoader();
 
     textLoad.load(this.path, (font) => {
-      let geometry = new TextGeometry(this.text, { 
+      let geometry = new TextGeometry(this.text, {
         font: font,
         size: this.visual.size,
         depth: this.visual.depth,
@@ -91,21 +101,15 @@ export class CreateText {
   }
 
   addToScene(scene) {
-    setInterval(() => {
-      if (this.textObject) {
-        scene.add(this.textObject);
-        return 1;
-      }
-    }, 500);
+    this.intervalSnippet(() => {
+      scene.add(this.textObject);
+    });
   }
 
   customEdit(callback) {
-    setInterval(() => {
-      if (this.textObject) {
-        callback(this.textObject);
-        return 1;
-      }
-    }, 500);
+    this.intervalSnippet(() => {
+      callback(this.textObject);
+    });
   }
 
   updateText(text, visual, path) {
@@ -115,63 +119,50 @@ export class CreateText {
     this.path = path || this.path;
     this.visual = { ...this.visual, ...visual };
 
-    setInterval(() => {
-      if (this.textObject) {
-        textLoad.load(this.path, (font) => {
-          let newGeometry = new TextGeometry(this.text, {
-            font: font,
-            size: this.visual.size,
-            depth: this.visual.depth,
-            curveSegments: this.visual.curveSegments,
-            bevelEnabled: this.visual.bevelEnabled,
-            bevelThickness: this.visual.bevelThickness,
-            bevelSize: this.visual.bevelSize,
-            bevelOffset: this.visual.bevelOffset,
-            bevelSegments: this.visual.bevelSegments,
-          });
-
-          this.textObject.geometry.dispose();
-          this.textObject.geometry = newGeometry;
+    this.intervalSnippet(() => {
+      textLoad.load(this.path, (font) => {
+        let newGeometry = new TextGeometry(this.text, {
+          font: font,
+          size: this.visual.size,
+          depth: this.visual.depth,
+          curveSegments: this.visual.curveSegments,
+          bevelEnabled: this.visual.bevelEnabled,
+          bevelThickness: this.visual.bevelThickness,
+          bevelSize: this.visual.bevelSize,
+          bevelOffset: this.visual.bevelOffset,
+          bevelSegments: this.visual.bevelSegments,
         });
-        return 1;
-      }
-    }, 500);
+
+        this.textObject.geometry.dispose();
+        this.textObject.geometry = newGeometry;
+      });
+    });
   }
 
   updatePosition(position) {
     this.position = { ...this.position, ...position };
 
-    setInterval(() => {
-      if (this.textObject) {
-        this.textObject.position.x = this.position.posX;
-        this.textObject.position.y = this.position.posY;
-        this.textObject.position.z = this.position.posZ;
+    this.intervalSnippet(() => {
+      this.textObject.position.x = this.position.posX;
+      this.textObject.position.y = this.position.posY;
+      this.textObject.position.z = this.position.posZ;
 
-        this.textObject.rotation.x = DEGREE * this.position.rotateX;
-        this.textObject.rotation.y = DEGREE * this.position.rotateY;
-        this.textObject.rotation.z = DEGREE * this.position.rotateZ;
+      this.textObject.rotation.x = DEGREE * this.position.rotateX;
+      this.textObject.rotation.y = DEGREE * this.position.rotateY;
+      this.textObject.rotation.z = DEGREE * this.position.rotateZ;
 
-        this.textObject.scale.set(
-          this.position.scaleWidth,
-          this.position.scaleHeight,
-          this.position.scaleLength
-        );
-        return 1;
-      }
-    }, 500);
+      this.textObject.scale.set(
+        this.position.scaleWidth,
+        this.position.scaleHeight,
+        this.position.scaleLength
+      );
+    });
   }
 
   switchingShadow() {
-    setInterval(() => {
-      if (this.textObject) {
-        this.setNodeParam((node) => {
-          if (node.isMesh) {
-            this.textObject.castShadow = !this.shadow.shadowCasting;
-            this.textObject.receiveShadow = !this.shadow.shadowReceiving;
-          }
-        });
-        return 1;
-      }
-    }, 500);
+    this.intervalSnippet(() => {
+      this.textObject.castShadow = this.shadow.shadowCasting;
+      this.textObject.receiveShadow = this.shadow.shadowReceiving;
+    });
   }
 }
