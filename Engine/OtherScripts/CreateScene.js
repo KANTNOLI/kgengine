@@ -10,7 +10,7 @@ export class CreateScene {
   constructor(visual) {
     this.visual = { ...this.visual, ...visual };
 
-    this.scene.background = this.visual.backgroundColor;
+    this.scene.background = new THREE.Color(this.visual.backgroundColor);
   }
 
   addScene(value) {

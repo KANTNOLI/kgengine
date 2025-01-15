@@ -14,7 +14,7 @@ import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
 
 // дефолтные переменные для рендера сцены и картинки + камера с ее управлением
 const visualEngine = DefaultViEnConfig();
-const scene = new CreateScene()
+const scene = new CreateScene({backgroundColor: 0x0b091f})
 const camera = DefaultCameraSettings({ x: 0, y: 0.5, z: 3 });
 const playerControlls = DefaultOrbitControll(visualEngine, camera, {
   min: 0,
