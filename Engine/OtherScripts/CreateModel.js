@@ -5,8 +5,8 @@ import { LoadingProcess } from "./LoadingProcess.js";
 const DEGREE = Math.PI / 180;
 
 export class CreateModel {
-  model = null;
-  path = "./Engine/Assets/Models/default.glb";
+  model;
+  path = "./Assets/Models/default.glb";
   position = {
     posX: 0,
     posY: 0,
@@ -28,8 +28,6 @@ export class CreateModel {
     this.position = { ...this.position, ...position };
     this.shadow = { ...this.shadow, ...shadow };
 
-    console.log(this.position);
-
     this.modelLoadig();
   }
 
@@ -38,7 +36,6 @@ export class CreateModel {
       if (this.model) {
         callback();
         clearInterval(waitLoading);
-        console.log("inter model");
       }
     }, 1000);
   }

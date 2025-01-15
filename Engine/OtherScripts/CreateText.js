@@ -55,7 +55,6 @@ export class CreateText {
       if (this.textObject) {
         callback();
         clearInterval(waitLoading);
-        console.log("inter text");
       }
     }, 1000);
   }
