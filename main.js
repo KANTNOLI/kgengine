@@ -28,7 +28,7 @@ let directLight = DirectionalLightCfg(
   { x: 0, y: 1, z: 10 },
   { color: 0xffffff, intensity: 1 }
 );
-directLight.castShadow = true
+directLight.castShadow = true;
 AmbientLightCfg(scene.scene, { intensity: 0.1 });
 ShadowCfg(scene.scene);
 
@@ -37,10 +37,11 @@ let texLoader = new THREE.TextureLoader();
 let test = new THREE.Mesh(
   SphereGeometry(1, { heightSegments: 350, widthSegments: 350 }),
   PhysicalMaterial(
-    {specularColor: 0xffffff,specularIntensity: 1},
+    { specularColor: 0xffffff, specularIntensity: 1 },
     {
       map: texLoader.load("./test.jpg"),
       normalMap: texLoader.load("./normal_map.jpg"),
+      normalScale: { x: 10 ,y: 10},
       specularMap: texLoader.load("./specular_map_1.jpg"),
     }
   )
@@ -65,7 +66,7 @@ text.addToScene(scene.scene);
 text.updateText("switching shadow?");
 
 const animate = (time) => {
-  test.rotation.y += 0.001
+  test.rotation.y += 0.001;
   playerControlls.update();
   visualEngine.render(scene.scene, camera);
   //CameraLimitSquare(camera, 5);

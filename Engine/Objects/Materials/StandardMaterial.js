@@ -19,7 +19,7 @@ export const StandardMaterial = (
     envMap: null,
     alphaMap: null,
     normalMap: null,
-    normalScale: 1,
+    normalScale: { x: 1, y: 1 },
     displacementMap: null,
     displacementScale: 0.1,
     combine: THREE.AddOperation,

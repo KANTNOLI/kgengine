@@ -17,7 +17,7 @@ export const PhongMaterial = (
     envMap: null,
     alphaMap: null,
     normalMap: null,
-    normalScale: 1,
+    normalScale: { x: 1, y: 1 },
     specularMap: null,
     displacementMap: null,
     displacementScale: 0.1,
