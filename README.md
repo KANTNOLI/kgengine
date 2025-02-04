@@ -1,3 +1,6 @@
+## ВРЕМЕННО БЕЗ РАЗРАБОКИ +- неделя
+
+
 ## To be honest, I do not even know how to describe this project. Ideally, I would like to implement a convenient engine or API for creating 3D websites or even games, rather even the latter
 ## Честно говоря, я даже не знаю как описать этот проект. В идеале мне бы хотелось реализовать удобный движок или апи для создания 3D сайтов или даже игр, скорее даже второе
 
