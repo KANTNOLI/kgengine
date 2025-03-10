@@ -8,32 +8,18 @@
 > На данный момент я описываю высокоуровнево  библиотеку Three.js, чтобы в дальнейшем мне было легче с ней работать для отрисовки чего либо, т.к. она сейчас самая актуальная для 3D отрисовки страницы и активно поддерживается! 
 
 # **Immediate plans | Ближайшие планы**
-- The most important thing is to make a normal description of the library. THREE.js **(The description makes it better)**
-- Preparation of assets for basic tests
-- Then there are even more ambitious plans, specifically to add other libraries! starting with object collisions, etc.
+- Rewriting a project on TS from JS
+- Perhaps a reworking of the class OOP
 
-- Самое главное, сделать нормальное описание библиотеки THREE.js **(Описание позволяет лучше)**
-- Заготовка ассетов для базовых тестов
-- Далее уже еще более масштабные планы, конкретно же добавлять другие библиотеки! начиная с столкновений объектов и т.д
+- Перезапись проекта на TS с JS 
+- Возможно, переработка классового  ООП
 
 ## Last update | Последнее обновление 
 
-> Right now, I'm busy with the most difficult thing so far, creating text and models in the scene. I've already managed this, but it's still far from ideal, the next step is to adjust the classes and combine logically set functions, for example, add a position change
+> Now the task is to rewrite the project from JS to TS, for convenient typing and further work + it will allow you to remember the project and make a plan for additions during this time
 
-> Cейчас я занят пока что с самым сложным, созданием текста и моделей в сцене. Я уже справился с этим, но до идеала ещё далеко, следующий шаг это корректировать классы и объединить логически гет сет функции, например добавить изменение позиции
+> Сейчас стоит задача перезаписи проекта с JS на TS, для удобной типизации и дальнейшей работы + позволит вспомнить проект и за это время составить план дополнений
 
 **Example using the last function | Пример использование последний функций**
 
-```javascript
- text + model.addToScene(scene) // add to actual scene (PROMISE)  
- text + model.updatePosition(position) // Update position realTime (rotate, positions...)
- text + model.switchingShadow(void) // switch shadow mode on\off  
- text.updateText(text, visual, path); // Update text realTime (Font, style and text)
-});
-model.addScene(scene);
-model.setOrbitControll(playerControlls);
-model.setObjectLook(light);
-```
-
-![image](https://github.com/user-attachments/assets/ed097fbc-0ad2-43fa-a540-fa0ea2d09448)
-
+![image](https://github.com/user-attachments/assets/f7a2b535-0170-4a48-b87b-c8e76b8683da)
