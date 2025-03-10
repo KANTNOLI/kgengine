@@ -129,13 +129,9 @@ export class CreateModel {
   }
 
   switchingShadow() {
-    this.intervalSnippet(() => {
-      this.setNodeParam((node) => {
-        if (node.isMesh) {
-          node.castShadow = !this.shadow.shadowCasting;
-          node.receiveShadow = !this.shadow.shadowReceiving;
-        }
-      });
+    this.setNodeParam((node) => {
+      node.castShadow = !this.shadow.shadowCasting;
+      node.receiveShadow = !this.shadow.shadowReceiving;
     });
   }
 }

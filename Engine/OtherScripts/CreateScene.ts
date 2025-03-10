@@ -1,23 +1,27 @@
 import * as THREE from "three";
 
+interface SceneVisual {
+  backgroundColor: number;
+}
+
 export class CreateScene {
   scene = new THREE.Scene();
   texture = null;
-  visual = {
+  visual: SceneVisual = {
     backgroundColor: 0x111111,
   };
 
-  constructor(visual) {
+  constructor(visual: SceneVisual) {
     this.visual = { ...this.visual, ...visual };
 
     this.scene.background = new THREE.Color(this.visual.backgroundColor);
   }
 
-  addScene(value) {
+  addScene(value: THREE.Object3D | THREE.Object3D[]) {
     let objArray = Array.isArray(value) ? value : [value];
 
-    objArray.map((obj, id) => {
-        this.scene.add(obj)
-    }) 
+    objArray.map((obj) => {
+      this.scene.add(obj);
+    });
   }
 }
