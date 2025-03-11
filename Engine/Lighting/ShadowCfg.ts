@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { ShadowsSize } from "./Lighting.interface.js";
+import { LightingTypes } from "../Constants.interface.js";
 
 export const ShadowCfg = (
   scene: THREE.Scene,
@@ -7,7 +8,7 @@ export const ShadowCfg = (
     width: 10,
     height: 10,
   }
-): THREE.Mesh => {
+): LightingTypes => {
   const shadowGeometry = new THREE.PlaneGeometry(size.width, size.height); // По сути тень это типо пласт
   const shadowMaterial = new THREE.ShadowMaterial({ opacity: 0.5 }); // Интенс тени
   const shadow = new THREE.Mesh(shadowGeometry, shadowMaterial); //Линкуем

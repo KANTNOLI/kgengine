@@ -11,7 +11,7 @@ export class CreateScene {
     backgroundColor: 0x111111,
   };
 
-  constructor(visual: SceneVisual) {
+  constructor(visual?: SceneVisual) {
     this.visual = { ...this.visual, ...visual };
 
     this.scene.background = new THREE.Color(this.visual.backgroundColor);

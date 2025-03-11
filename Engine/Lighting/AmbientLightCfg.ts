@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { LightingParams } from "./Lighting.interface.js";
+import { LightingTypes } from "../Constants.interface.js";
 
 export const AmbientLightCfg = (
   scene: THREE.Scene,
@@ -7,7 +8,7 @@ export const AmbientLightCfg = (
     color: 0xffffff,
     intensity: 1,
   }
-): THREE.AmbientLight => {
+): LightingTypes => {
   const light = new THREE.AmbientLight(params.color, params.intensity);
   scene.add(light);
 

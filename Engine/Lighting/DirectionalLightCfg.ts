@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { LightingParams, LightingShadows } from "./Lighting.interface.js";
-import { PositionObject3D } from "../Constants.interface.js";
+import { LightingTypes, PositionObject3D } from "../Constants.interface.js";
 
 export const DirectionalLightCfg = (
   scene: THREE.Scene,
@@ -18,7 +18,7 @@ export const DirectionalLightCfg = (
     bias: -0.000005,
     mapSize: 8192,
   }
-): THREE.DirectionalLight => {
+): LightingTypes => {
   const light = new THREE.DirectionalLight(params.color, params.intensity); // Белый свет с интенсивностью 1
 
   light.position.set(position.x, position.y, position.z);

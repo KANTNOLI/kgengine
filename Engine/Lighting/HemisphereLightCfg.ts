@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { LightingHemisphereParams } from "./Lighting.interface.js";
+import { LightingTypes } from "../Constants.interface.js";
 
 export const HemisphereLightCfg = (
   scene: THREE.Scene,
@@ -8,7 +9,7 @@ export const HemisphereLightCfg = (
     landColor: 0x80ff80,
     intensity: 1,
   }
-): THREE.HemisphereLight => {
+): LightingTypes => {
   const light = new THREE.HemisphereLight(
     params.skyColor,
     params.landColor,

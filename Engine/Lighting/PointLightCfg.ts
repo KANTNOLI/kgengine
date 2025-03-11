@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import { PositionObject3D } from "../Constants.interface.js";
+import { LightingTypes, PositionObject3D } from "../Constants.interface.js";
 import { LightingParams, LightingShadows } from "./Lighting.interface.js";
 
 export const PointLightCfg = (
@@ -20,7 +20,7 @@ export const PointLightCfg = (
     mapSize: 512,
   },
   decay: number = 2
-): THREE.PointLight => {
+): LightingTypes => {
   const light = new THREE.PointLight(
     params.color,
     params.intensity,

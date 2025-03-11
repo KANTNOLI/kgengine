@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { LightingLight, LightingShadows } from "./Lighting.interface.js";
-import { PositionObject3D } from "../Constants.interface.js";
+import { LightingTypes, PositionObject3D } from "../Constants.interface.js";
 
 export const SpotLightCfg = (
   scene: THREE.Scene,
@@ -24,7 +24,7 @@ export const SpotLightCfg = (
     bias: -0.0002,
     mapSize: 8192,
   }
-) => {
+): LightingTypes => {
   const light = new THREE.SpotLight(params.color, params.intensity); // Зеленый свет с интенсивностью 1
   light.position.set(position.x, position.y, position.z);
   scene.add(light);
