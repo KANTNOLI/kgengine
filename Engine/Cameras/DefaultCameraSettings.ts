@@ -1,8 +1,9 @@
 import * as THREE from "three";
-import { CameraPerspective, CameraPosition } from "./Cameras.interface.js";
+import { CameraPerspective } from "./Cameras.interface.js";
+import { PositionObject3D } from "../Constants.interface.js";
 
 export const DefaultCameraSettings = (
-  position: CameraPosition = { x: 0, y: 0.25, z: 1 },
+  position: PositionObject3D = { x: 0, y: 0.25, z: 1 },
   perspective: CameraPerspective = {
     fov: 75,
     aspect: window.innerWidth / window.innerHeight,
