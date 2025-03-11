@@ -1,6 +1,8 @@
+import * as THREE from "three";
+
 export const CameraLimitSquare = (
-  camera,
-  position = 10
+  camera: THREE.PerspectiveCamera,
+  position: number = 10
 ) => {
   camera.position.x = Math.max(
     -position,
@@ -14,6 +16,6 @@ export const CameraLimitSquare = (
     -position,
     Math.min(position, camera.position.z)
   );
-  
+
   return camera;
 };
