@@ -1,6 +1,6 @@
 import * as THREE from "three";
 import { GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
-import { ModelPosition, ModelShadow } from "./OtScrInterfaces.interface.js";
+import { ModelPosition, ModelShadow } from "./OtherScripts.interface.js";
 
 const DEGREE = Math.PI / 180;
 
@@ -64,15 +64,18 @@ export class CreateModel {
         this.model.position.y = this.position.posY;
         this.model.position.z = this.position.posZ;
 
-        this.model.rotation.x = this.position.rotateX
-          ? DEGREE * this.position.rotateX
-          : 0;
-        this.model.rotation.y = this.position.rotateY
-          ? DEGREE * this.position.rotateY
-          : 0;
-        this.model.rotation.z = this.position.rotateZ
-          ? DEGREE * this.position.rotateZ
-          : 0;
+        this.model.rotation.x =
+          this.position.rotateX != undefined
+            ? DEGREE * this.position.rotateX
+            : 0;
+        this.model.rotation.y =
+          this.position.rotateY != undefined
+            ? DEGREE * this.position.rotateY
+            : 0;
+        this.model.rotation.z =
+          this.position.rotateZ != undefined
+            ? DEGREE * this.position.rotateZ
+            : 0;
 
         this.model.scale.set(
           this.position.scaleWidth || 1,
@@ -84,8 +87,14 @@ export class CreateModel {
       }
 
       this.setNodeParam((node: THREE.Mesh) => {
-        node.castShadow = this.shadow.shadowCasting;
-        node.receiveShadow = this.shadow.shadowReceiving;
+        node.castShadow =
+          this.shadow.shadowCasting != undefined
+            ? this.shadow.shadowCasting
+            : true;
+        node.receiveShadow =
+          this.shadow.shadowReceiving != undefined
+            ? this.shadow.shadowReceiving
+            : true;
       });
     });
   }
@@ -110,15 +119,12 @@ export class CreateModel {
       this.model.position.y = this.position.posY;
       this.model.position.z = this.position.posZ;
 
-      this.model.rotation.x = this.position.rotateX
-        ? DEGREE * this.position.rotateX
-        : 0;
-      this.model.rotation.y = this.position.rotateY
-        ? DEGREE * this.position.rotateY
-        : 0;
-      this.model.rotation.z = this.position.rotateZ
-        ? DEGREE * this.position.rotateZ
-        : 0;
+      this.model.rotation.x =
+        this.position.rotateX != undefined ? DEGREE * this.position.rotateX : 0;
+      this.model.rotation.y =
+        this.position.rotateY != undefined ? DEGREE * this.position.rotateY : 0;
+      this.model.rotation.z =
+        this.position.rotateZ != undefined ? DEGREE * this.position.rotateZ : 0;
 
       this.model.scale.set(
         this.position.scaleWidth || 1,
@@ -129,13 +135,9 @@ export class CreateModel {
   }
 
   switchingShadow() {
-    this.intervalSnippet(() => {
-      this.setNodeParam((node) => {
-        if (node.isMesh) {
-          node.castShadow = !this.shadow.shadowCasting;
-          node.receiveShadow = !this.shadow.shadowReceiving;
-        }
-      });
+    this.setNodeParam((node) => {
+      node.castShadow = !this.shadow.shadowCasting;
+      node.receiveShadow = !this.shadow.shadowReceiving;
     });
   }
 }

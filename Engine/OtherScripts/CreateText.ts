@@ -2,18 +2,25 @@
 import * as THREE from "three";
 import { FontLoader } from "three/examples/jsm/loaders/FontLoader.js";
 import { TextGeometry } from "three/examples/jsm/geometries/TextGeometry.js";
-import { StandardMaterial } from "../Objects/Materials/StandardMaterial";
+import { StandardMaterial } from "../Objects/Materials/StandardMaterial.js";
 
-const DEGREE = Math.PI / 180;
+import {
+  TextPosition,
+  TextShadow,
+  TextVisual,
+} from "./OtherScripts.interface.js";
+
+const DEGREE: number = Math.PI / 180;
 
 export class CreateText {
-  textObject = null;
-  text = "Hello World";
-  material = StandardMaterial({
+  textObject: THREE.Mesh = new THREE.Mesh();
+  text: string = "Hello World";
+  path: string =
+    "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json";
+  material: any = StandardMaterial({
     color: 0xffffff,
   });
-  path = "https://threejs.org/examples/fonts/helvetiker_regular.typeface.json";
-  position = {
+  position: TextPosition = {
     posX: 0,
     posY: 0,
     posZ: 0,
@@ -24,7 +31,7 @@ export class CreateText {
     scaleHeight: 1,
     scaleLength: 1,
   };
-  visual = {
+  visual: TextVisual = {
     size: 0.5,
     depth: 0.2,
     curveSegments: 12,
@@ -34,12 +41,19 @@ export class CreateText {
     bevelOffset: 0,
     bevelSegments: 2,
   };
-  shadow = {
+  shadow: TextShadow = {
     shadowCasting: true,
     shadowReceiving: true,
   };
 
-  constructor(text, material, path, position, visual, shadow) {
+  constructor(
+    text: string,
+    material: THREE.MeshStandardMaterial,
+    path: string,
+    position: TextPosition,
+    visual: TextVisual,
+    shadow: TextShadow
+  ) {
     this.text = text || this.text;
     this.material = material || this.material;
     this.path = path || this.path;
@@ -50,7 +64,7 @@ export class CreateText {
     this.textLoading();
   }
 
-  intervalSnippet(callback) {
+  intervalSnippet(callback: () => any) {
     let waitLoading = setInterval(() => {
       if (this.textObject) {
         callback();
@@ -76,42 +90,57 @@ export class CreateText {
       });
 
       this.textObject = new THREE.Mesh(geometry, this.material);
-      this.textObject.castShadow = this.shadow.shadowCasting;
-      this.textObject.receiveShadow = this.shadow.shadowReceiving;
+      this.textObject.castShadow =
+        this.shadow.shadowCasting != undefined
+          ? this.shadow.shadowCasting
+          : true;
+      this.textObject.receiveShadow =
+        this.shadow.shadowReceiving != undefined
+          ? this.shadow.shadowReceiving
+          : true;
 
       if (this.textObject) {
         this.textObject.position.x = this.position.posX;
         this.textObject.position.y = this.position.posY;
         this.textObject.position.z = this.position.posZ;
 
-        this.textObject.rotation.x = DEGREE * this.position.rotateX;
-        this.textObject.rotation.y = DEGREE * this.position.rotateY;
-        this.textObject.rotation.z = DEGREE * this.position.rotateZ;
+        this.textObject.rotation.x =
+          this.position.rotateX != undefined
+            ? DEGREE * this.position.rotateX
+            : 0;
+        this.textObject.rotation.y =
+          this.position.rotateY != undefined
+            ? DEGREE * this.position.rotateY
+            : 0;
+        this.textObject.rotation.z =
+          this.position.rotateZ != undefined
+            ? DEGREE * this.position.rotateZ
+            : 0;
 
         this.textObject.scale.set(
-          this.position.scaleWidth,
-          this.position.scaleHeight,
-          this.position.scaleLength
+          this.position.scaleWidth ? this.position.scaleWidth : 0,
+          this.position.scaleHeight ? this.position.scaleHeight : 0,
+          this.position.scaleLength ? this.position.scaleLength : 0
         );
       } else {
-        console.log("this.model error! Check all data");
+        console.error(`textLoading is dead! \n this.textObject -> false`);
       }
     });
   }
 
-  addToScene(scene) {
+  addToScene(scene: THREE.Scene) {
     this.intervalSnippet(() => {
       scene.add(this.textObject);
     });
   }
 
-  customEdit(callback) {
+  customEdit(callback: (value: THREE.Object3D) => any) {
     this.intervalSnippet(() => {
       callback(this.textObject);
     });
   }
 
-  updateText(text, visual, path) {
+  updateText(text: string, visual: TextVisual, path: string) {
     const textLoad = new FontLoader();
 
     this.text = text || this.text;
@@ -138,7 +167,7 @@ export class CreateText {
     });
   }
 
-  updatePosition(position) {
+  updatePosition(position: TextPosition) {
     this.position = { ...this.position, ...position };
 
     this.intervalSnippet(() => {
@@ -146,22 +175,25 @@ export class CreateText {
       this.textObject.position.y = this.position.posY;
       this.textObject.position.z = this.position.posZ;
 
-      this.textObject.rotation.x = DEGREE * this.position.rotateX;
-      this.textObject.rotation.y = DEGREE * this.position.rotateY;
-      this.textObject.rotation.z = DEGREE * this.position.rotateZ;
+      this.textObject.rotation.x =
+        this.position.rotateX != undefined ? DEGREE * this.position.rotateX : 0;
+      this.textObject.rotation.y =
+        this.position.rotateY != undefined ? DEGREE * this.position.rotateY : 0;
+      this.textObject.rotation.z =
+        this.position.rotateZ != undefined ? DEGREE * this.position.rotateZ : 0;
 
       this.textObject.scale.set(
-        this.position.scaleWidth,
-        this.position.scaleHeight,
-        this.position.scaleLength
+        this.position.scaleWidth ? this.position.scaleWidth : 0,
+        this.position.scaleHeight ? this.position.scaleHeight : 0,
+        this.position.scaleLength ? this.position.scaleLength : 0
       );
     });
   }
 
   switchingShadow() {
     this.intervalSnippet(() => {
-      this.textObject.castShadow = this.shadow.shadowCasting;
-      this.textObject.receiveShadow = this.shadow.shadowReceiving;
+      this.textObject.castShadow = !this.shadow.shadowCasting;
+      this.textObject.receiveShadow = !this.shadow.shadowReceiving;
     });
   }
 }

@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import DefaultViEnInterface from "./ViEnInterfaces.interface.js";
+import VisualEngineQuality from "./VisualEngine.interface.js";
 
 //antialias - Сглаживание
 //precision - точность расчётов шейдеров  / lowp   mediump   highp
@@ -7,7 +7,7 @@ import DefaultViEnInterface from "./ViEnInterfaces.interface.js";
 //depth - буфер глубины
 
 export const DefaultViEnConfig = (
-  quality: DefaultViEnInterface = {
+  quality: VisualEngineQuality = {
     antialias: true,
     precision: "mediump",
     powerPrfrnc: "default",
@@ -17,17 +17,20 @@ export const DefaultViEnConfig = (
   }
 ): THREE.WebGLRenderer => {
   const renderer = new THREE.WebGLRenderer({
-    antialias: quality.antialias,
-    precision: quality.precision,
-    powerPreference: quality.powerPrfrnc as WebGLPowerPreference,
-    depth: quality.depth,
+    antialias: quality.antialias != undefined ? quality.antialias : true,
+    precision: quality.precision != undefined ? quality.precision : "mediump",
+    powerPreference:
+      quality.powerPrfrnc != undefined
+        ? (quality.powerPrfrnc as WebGLPowerPreference)
+        : "default",
+    depth: quality.depth != undefined ? quality.antialias : true,
   });
 
   renderer.setSize(window.innerWidth, window.innerHeight);
 
-  if (quality.shadowOn) {
+  if (quality.shadowOn != undefined ? quality.shadowOn : true) {
     renderer.shadowMap.enabled = true;
-    switch (quality.shadowMap) {
+    switch (quality.shadowMap != undefined ? quality.shadowMap : "low") {
       case "low":
         renderer.shadowMap.type = THREE.BasicShadowMap;
         break;
