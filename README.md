@@ -8,11 +8,14 @@
 > На данный момент я описываю высокоуровнево  библиотеку Three.js, чтобы в дальнейшем мне было легче с ней работать для отрисовки чего либо, т.к. она сейчас самая актуальная для 3D отрисовки страницы и активно поддерживается! 
 
 # **Immediate plans | Ближайшие планы**
-- Rewriting a project on TS from JS
-- Perhaps a reworking of the class OOP
+- Rewriting a project on TS from JS +-
+- Perhaps a reworking of the class OOP +
+- Add generalized interfaces for ease of operation, for example, generalization of light in a scene + generics
+  
 
-- Перезапись проекта на TS с JS 
-- Возможно, переработка классового  ООП
+- Перезапись проекта на TS с JS +-
+- Возможно, переработка классового ООП +
+- Добавить обобщенные интерфейсы для удобства работы, например обобщения света в сцене + джинерики 
 
 ## Last update | Последнее обновление 
 
