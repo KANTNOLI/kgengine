@@ -12,11 +12,11 @@ interface MaterialBasicParams {
 
 interface MaterialOtherParams {
   fog?: boolean;
-  map?: THREE.Texture | null;
-  envMap?: THREE.Texture | null;
-  alphaMap?: THREE.Texture | null;
-  normalMap?: THREE.Texture | null;
-  displacementMap?: THREE.Texture | null;
+  map?: THREE.Texture | undefined;
+  envMap?: THREE.Texture | undefined;
+  alphaMap?: THREE.Texture | undefined;
+  normalMap?: THREE.Texture | undefined;
+  displacementMap?: THREE.Texture | undefined;
   displacementScale?: number;
   combine?: THREE.Combine;
   reflectivity?: number;
@@ -40,9 +40,9 @@ export const BasicMaterial = (
   },
   CustomParams: MaterialOtherParams = {
     fog: true,
-    map: null,
-    envMap: null,
-    alphaMap: null,
+    map: undefined,
+    envMap: undefined,
+    alphaMap: undefined,
     combine: THREE.AddOperation,
     reflectivity: 0.5,
     refractionRatio: 0.5,

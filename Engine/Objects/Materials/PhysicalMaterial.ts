@@ -116,7 +116,8 @@ export const PhysicalMaterial = (
     clearcoat: basicParams.clearcoat,
     clearcoatRoughness: basicParams.clearcoatRoughness,
     visible: basicParams.visible,
-    transparent: basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
+    transparent:
+      basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
     opacity: basicParams.opacity,
 
     side: CustomParams.side,

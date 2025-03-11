@@ -83,7 +83,8 @@ export const StandardMaterial = (
     metalnessMap: basicParams.metalnessMap,
 
     visible: basicParams.visible,
-    transparent: basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
+    transparent:
+      basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
     opacity: basicParams.opacity,
 
     side: CustomParams.side,

@@ -64,7 +64,8 @@ export const LambertMaterial = (
   new THREE.MeshLambertMaterial({
     color: basicParams.color,
     visible: basicParams.visible,
-    transparent: basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
+    transparent:
+      basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
     opacity: basicParams.opacity,
 
     side: CustomParams.side,

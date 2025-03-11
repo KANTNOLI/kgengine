@@ -78,7 +78,8 @@ export const PhongMaterial = (
     specular: basicParams.specular,
     shininess: basicParams.shininess,
     visible: basicParams.visible,
-    transparent: basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
+    transparent:
+      basicParams.opacity !== undefined ? basicParams.opacity < 1 : true,
     opacity: basicParams.opacity,
 
     side: CustomParams.side,
