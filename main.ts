@@ -4,7 +4,7 @@ import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
 import { DefaultViEnConfig } from "./Engine/VisualEngineConfigs/DefaultViEnConfig.js";
 import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
 import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
-import CreateAnimation from "./Engine/OtherScripts/CreateAnimation.js";
+import CreateAnimation from "./Engine/OtherScripts/CreateAnimationMove.js";
 
 const scene = new CreateScene();
 const camera = DefaultCameraSettings({ x: -2, y: 2, z: 0 });
