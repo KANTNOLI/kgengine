@@ -23,6 +23,24 @@
 
 > Сейчас стоит задача перезаписи проекта с JS на TS, для удобной типизации и дальнейшей работы + позволит вспомнить проект и за это время составить план дополнений
 
-** | **
+** Default starting **
 
-![image](https://github.com/user-attachments/assets/f7a2b535-0170-4a48-b87b-c8e76b8683da)
+``` javascript
+import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
+import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
+import { DefaultViEnConfig } from "./Engine/VisualEngineConfigs/DefaultViEnConfig.js";
+
+const scene = new CreateScene();
+const camera = DefaultCameraSettings();
+
+const renderer = DefaultViEnConfig();
+
+document.body.appendChild(renderer.domElement);
+
+const animate = () => {
+  renderer.render(scene.scene, camera);
+  requestAnimationFrame(animate);
+};
+
+animate()
+```
