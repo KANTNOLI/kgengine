@@ -1,46 +1,20 @@
-## The project is back in force
+## The project is in its prime)
 
-## To be honest, I do not even know how to describe this project. Ideally, I would like to implement a convenient engine or API for creating 3D websites or even games, rather even the latter
-## Честно говоря, я даже не знаю как описать этот проект. В идеале мне бы хотелось реализовать удобный движок или апи для создания 3D сайтов или даже игр, скорее даже второе
+### This project was created for the convenience of working with 3D elements. The project is based on THREE.js is a more generalized and simpler version to work with. It has snippets, ready-made components, and default values that don't need to be specified every time.
+### Этот проект создан для удобства работы с 3Д элементами. Проект работает на базе THREE.js и представляет из себя более обобщенную и простую версию для работы. В ней есть сниппеты, готовые компоненты и значения по умолчанию, которые не нужно каждый раз прописывать. 
 
-> At the moment, I am describing the Three library at a high level.js, so that in the future it would be easier for me to work with it to draw something, because it is now the most relevant for 3D page rendering and is actively supported!
+###  **Plan**
+- Create a WIKI page with full documentation (Создать WIKI страницу полной документацией)
+- Make module tests (Сделать тесты модулей)
 
-> На данный момент я описываю высокоуровнево  библиотеку Three.js, чтобы в дальнейшем мне было легче с ней работать для отрисовки чего либо, т.к. она сейчас самая актуальная для 3D отрисовки страницы и активно поддерживается! 
+### Last Update
+Animation creation functions have been added. One of them is custom, with any setting you want, and the second is specifically with the movement of 3D objects on the stage.
 
-# **Immediate plans | Ближайшие планы**
-- Rewriting a project on TS from JS +-
-- Perhaps a reworking of the class OOP +
-- Add generalized interfaces for ease of operation, for example, generalization of light in a scene + generics
-  
+Были добавлены функции для создания анимации. Один из который кастомный, с вашей любой настройкой, а второй с конкретно передвижением объектов Object 3D на сцене
 
-- Перезапись проекта на TS с JS +-
-- Возможно, переработка классового ООП +
-- Добавить обобщенные интерфейсы для удобства работы, например обобщения света в сцене + джинерики 
 
-## Last update | Последнее обновление 
-
-> Now the task is to rewrite the project from JS to TS, for convenient typing and further work + it will allow you to remember the project and make a plan for additions during this time
-
-> Сейчас стоит задача перезаписи проекта с JS на TS, для удобной типизации и дальнейшей работы + позволит вспомнить проект и за это время составить план дополнений
-
-** Default starting **
-
-``` javascript
-import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
-import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
-import { DefaultViEnConfig } from "./Engine/VisualEngineConfigs/DefaultViEnConfig.js";
-
-const scene = new CreateScene();
-const camera = DefaultCameraSettings();
-
-const renderer = DefaultViEnConfig();
-
-document.body.appendChild(renderer.domElement);
-
-const animate = () => {
-  renderer.render(scene.scene, camera);
-  requestAnimationFrame(animate);
-};
-
-animate()
-```
+> **NPM using** -> https://www.npmjs.com/package/kgengine
+> 
+> **WIKI documentation** -> https://github.com/KANTNOLI/KGEngine/wiki (Process)
+> 
+> **If you have any ideas** -> https://t.me/KANTNOLI
