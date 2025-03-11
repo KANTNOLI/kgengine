@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { MaterialTypes } from "../../Constants.interface.js";
 
 // добавть куб окружения и дефолт текстуры по типу дерева envMap + map
 // alphaMap - места прозрч черные проз белые норм png
@@ -55,7 +56,7 @@ export const BasicMaterial = (
     depthTest: true,
     depthWrite: true,
   }
-) =>
+): MaterialTypes =>
   new THREE.MeshBasicMaterial({
     color: basicParams.color,
     visible: basicParams.visible,

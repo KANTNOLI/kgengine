@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { MaterialTypes } from "../../Constants.interface.js";
 
 interface MaterialBasicParams {
   color?: number;
@@ -94,7 +95,7 @@ export const PhysicalMaterial = (
     depthTest: true,
     depthWrite: true,
   }
-) => {
+): MaterialTypes => {
   return new THREE.MeshPhysicalMaterial({
     color: basicParams.color,
     emissive: basicParams.emissive,

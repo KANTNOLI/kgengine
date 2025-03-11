@@ -12,3 +12,10 @@ export type LightingTypes =
   | THREE.PointLight
   | THREE.SpotLight
   | THREE.Mesh;
+
+export type MaterialTypes =
+  | THREE.MeshStandardMaterial
+  | THREE.MeshPhysicalMaterial
+  | THREE.MeshPhongMaterial
+  | THREE.MeshLambertMaterial
+  | THREE.MeshBasicMaterial;

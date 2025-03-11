@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { MaterialTypes } from "../../Constants.interface.js";
 
 interface MaterialBasicParams {
   color?: number;
@@ -60,7 +61,7 @@ export const LambertMaterial = (
     depthTest: true,
     depthWrite: true,
   }
-) =>
+): MaterialTypes =>
   new THREE.MeshLambertMaterial({
     color: basicParams.color,
     visible: basicParams.visible,
