@@ -6,8 +6,8 @@
 ### Этот проект создан для удобства работы с 3Д элементами. Проект работает на базе THREE.js и представляет из себя более обобщенную и простую версию для работы. В ней есть сниппеты, готовые компоненты и значения по умолчанию, которые не нужно каждый раз прописывать. 
 
 ###  **Plan**
-- Create a WIKI page with full documentation (Создать WIKI страницу полной документацией)
-- Make module tests (Сделать тесты модулей)
+- Adding work with smoke and particles in a scene (Добавление работы с дымом и частицами в сцене)
+- Documentation
 
 ### Last Update
 Animation creation functions have been added. One of them is custom, with any setting you want, and the second is specifically with the movement of 3D objects on the stage.
