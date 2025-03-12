@@ -25,6 +25,7 @@ const CreateAnimation = (
     callback(progress);
     if (progress >= 1) {
       clearInterval(move);
+      return true;
     }
   }, cycle);
 };
