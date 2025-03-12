@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface TubeParams {
   path?: THREE.Curve<THREE.Vector3>;
@@ -16,7 +17,7 @@ export const TubeGeometry = (
     radialSegments: 8,
     closed: false,
   }
-): THREE.TubeGeometry => {
+):GeometryTypes => {
   const {
     path = new THREE.CatmullRomCurve3([new THREE.Vector3(0, 0, 0), new THREE.Vector3(1, 1, 1)]),
     tubularSegments = 64,

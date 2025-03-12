@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface IcosahedronParams {
   radius?: number;
@@ -10,7 +11,7 @@ export const IcosahedronGeometry = (
     radius: 1,
     detail: 0,
   }
-): THREE.IcosahedronGeometry => {
+):GeometryTypes  => {
   const { radius = 1, detail = 0 } = params;
 
   return new THREE.IcosahedronGeometry(radius, detail);

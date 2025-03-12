@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface LathePhi {
   phiStart?: number;
@@ -12,7 +13,7 @@ export const LatheGeometry = (
     phiStart: 0,
     phiLength: Math.PI * 2,
   }
-): THREE.LatheGeometry => {
+):GeometryTypes  => {
   const { phiStart = 0, phiLength = Math.PI * 2 } = phi;
 
   return new THREE.LatheGeometry(points, segments, phiStart, phiLength);

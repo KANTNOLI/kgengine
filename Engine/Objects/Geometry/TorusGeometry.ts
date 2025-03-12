@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface TorusSegments {
   radialSegments?: number;
@@ -13,7 +14,7 @@ export const TorusGeometry = (
     tubularSegments: 100,
   },
   arc: number = Math.PI * 2
-): THREE.TorusGeometry => {
+):GeometryTypes => {
   const { radialSegments = 16, tubularSegments = 100 } = segments;
 
   return new THREE.TorusGeometry(

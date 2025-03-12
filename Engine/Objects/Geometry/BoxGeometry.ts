@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface BoxSize {
   width?: number;
@@ -23,7 +24,7 @@ export const BoxGeometry = (
     heightSegments: 1,
     depthSegments: 1,
   }
-) => {
+):GeometryTypes => {
   const { width = 1, height = 1, depth = 1 } = size;
   const { widthSegments = 1, heightSegments = 1, depthSegments = 1 } = segments;
 

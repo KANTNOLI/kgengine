@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface RingTheta {
   thetaStart?: number;
@@ -14,7 +15,7 @@ export const RingGeometry = (
     thetaStart: 0,
     thetaLength: Math.PI * 2,
   }
-): THREE.RingGeometry => {
+):GeometryTypes => {
   const { thetaStart = 0, thetaLength = Math.PI * 2 } = theta;
 
   return new THREE.RingGeometry(

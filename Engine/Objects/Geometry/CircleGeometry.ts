@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface CircleSegments {
   segments?: number;
@@ -18,7 +19,7 @@ export const CircleGeometry = (
     thetaStart: 0,
     thetaLength: Math.PI * 2,
   }
-): THREE.CircleGeometry => {
+): GeometryTypes   => {
   return new THREE.CircleGeometry(
     radius,
     segments.segments ?? 32, // Проверка на значение, если не передано

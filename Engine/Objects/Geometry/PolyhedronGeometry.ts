@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface PolyhedronParams {
   vertices?: number[];
@@ -14,7 +15,7 @@ export const PolyhedronGeometry = (
     radius: 1,
     detail: 0,
   }
-): THREE.PolyhedronGeometry => {
+):GeometryTypes  => {
   const {
     vertices = [0, 0, 0, 1, 1, 1, -1, -1, -1],
     indices = [0, 1, 2, 1, 2, 3],

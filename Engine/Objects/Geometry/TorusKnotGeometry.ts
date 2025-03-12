@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface TorusKnotSegments {
   tubularSegments?: number;
@@ -14,7 +15,7 @@ export const TorusKnotGeometry = (
   },
   p: number = 2,
   q: number = 3
-): THREE.TorusKnotGeometry => {
+):GeometryTypes => {
   const { tubularSegments = 100, radialSegments = 16 } = segments;
 
   return new THREE.TorusKnotGeometry(

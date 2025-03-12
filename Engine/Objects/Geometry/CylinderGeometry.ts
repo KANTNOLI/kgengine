@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface CylinderRadius {
   radiusTop?: number;
@@ -30,7 +31,7 @@ export const CylinderGeometry = (
     thetaStart: 0,
     thetaLength: Math.PI * 2,
   }
-): THREE.CylinderGeometry => {
+):GeometryTypes  => {
   const { radiusTop = 1, radiusBottom = 1 } = radius;
   const { radialSegments = 32, heightSegments = 1 } = segments;
   const { thetaStart = 0, thetaLength = Math.PI * 2 } = theta;

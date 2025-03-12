@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface ExtrudeOptions {
   depth?: number;
@@ -19,6 +20,6 @@ export const ExtrudeGeometry = (
     bevelOffset: 0,
     bevelSegments: 3,
   }
-): THREE.ExtrudeGeometry => {
+):GeometryTypes  => {
   return new THREE.ExtrudeGeometry(shape, options);
 };

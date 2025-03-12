@@ -13,6 +13,26 @@ export type LightingTypes =
   | THREE.SpotLight
   | THREE.Mesh;
 
+export type GeometryTypes =
+  | THREE.BoxGeometry
+  | THREE.CircleGeometry
+  | THREE.ConeGeometry
+  | THREE.CylinderGeometry
+  | THREE.DodecahedronGeometry
+  | THREE.ExtrudeGeometry
+  | THREE.IcosahedronGeometry
+  | THREE.LatheGeometry
+  | THREE.OctahedronGeometry
+  | THREE.PlaneGeometry
+  | THREE.PolyhedronGeometry
+  | THREE.RingGeometry
+  | THREE.ShapeGeometry
+  | THREE.SphereGeometry
+  | THREE.TetrahedronGeometry
+  | THREE.TorusGeometry
+  | THREE.TorusKnotGeometry
+  | THREE.TubeGeometry;
+
 export type MaterialTypes =
   | THREE.MeshStandardMaterial
   | THREE.MeshPhysicalMaterial

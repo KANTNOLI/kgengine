@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface PlaneSize {
   width?: number;
@@ -19,7 +20,7 @@ export const PlaneGeometry = (
     widthSegments: 1,
     heightSegments: 1,
   }
-): THREE.PlaneGeometry => {
+):GeometryTypes  => {
   const { width = 1, height = 1 } = size;
   const { widthSegments = 1, heightSegments = 1 } = segments;
 

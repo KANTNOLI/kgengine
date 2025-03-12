@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface ShapeParams {
   shape?: THREE.Shape;
@@ -10,7 +11,7 @@ export const ShapeGeometry = (
     shape: new THREE.Shape(),
     curveSegments: 12,
   }
-): THREE.ShapeGeometry => {
+):GeometryTypes => {
   const { shape = new THREE.Shape(), curveSegments = 12 } = params;
 
   return new THREE.ShapeGeometry(shape, curveSegments);

@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface ConeTheta {
   thetaStart?: number;
@@ -15,7 +16,7 @@ export const ConeGeometry = (
     thetaStart: 0,
     thetaLength: Math.PI * 2,
   }
-): THREE.ConeGeometry => {
+):GeometryTypes  => {
   const { thetaStart = 0, thetaLength = Math.PI * 2 } = theta;
 
   return new THREE.ConeGeometry(

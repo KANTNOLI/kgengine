@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface SphereSegments {
   widthSegments?: number;
@@ -29,7 +30,7 @@ export const SphereGeometry = (
     thetaStart: 0,
     thetaLength: Math.PI,
   }
-): THREE.SphereGeometry => {
+):GeometryTypes => {
   const { widthSegments = 32, heightSegments = 32 } = segments;
   const { phiStart = 0, phiLength = Math.PI * 2 } = phi;
   const { thetaStart = 0, thetaLength = Math.PI } = theta;

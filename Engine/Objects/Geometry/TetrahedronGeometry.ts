@@ -1,4 +1,5 @@
 import * as THREE from "three";
+import { GeometryTypes } from "../../Constants.interface.js";
 
 interface TetrahedronParams {
   radius?: number;
@@ -10,7 +11,7 @@ export const TetrahedronGeometry = (
     radius: 1,
     detail: 0,
   }
-): THREE.TetrahedronGeometry => {
+):GeometryTypes => {
   const { radius = 1, detail = 0 } = params;
 
   return new THREE.TetrahedronGeometry(radius, detail);
