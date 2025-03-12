@@ -5,7 +5,7 @@ const CreateAnimation = (
   const cycle = 8.34 * time;
 
   let progress = 0;
-  let step = 0.016;
+  let step = 0.016 / time;
 
   const move = setInterval(() => {
     progress += step;
