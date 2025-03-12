@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+import { CSS3DRenderer } from "three/examples/jsm/Addons.js";
 
 interface Angles {
   min: number;
@@ -7,7 +8,7 @@ interface Angles {
 }
 
 export const DefaultOrbitControll = (
-  renderer: THREE.WebGLRenderer,
+  renderer: THREE.WebGLRenderer | CSS3DRenderer,
   camera: THREE.PerspectiveCamera,
   pAngle:Angles = {
     min: 30,
