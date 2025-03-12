@@ -10,7 +10,7 @@ export type LightingTypes =
   | THREE.DirectionalLight
   | THREE.HemisphereLight
   | THREE.PointLight
-  | THREE.SpotLight
+  | THREE.SpotLight 
   | THREE.Mesh;
 
 export type GeometryTypes =
