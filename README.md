@@ -7,6 +7,7 @@
 
 ###  **Plan**
 - Adding work with smoke and particles in a scene (Добавление работы с дымом и частицами в сцене)
+- Add Func for textureLoading
 - Documentation
 
 ### Last Update
@@ -15,7 +16,9 @@ Animation creation functions have been added. One of them is custom, with any se
 Были добавлены функции для создания анимации. Один из который кастомный, с вашей любой настройкой, а второй с конкретно передвижением объектов Object 3D на сцене
 
 
-> **NPM using** -> https://www.npmjs.com/package/kgengine
+> **NPM** -> https://www.npmjs.com/package/kgengine
+>
+> **GitHub** -> https://github.com/KANTNOLI/KGEngine
 > 
 > **WIKI documentation** -> https://github.com/KANTNOLI/KGEngine/wiki (Process)
 > 
