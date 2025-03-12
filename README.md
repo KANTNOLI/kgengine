@@ -6,8 +6,9 @@
 ### Этот проект создан для удобства работы с 3Д элементами. Проект работает на базе THREE.js и представляет из себя более обобщенную и простую версию для работы. В ней есть сниппеты, готовые компоненты и значения по умолчанию, которые не нужно каждый раз прописывать. 
 
 ###  **Plan**
-- Create a WIKI page with full documentation (Создать WIKI страницу полной документацией)
-- Make module tests (Сделать тесты модулей)
+- Adding work with smoke and particles in a scene (Добавление работы с дымом и частицами в сцене)
+- Add Func for textureLoading
+- Documentation
 
 ### Last Update
 Animation creation functions have been added. One of them is custom, with any setting you want, and the second is specifically with the movement of 3D objects on the stage.
@@ -15,7 +16,9 @@ Animation creation functions have been added. One of them is custom, with any se
 Были добавлены функции для создания анимации. Один из который кастомный, с вашей любой настройкой, а второй с конкретно передвижением объектов Object 3D на сцене
 
 
-> **NPM using** -> https://www.npmjs.com/package/kgengine
+> **NPM** -> https://www.npmjs.com/package/kgengine
+>
+> **GitHub** -> https://github.com/KANTNOLI/KGEngine
 > 
 > **WIKI documentation** -> https://github.com/KANTNOLI/KGEngine/wiki (Process)
 > 
