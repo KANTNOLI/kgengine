@@ -1,83 +1,140 @@
+// Импорты из THREE.js
 import * as THREE from "three";
-import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
-import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
-import { DefaultViEnConfig } from "./Engine/VisualEngineConfigs/DefaultViEnConfig.js";
-import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
-import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
-
 import {
-  CSS2DRenderer,
-  CSS2DObject,
-} from "three/examples/jsm/renderers/CSS2DRenderer.js";
-import { DefaultOrbitControll } from "./Engine/PlayerActions/DefaultOrbitControll.js";
+  CSS3DRenderer,
+  CSS3DObject,
+} from "three/examples/jsm/renderers/CSS3DRenderer.js";
+import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
 
-// Инициализация WebGLRenderer
-const renderer = DefaultViEnConfig();
-renderer.setSize(window.innerWidth, window.innerHeight);
-document.body.appendChild(renderer.domElement);
+let camera: THREE.PerspectiveCamera;
+let sceneGl: THREE.Scene, rendererGl: THREE.WebGLRenderer;
+let sceneCss: THREE.Scene, rendererCss: CSS3DRenderer;
+let controls: TrackballControls;
+let plane: THREE.Plane;
 
-// Инициализация CSS2DRenderer
-const css2DRenderer = new CSS2DRenderer();
-css2DRenderer.setSize(window.innerWidth, window.innerHeight);
-css2DRenderer.domElement.style.position = "absolute";
-css2DRenderer.domElement.style.top = "0";
-css2DRenderer.domElement.style.pointerEvents = "none"; // Отключение взаимодействия
-document.body.appendChild(css2DRenderer.domElement);
+// Инициализация сцены
+init();
+animate();
 
-const scene = new CreateScene();
-const camera = DefaultCameraSettings({ x: -2, y: 2, z: 0 });
+function init() {
+  // Настраиваем камеру
+  camera = new THREE.PerspectiveCamera(
+    45,
+    window.innerWidth / window.innerHeight,
+    1,
+    1000
+  );
+  camera.position.set(200, 200, 200);
 
-// Создаем объект сцены (куб)
-const cube = new THREE.Mesh(
-  BoxGeometry(),
-  BasicMaterial({ color: 0x0055ff }) // Цвет куба
-);
-scene.addScene(cube);
+  // Настройка контролов
+  controls = new TrackballControls(camera, document.body);
 
-// Создаем HTML-метку
-const labelDiv = document.createElement("div");
-labelDiv.className = "label";
-labelDiv.textContent = "Куб";
-labelDiv.style.color = "white";
-labelDiv.style.width = "200px";
-labelDiv.style.height = "200px";
-labelDiv.style.backgroundColor = "rgb(0, 0, 0)";
-labelDiv.style.padding = "5px";
-labelDiv.style.borderRadius = "5px";
+  // Инициализация сцен
+  sceneGl = new THREE.Scene();
+  sceneCss = new THREE.Scene();
 
-// Привязываем HTML-метку к CSS2DObject
-const label = new CSS2DObject(labelDiv);
-label.position.set(0, 1.5, 0); // Располагаем метку над кубом
-cube.add(label); // Привязываем метку к кубу
+  // Плоскость обрезки
+  plane = new THREE.Plane(new THREE.Vector3(0, -1, 0).normalize(), 50); // Нормаль вниз
+  const helper = new THREE.PlaneHelper(plane, 500, 0xffff00); // Визуализация плоскости
+  sceneGl.add(helper);
 
-camera.lookAt(cube.position);
+  // Создание куба
+  const boxGeom = new THREE.BoxGeometry(60, 60, 60);
+  const cubeMaterial = new THREE.MeshBasicMaterial({
+    color: 0x05009a,          // Синий цвет куба
+    clippingPlanes: [plane],  // Используем плоскость обрезки
+    side: THREE.DoubleSide,   // Видимость с обеих сторон
+  });
+  const cube = new THREE.Mesh(boxGeom, cubeMaterial);
+  cube.position.set(0, 30, 0); // Устанавливаем куб
+  sceneGl.add(cube);
 
-// Настройка управления камерой
-let orbitControl = DefaultOrbitControll(renderer, camera, { max: 180, min: 0 });
+  // HTML-объекты (CSS3D)
+  const xpos = [50, -10, 30, 70, 110];
+  const ypos = [60, -40, 0, 40, 80];
+  const zpos = [-30, -50, 0, 50, 100];
 
-// Инициализация Raycaster для проверки пересечений
-const raycaster = new THREE.Raycaster();
+  for (let i = 0; i < 5; i++) {
+    // Создаем HTML-объект
+    const element = document.createElement("div");
+    element.style.width = "100px";
+    element.style.height = "100px";
+    element.style.opacity = "1.0";
+    element.style.background = new THREE.Color(
+      Math.random() * 0xff0000
+    ).getStyle();
+    element.style.display = "flex";
+    element.style.alignItems = "center";
+    element.style.justifyContent = "center";
+    element.style.color = "white";
+    element.style.fontSize = "14px";
+    element.style.fontFamily = "Arial, sans-serif";
 
-// Функция для обновления видимости метки
-const updateLabelVisibility = () => {
-  raycaster.set(camera.position, label.position.clone().sub(camera.position).normalize());
-  const intersects = raycaster.intersectObjects(scene.scene.children, true);
+    // Добавляем текст на объект
+    element.textContent = `Объект ${i + 1}`;
 
-  if (intersects.length > 0 && intersects[0].object !== cube) {
-    labelDiv.style.display = "none"; // Скрыть метку, если перед ней есть другой объект
-  } else {
-    labelDiv.style.display = "block"; // Показать метку, если путь свободен
+    // Превращаем HTML-элемент в CSS3DObject
+    const cssObject = new CSS3DObject(element);
+    cssObject.position.set(xpos[i], ypos[i], zpos[i]);
+    cssObject.scale.set(i / 12 + 0.5, 1 / (12 - i) + 0.5, 1);
+    sceneCss.add(cssObject);
+
+    // Создаем соответствующую 3D-плоскость
+    const geometry = new THREE.PlaneGeometry(100, 100);
+    const material = new THREE.MeshBasicMaterial({
+      color: 0x000000,
+      opacity: 0.0,
+      side: THREE.FrontSide,
+    });
+    const mesh = new THREE.Mesh(geometry, material);
+    mesh.position.copy(cssObject.position);
+    mesh.scale.copy(cssObject.scale);
+    sceneGl.add(mesh);
   }
-};
 
-// Цикл анимации с обновлением видимости метки
-const animate = () => {
+  // Настройка CSS3DRenderer
+  rendererCss = new CSS3DRenderer();
+  rendererCss.setSize(window.innerWidth, window.innerHeight);
+  rendererCss.domElement.style.position = "absolute";
+  rendererCss.domElement.style.top = "0";
+
+  // Настройка WebGLRenderer
+  rendererGl = new THREE.WebGLRenderer({ alpha: true });
+  rendererGl.setClearColor(0x000000, 0); // Фон сцены
+  rendererGl.setSize(window.innerWidth, window.innerHeight);
+  rendererGl.localClippingEnabled = true; // Включаем обрезку
+
+  rendererGl.domElement.style.position = "absolute";
+  rendererGl.domElement.style.top = "0";
+  rendererCss.domElement.appendChild(rendererGl.domElement);
+
+  // Добавляем рендереры в DOM
+  document.body.appendChild(rendererCss.domElement);
+
+  // Обработка изменения размера окна
+  window.addEventListener("resize", onWindowResize);
+}
+
+function onWindowResize() {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  rendererGl.setSize(window.innerWidth, window.innerHeight);
+  rendererCss.setSize(window.innerWidth, window.innerHeight);
+}
+
+// Анимация
+function animate() {
   requestAnimationFrame(animate);
 
-  updateLabelVisibility(); // Проверка видимости метки
-  orbitControl.update();
-  renderer.render(scene.scene, camera); // WebGL рендер
-  css2DRenderer.render(scene.scene, camera); // CSS2D рендер
-};
+  // Проверяем позицию камеры, чтобы обрезать объект только с одной стороны
+  const cameraDirection = camera.position.clone().normalize();
+  if (cameraDirection.z > 0) {
+    plane.constant = 100; // Оставляем куб целым
+  } else {
+    plane.constant = 30; // Обрезаем часть куба
+  }
 
-animate();
+  controls.update();
+  rendererGl.render(sceneGl, camera);
+  rendererCss.render(sceneCss, camera);
+}
