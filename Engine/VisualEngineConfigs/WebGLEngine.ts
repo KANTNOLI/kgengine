@@ -1,5 +1,5 @@
 import * as THREE from "three";
-import VisualEngineQuality from "./VisualEngine.interface.js";
+import WebGLEngineQuality, { EngineSizes } from "./VisualEngine.interface.js";
 
 //antialias - Сглаживание
 //precision - точность расчётов шейдеров  / lowp   mediump   highp
@@ -7,13 +7,17 @@ import VisualEngineQuality from "./VisualEngine.interface.js";
 //depth - буфер глубины
 
 export const DefaultViEnConfig = (
-  quality: VisualEngineQuality = {
+  quality: WebGLEngineQuality = {
     antialias: true,
     precision: "mediump",
     powerPrfrnc: "default",
     depth: true,
     shadowOn: true,
     shadowMap: "normal",
+  },
+  sizes: EngineSizes = {
+    width: window.innerWidth,
+    height: window.innerHeight,
   }
 ): THREE.WebGLRenderer => {
   const renderer = new THREE.WebGLRenderer({
@@ -26,7 +30,7 @@ export const DefaultViEnConfig = (
     depth: quality.depth != undefined ? quality.antialias : true,
   });
 
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(sizes.width, sizes.height);
 
   if (quality.shadowOn != undefined ? quality.shadowOn : true) {
     renderer.shadowMap.enabled = true;

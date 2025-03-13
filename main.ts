@@ -83,7 +83,7 @@ function init() {
     const geometry = new THREE.PlaneGeometry(100, 100);
     const material = new THREE.MeshBasicMaterial({
       color: 0x000000,
-      opacity: 0.0,
+      opacity: 0.0, clippingPlanes: [plane],  
       side: THREE.FrontSide,
     });
     const mesh = new THREE.Mesh(geometry, material);
