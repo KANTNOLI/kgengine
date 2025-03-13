@@ -6,10 +6,13 @@
 ### Этот проект создан для удобства работы с 3Д элементами. Проект работает на базе THREE.js и представляет из себя более обобщенную и простую версию для работы. В ней есть сниппеты, готовые компоненты и значения по умолчанию, которые не нужно каждый раз прописывать. 
 
 ###  **Plan**
-- Working with HTML elements in a 3D scene, settings for convenient operation, castings but implementation (In progress)
-- Работа с HTML элементами в 3D сцене, настройки для удобной работы, кастыли но реализация (В работе)
+- Animation - Do a repeat and reverse repeat during a cycle + number of cycles
+- Should I rewrite the undefined script ? on variate | variate
+- Clipping in 3d models for HTML
+- Shaders, tracking raycasters relative to the screen to the corners of HTML so that 3D is not visible? (50\50)
+- Working with HTML elements in a 3D scene, settings for convenient operation, castings but implementation 
 - Documentation
-- Adding screens to a scene
+
 
 ### Last Update
 Animation creation functions have been added. One of them is custom, with any setting you want, and the second is specifically with the movement of 3D objects on the stage.
