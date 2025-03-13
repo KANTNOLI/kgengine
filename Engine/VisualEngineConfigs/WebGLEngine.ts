@@ -6,7 +6,7 @@ import WebGLEngineQuality, { EngineSizes } from "./VisualEngine.interface.js";
 //powerPreference - уровень производительности для рендерера    high-performance  default  low-power
 //depth - буфер глубины
 
-export const DefaultViEnConfig = (
+export const WebGLEngine = (
   quality: WebGLEngineQuality = {
     antialias: true,
     precision: "mediump",
