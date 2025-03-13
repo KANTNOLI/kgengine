@@ -41,9 +41,9 @@ function init() {
   // Создание куба
   const boxGeom = new THREE.BoxGeometry(60, 60, 60);
   const cubeMaterial = new THREE.MeshBasicMaterial({
-    color: 0x05009a,          // Синий цвет куба
-    clippingPlanes: [plane],  // Используем плоскость обрезки
-    side: THREE.DoubleSide,   // Видимость с обеих сторон
+    color: 0x05009a, // Синий цвет куба
+    clippingPlanes: [plane], // Используем плоскость обрезки
+    side: THREE.DoubleSide, // Видимость с обеих сторон
   });
   const cube = new THREE.Mesh(boxGeom, cubeMaterial);
   cube.position.set(0, 30, 0); // Устанавливаем куб
@@ -83,7 +83,8 @@ function init() {
     const geometry = new THREE.PlaneGeometry(100, 100);
     const material = new THREE.MeshBasicMaterial({
       color: 0x000000,
-      opacity: 0.0, clippingPlanes: [plane],  
+      opacity: 0.0,
+      clippingPlanes: [plane],
       side: THREE.FrontSide,
     });
     const mesh = new THREE.Mesh(geometry, material);
@@ -112,14 +113,6 @@ function init() {
   document.body.appendChild(rendererCss.domElement);
 
   // Обработка изменения размера окна
-  window.addEventListener("resize", onWindowResize);
-}
-
-function onWindowResize() {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  rendererGl.setSize(window.innerWidth, window.innerHeight);
-  rendererCss.setSize(window.innerWidth, window.innerHeight);
 }
 
 // Анимация
