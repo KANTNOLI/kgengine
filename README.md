@@ -6,6 +6,8 @@
 ### Этот проект создан для удобства работы с 3Д элементами. Проект работает на базе THREE.js и представляет из себя более обобщенную и простую версию для работы. В ней есть сниппеты, готовые компоненты и значения по умолчанию, которые не нужно каждый раз прописывать. 
 
 ###  **Plan**
+- Working with HTML elements in a 3D scene, settings for convenient operation, castings but implementation (In progress)
+- Работа с HTML элементами в 3D сцене, настройки для удобной работы, кастыли но реализация (В работе)
 - Documentation
 - Adding screens to a scene
 
