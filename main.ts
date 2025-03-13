@@ -33,7 +33,7 @@ function init() {
   sceneGl = new THREE.Scene();
   sceneCss = new THREE.Scene();
 
-  // Плоскость обрезки
+  // Плоскость обрезки 
   plane = new THREE.Plane(new THREE.Vector3(0, -1, 0).normalize(), 50); // Нормаль вниз
   const helper = new THREE.PlaneHelper(plane, 500, 0xffff00); // Визуализация плоскости
   sceneGl.add(helper);
