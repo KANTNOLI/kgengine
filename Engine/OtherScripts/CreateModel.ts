@@ -6,7 +6,7 @@ const DEGREE = Math.PI / 180;
 
 export class CreateModel {
   model: THREE.Object3D = new THREE.Object3D();
-  path = "./Assets/Models/default.glb";
+  path = "./KGEngine/Models/default.glb";
   position: ModelPosition = {
     posX: 0,
     posY: 0,
@@ -55,7 +55,8 @@ export class CreateModel {
 
   modelLoading() {
     const modelsLoader = new GLTFLoader();
-
+    console.log(this.path);
+    
     modelsLoader.load(this.path, (model: GLTF) => {
       this.model = model.scene;
 

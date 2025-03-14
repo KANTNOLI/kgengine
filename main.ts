@@ -10,12 +10,34 @@ import { CSS3DEngine } from "./Engine/VisualEngineConfigs/CSS3DEngine.js";
 import { OrbitControll } from "./Engine/PlayerActions/OrbitControll.js";
 import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
 import { DEGREE } from "./Engine/Constants.interface.js";
+import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
+import { AmbientLightCfg } from "./Engine/Lighting/AmbientLightCfg.js";
 
 // Создаем сцену для размещения CSS и GL
 const sceneGL = new CreateScene();
 sceneGL.scene.background = null;
 const sceneCSS = new CreateScene();
 sceneCSS.scene.background = new THREE.Color(0x808080);
+
+ShadowCfg(sceneGL.scene);
+AmbientLightCfg(sceneGL.scene);
+
+DirectionalLightCfg(sceneGL.scene, { x: 0, y: 2, z: 2});
+
+let laptop = new CreateModel(
+  "./KGEngine/Models/default.glb",
+  {
+    posX: 0,
+    posY: 0,
+    posZ: 0,
+    scaleHeight: 0.1,
+    scaleLength: 0.1,
+    scaleWidth: 0.1,
+  },
+  {}
+);
+
+laptop.addToScene(sceneGL.scene);
 
 // Тоже самое, что и со сценами
 const rendererGL = WebGLEngine();
@@ -35,21 +57,11 @@ let css3Object1 = CreateCSS3(sceneCSS.scene, {
 
 css3Object1.scale.set(0.02, 0.02, 0.02);
 css3Object1.position.set(1, 0, 0);
-css3Object1.rotation.y = DEGREE * 90;
-
-const cube = new THREE.Mesh(
-  BoxGeometry({ width: 1, depth: 1, height: 1 }),
-  BasicMaterial({ color: 0x00022 })
-);
-cube.position.set(1, 0, 0);
-sceneGL.addScene(cube);
-camera.lookAt(cube.position);
+//css3Object1.rotation.y = DEGREE * 90;
 
 document.body.appendChild(renderCSS.domElement);
 
 const animate = () => {
-  cube.rotation.y += 0.01;
-
   controlls.update();
   rendererGL.render(sceneGL.scene, camera);
   renderCSS.render(sceneCSS.scene, camera);
