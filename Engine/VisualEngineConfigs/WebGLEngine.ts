@@ -18,7 +18,8 @@ export const WebGLEngine = (
   sizes: EngineSizes = {
     width: window.innerWidth,
     height: window.innerHeight,
-  }
+  },
+  css3On: boolean = true
 ): THREE.WebGLRenderer => {
   const renderer = new THREE.WebGLRenderer({
     antialias: quality.antialias || true,
@@ -42,6 +43,12 @@ export const WebGLEngine = (
         renderer.shadowMap.type = THREE.PCFShadowMap;
         break;
     }
+  }
+
+  if (css3On) {
+    renderer.domElement.style.position =  "absolute";
+    renderer.domElement.style.zIndex =  "0";
+    renderer.domElement.style.top = "0";
   }
 
   document.body.appendChild(renderer.domElement);

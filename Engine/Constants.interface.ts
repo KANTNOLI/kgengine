@@ -40,3 +40,5 @@ export type MaterialTypes =
   | THREE.SpriteMaterial
   | THREE.MeshLambertMaterial
   | THREE.MeshBasicMaterial;
+
+export const DEGREE = Math.PI / 180;

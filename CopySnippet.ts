@@ -1,133 +1,56 @@
-// Импорты из THREE.js
 import * as THREE from "three";
-import {
-  CSS3DRenderer,
-  CSS3DObject,
-} from "three/examples/jsm/renderers/CSS3DRenderer.js";
-import { TrackballControls } from "three/examples/jsm/controls/TrackballControls.js";
+import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
+import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
+import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
+import { WebGLEngine } from "./Engine/VisualEngineConfigs/WebGLEngine.js";
+import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
+import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
+import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
+import { CSS3DEngine } from "./Engine/VisualEngineConfigs/CSS3DEngine.js";
+import { OrbitControll } from "./Engine/PlayerActions/OrbitControll.js";
+import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
 
-let camera: THREE.PerspectiveCamera;
-let sceneGl: THREE.Scene, rendererGl: THREE.WebGLRenderer;
-let sceneCss: THREE.Scene, rendererCss: CSS3DRenderer;
-let controls: TrackballControls;
-let plane: THREE.Plane;
+// Создаем сцену для размещения CSS и GL
+const sceneGL = new CreateScene();
+sceneGL.scene.background = null
 
-// Инициализация сцены
-init();
-animate();
+const sceneCSS = new CreateScene();
 
-function init() {
-  // Настраиваем камеру
-  camera = new THREE.PerspectiveCamera(
-    45,
-    window.innerWidth / window.innerHeight,
-    1,
-    1000
-  );
-  camera.position.set(200, 200, 200);
+// Тоже самое, что и со сценами
+const rendererGL = WebGLEngine();
+rendererGL.localClippingEnabled = true;
+rendererGL.setClearColor(0x000000, 0);
+const renderCSS = CSS3DEngine();
 
-  // Настройка контролов
-  controls = new TrackballControls(camera, document.body);
+rendererGL.domElement.appendChild(renderCSS.domElement);
 
-  // Инициализация сцен
-  sceneGl = new THREE.Scene();
-  sceneCss = new THREE.Scene();
+const camera = DefaultCameraSettings({ x: 1, y: 1, z: 1 });
+const controlls = OrbitControll(rendererGL, camera);
 
-  // Плоскость обрезки 
-  plane = new THREE.Plane(new THREE.Vector3(0, -1, 0).normalize(), 50); // Нормаль вниз
-  const helper = new THREE.PlaneHelper(plane, 500, 0xffff00); // Визуализация плоскости
-  sceneGl.add(helper);
+let css3Object1 = CreateCSS3(sceneCSS.scene, {
+  HTMLElement: document.createElement("div"),
+});
 
-  // Создание куба
-  const boxGeom = new THREE.BoxGeometry(60, 60, 60);
-  const cubeMaterial = new THREE.MeshBasicMaterial({
-    color: 0x05009a, // Синий цвет куба
-    clippingPlanes: [plane], // Используем плоскость обрезки
-    side: THREE.DoubleSide, // Видимость с обеих сторон
-  });
-  const cube = new THREE.Mesh(boxGeom, cubeMaterial);
-  cube.position.set(0, 30, 0); // Устанавливаем куб
-  sceneGl.add(cube);
+css3Object1.scale.set(0.02, 0.02, 0.02);
 
-  // HTML-объекты (CSS3D)
-  const xpos = [50, -10, 30, 70, 110];
-  const ypos = [60, -40, 0, 40, 80];
-  const zpos = [-30, -50, 0, 50, 100];
+const cube = new THREE.Mesh(
+  BoxGeometry({ width: 1, depth: 1, height: 1 }),
+  BasicMaterial({ color: 0x00022 })
+);
+cube.position.set(1, 0, 0);
+sceneGL.addScene(cube);
+camera.lookAt(cube.position);
 
-  for (let i = 0; i < 5; i++) {
-    // Создаем HTML-объект
-    const element = document.createElement("div");
-    element.style.width = "100px";
-    element.style.height = "100px";
-    element.style.opacity = "1.0";
-    element.style.background = new THREE.Color(
-      Math.random() * 0xff0000
-    ).getStyle();
-    element.style.display = "flex";
-    element.style.alignItems = "center";
-    element.style.justifyContent = "center";
-    element.style.color = "white";
-    element.style.fontSize = "14px";
-    element.style.fontFamily = "Arial, sans-serif";
+document.body.appendChild(rendererGL.domElement);
 
-    // Добавляем текст на объект
-    element.textContent = `Объект ${i + 1}`;
+const animate = () => {
+  cube.rotation.y += 0.01;
 
-    // Превращаем HTML-элемент в CSS3DObject
-    const cssObject = new CSS3DObject(element);
-    cssObject.position.set(xpos[i], ypos[i], zpos[i]);
-    cssObject.scale.set(i / 12 + 0.5, 1 / (12 - i) + 0.5, 1);
-    sceneCss.add(cssObject);
+  controlls.update();
+  renderCSS.render(sceneCSS.scene, camera);
+  rendererGL.render(sceneGL.scene, camera);
 
-    // Создаем соответствующую 3D-плоскость
-    const geometry = new THREE.PlaneGeometry(100, 100);
-    const material = new THREE.MeshBasicMaterial({
-      color: 0x000000,
-      opacity: 0.0,
-      clippingPlanes: [plane],
-      side: THREE.FrontSide,
-    });
-    const mesh = new THREE.Mesh(geometry, material);
-    mesh.position.copy(cssObject.position);
-    mesh.scale.copy(cssObject.scale);
-    sceneGl.add(mesh);
-  }
-
-  // Настройка CSS3DRenderer
-  rendererCss = new CSS3DRenderer();
-  rendererCss.setSize(window.innerWidth, window.innerHeight);
-  rendererCss.domElement.style.position = "absolute";
-  rendererCss.domElement.style.top = "0";
-
-  // Настройка WebGLRenderer
-  rendererGl = new THREE.WebGLRenderer({ alpha: true });
-  rendererGl.setClearColor(0x000000, 0); // Фон сцены
-  rendererGl.setSize(window.innerWidth, window.innerHeight);
-  rendererGl.localClippingEnabled = true; // Включаем обрезку
-
-  rendererGl.domElement.style.position = "absolute";
-  rendererGl.domElement.style.top = "0";
-  rendererCss.domElement.appendChild(rendererGl.domElement);
-
-  // Добавляем рендереры в DOM
-  document.body.appendChild(rendererCss.domElement);
-
-  // Обработка изменения размера окна
-}
-
-// Анимация
-function animate() {
   requestAnimationFrame(animate);
+};
 
-  // Проверяем позицию камеры, чтобы обрезать объект только с одной стороны
-  const cameraDirection = camera.position.clone().normalize();
-  if (cameraDirection.z > 0) {
-    plane.constant = 100; // Оставляем куб целым
-  } else {
-    plane.constant = 30; // Обрезаем часть куба
-  }
-
-  controls.update();
-  rendererGl.render(sceneGl, camera);
-  rendererCss.render(sceneCss, camera);
-}
+animate();

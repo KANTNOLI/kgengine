@@ -7,12 +7,12 @@ interface Angles {
   max: number;
 }
 
-export const DefaultOrbitControll = (
+export const OrbitControll = (
   renderer: THREE.WebGLRenderer | CSS3DRenderer,
   camera: THREE.PerspectiveCamera,
   pAngle:Angles = {
-    min: 30,
-    max: 70,
+    min: 10,
+    max: 180,
   }
 ): OrbitControls => {
   const action = new OrbitControls(camera, renderer.domElement);
