@@ -22,8 +22,8 @@ export const CircleGeometry = (
 ): GeometryTypes   => {
   return new THREE.CircleGeometry(
     radius,
-    segments.segments ?? 32, // Проверка на значение, если не передано
-    theta.thetaStart ?? 0,
-    theta.thetaLength ?? Math.PI * 2
+    segments.segments || 32, 
+    theta.thetaStart || 0,
+    theta.thetaLength || Math.PI * 2
   );
 };

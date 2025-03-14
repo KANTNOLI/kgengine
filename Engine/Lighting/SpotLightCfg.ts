@@ -31,17 +31,15 @@ export const SpotLightCfg = (
 
   // light.color.set(0xffa500); // Изменение цвета света
   // light.intensity = 2; // Изменение интенсивности
-  light.distance = lighting.distance != undefined ? lighting.distance : 300; // Изменение максимального расстояния света
-  light.angle = lighting.angle != undefined ? lighting.angle : Math.PI / 4; // Изменение угла освещения конус
-  light.penumbra = lighting.penumbra != undefined ? lighting.penumbra : 0.1; // Изменение полутона типо где меньше света
-  light.decay = lighting.decay != undefined ? lighting.decay : 2; // Изменение коэффициента затухания света
+  light.distance = lighting.distance || 300; // Изменение максимального расстояния света
+  light.angle = lighting.angle || Math.PI / 4; // Изменение угла освещения конус
+  light.penumbra = lighting.penumbra || 0.1; // Изменение полутона типо где меньше света
+  light.decay = lighting.decay || 2; // Изменение коэффициента затухания света
 
-  light.castShadow = shadows.cast != undefined ? shadows.cast : true; // Включение теней
-  light.shadow.bias = shadows.bias != undefined ? shadows.bias : -0.0002; // Пример значения для shadow.bias
-  light.shadow.mapSize.width =
-    shadows.mapSize != undefined ? shadows.mapSize : 8192; // Установка размера карты теней
-  light.shadow.mapSize.height =
-    shadows.mapSize != undefined ? shadows.mapSize : 8192; // Установка размера карты теней
+  light.castShadow = shadows.cast || true; // Включение теней
+  light.shadow.bias = shadows.bias || -0.0002; // Пример значения для shadow.bias
+  light.shadow.mapSize.width = shadows.mapSize || 8192; // Установка размера карты теней
+  light.shadow.mapSize.height = shadows.mapSize || 8192; // Установка размера карты теней
 
   return light;
 };

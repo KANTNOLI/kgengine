@@ -26,12 +26,10 @@ export const DirectionalLightCfg = (
 
   // light.color.set(0x00ff00); // Изменение цвета света
   // light.intensity = 0.8; // Изменение интенсивности
-  light.castShadow = shadows.cast != undefined ? shadows.cast : true; // Включение теней
-  light.shadow.bias = shadows.bias != undefined ? shadows.bias : -0.000005; // артефакты фикс
-  light.shadow.mapSize.width =
-    shadows.mapSize != undefined ? shadows.mapSize : 8192; // Установка размера карты теней
-  light.shadow.mapSize.height =
-    shadows.mapSize != undefined ? shadows.mapSize : 8192; // Установка размера карты теней
+  light.castShadow = shadows.cast || true; // Включение теней
+  light.shadow.bias = shadows.bias || -0.000005; // артефакты фикс
+  light.shadow.mapSize.width = shadows.mapSize || 8192; // Установка размера карты теней
+  light.shadow.mapSize.height = shadows.mapSize || 8192; // Установка размера карты теней
 
   return light;
 };

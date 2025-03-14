@@ -12,12 +12,10 @@ export const DefaultCameraSettings = (
   }
 ): THREE.PerspectiveCamera => {
   const camera = new THREE.PerspectiveCamera(
-    perspective.fov != undefined ? perspective.fov : 75,
-    perspective.aspect != undefined
-      ? perspective.aspect
-      : window.innerWidth / window.innerHeight,
-    perspective.near != undefined ? perspective.near : 0.01,
-    perspective.far != undefined ? perspective.far : 1000
+    perspective.fov || 75,
+    perspective.aspect || window.innerWidth / window.innerHeight,
+    perspective.near || 0.01,
+    perspective.far || 1000
   );
   camera.position.x = position.x;
   camera.position.y = position.y;

@@ -21,13 +21,10 @@ export const WebGLEngine = (
   }
 ): THREE.WebGLRenderer => {
   const renderer = new THREE.WebGLRenderer({
-    antialias: quality.antialias != undefined ? quality.antialias : true,
-    precision: quality.precision != undefined ? quality.precision : "mediump",
-    powerPreference:
-      quality.powerPrfrnc != undefined
-        ? (quality.powerPrfrnc as WebGLPowerPreference)
-        : "default",
-    depth: quality.depth != undefined ? quality.antialias : true,
+    antialias: quality.antialias || true,
+    precision: quality.precision || "mediump",
+    powerPreference: (quality.powerPrfrnc as WebGLPowerPreference) || "default",
+    depth: quality.depth || true,
   });
 
   renderer.setSize(sizes.width, sizes.height);
