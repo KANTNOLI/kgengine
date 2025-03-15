@@ -37,9 +37,9 @@ const sphereMaterial = new THREE.ShaderMaterial({
 
     void main() {
       // Проверяем, находится ли пиксель внутри границ куба
-      if (vWorldPosition.x > cubeMin.x && vWorldPosition.x < cubeMax.x &&
-          vWorldPosition.y > cubeMin.y && vWorldPosition.y < cubeMax.y &&
-          vWorldPosition.z > cubeMin.z && vWorldPosition.z < cubeMax.z) {
+      if (vWorldPosition.x >= cubeMin.x && vWorldPosition.x <= cubeMax.x &&
+          vWorldPosition.y >= cubeMin.y && vWorldPosition.y <= cubeMax.y &&
+          vWorldPosition.z >= cubeMin.z && vWorldPosition.z <= cubeMax.z) {
         discard; // Убираем пиксель, если он внутри куба
       }
 
@@ -51,7 +51,7 @@ const sphereMaterial = new THREE.ShaderMaterial({
 
 // Сфера (объект, который будет исчезать в области куба)
 const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
-sphere.position.set(0, 1, 0);
+sphere.position.set(0.7, 1,0);
 scene.add(sphere);
 
 // Увеличенный полупрозрачный куб
@@ -69,7 +69,7 @@ const controls = new OrbitControls(camera, renderer.domElement);
 
 // Анимация перемещения куба
 let direction = 1; // Направление движения куба
-const speed = 0.02; // Скорость движения куба
+const speed = 0.01; // Скорость движения куба
 
 const animate = () => {
   // Двигаем куб вперед и назад
