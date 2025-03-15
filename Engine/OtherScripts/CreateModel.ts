@@ -6,6 +6,7 @@ const DEGREE = Math.PI / 180;
 
 export class CreateModel {
   model: THREE.Object3D = new THREE.Object3D();
+  modelOriginal: GLTF = {} as GLTF;
   path = "./KGEngine/Models/default.glb";
   position: ModelPosition = {
     posX: 0,
@@ -53,12 +54,23 @@ export class CreateModel {
     });
   }
 
+  setCustomNodeParam(
+    callback: (node: THREE.Object3D, model: THREE.Object3D) => any
+  ) {
+    this.intervalSnippet(() => {
+      this.model.traverse((node: THREE.Object3D) => {
+        callback(node, this.model);
+      });
+    });
+  }
+
   modelLoading() {
     const modelsLoader = new GLTFLoader();
     console.log(this.path);
-    
+
     modelsLoader.load(this.path, (model: GLTF) => {
       this.model = model.scene;
+      this.modelOriginal = model;
 
       if (this.model) {
         this.model.position.x = this.position.posX;
@@ -109,6 +121,12 @@ export class CreateModel {
   customEdit(callback: (model: THREE.Object3D) => any) {
     this.intervalSnippet(() => {
       callback(this.model);
+    });
+  }
+
+  customEditOriginal(callback: (model: GLTF) => any) {
+    this.intervalSnippet(() => {
+      callback(this.modelOriginal);
     });
   }
 

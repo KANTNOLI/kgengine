@@ -12,6 +12,7 @@ import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
 import { DEGREE } from "./Engine/Constants.interface.js";
 import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
 import { AmbientLightCfg } from "./Engine/Lighting/AmbientLightCfg.js";
+import { CSG } from "three-csg-ts";
 
 // Создаем сцену для размещения CSS и GL
 const sceneGL = new CreateScene();
@@ -22,10 +23,10 @@ sceneCSS.scene.background = new THREE.Color(0x808080);
 ShadowCfg(sceneGL.scene);
 AmbientLightCfg(sceneGL.scene);
 
-DirectionalLightCfg(sceneGL.scene, { x: 0, y: 2, z: 2});
+DirectionalLightCfg(sceneGL.scene, { x: 0, y: 2, z: 2 });
 
 let laptop = new CreateModel(
-  "./KGEngine/Models/default.glb",
+  "./KGEngine/Models/gaming_laptop.glb",
   {
     posX: 0,
     posY: 0,
@@ -36,8 +37,47 @@ let laptop = new CreateModel(
   },
   {}
 );
+laptop.setNodeParam((node) => {
+  // Создаем куб
+  const cube = new THREE.Mesh(
+    new THREE.BoxGeometry(1, 1, 1), // Размеры куба
+    new THREE.MeshBasicMaterial({ color: 0xff0000 }) // Материал куба
+  );
 
-laptop.addToScene(sceneGL.scene);
+  // Устанавливаем позицию куба
+  cube.position.set(0, 0, 1);
+
+  // Обновляем матрицы куба и узла (node), чтобы трансформации учитывались
+  cube.updateMatrix();
+  node.updateMatrix();
+
+  // Преобразуем куб и узел в CSG
+  const cubeCSG = CSG.fromMesh(cube);
+  const modelCSG = CSG.fromMesh(node);
+
+  // Вычитаем куб из узла
+  const subtractedCSG = modelCSG.subtract(cubeCSG);
+
+  // Преобразуем результат обратно в Mesh
+  const resultMesh = CSG.toMesh(subtractedCSG, node.matrix, node.material);
+
+  // Добавляем результат в сцену
+
+  if (Math.floor((Math.random() * 100) % 2) === 0) {
+    sceneGL.scene.add(resultMesh);
+  }
+
+  // Удаляем оригинальный узел и куб, чтобы они не оставались в сцене
+  sceneGL.scene.remove(node);
+  sceneGL.scene.remove(cube);
+
+  console.log("Операция CSG завершена!");
+});
+
+// laptop.customEdit((model) => {
+
+// });
+// laptop.addToScene(sceneGL.scene);
 
 // Тоже самое, что и со сценами
 const rendererGL = WebGLEngine();
