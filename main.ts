@@ -1,111 +1,97 @@
 import * as THREE from "three";
-import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
-import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
-import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
-import { WebGLEngine } from "./Engine/VisualEngineConfigs/WebGLEngine.js";
-import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
-import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
-import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
-import { CSS3DEngine } from "./Engine/VisualEngineConfigs/CSS3DEngine.js";
-import { OrbitControll } from "./Engine/PlayerActions/OrbitControll.js";
-import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
-import { DEGREE } from "./Engine/Constants.interface.js";
-import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
-import { AmbientLightCfg } from "./Engine/Lighting/AmbientLightCfg.js";
-import { CSG } from "three-csg-ts";
+import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 
-// Создаем сцену для размещения CSS и GL
-const sceneGL = new CreateScene();
-sceneGL.scene.background = null;
-const sceneCSS = new CreateScene();
-sceneCSS.scene.background = new THREE.Color(0x808080);
+// Создаем сцену
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x808080);
 
-ShadowCfg(sceneGL.scene);
-AmbientLightCfg(sceneGL.scene);
+// Создаем камеру
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 3, 5);
 
-DirectionalLightCfg(sceneGL.scene, { x: 0, y: 2, z: 2 });
+// Создаем рендерер
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-let laptop = new CreateModel(
-  "./KGEngine/Models/gaming_laptop.glb",
-  {
-    posX: 0,
-    posY: 0,
-    posZ: 0,
-    scaleHeight: 0.1,
-    scaleLength: 0.1,
-    scaleWidth: 0.1,
+// Геометрия объекта
+const sphereGeometry = new THREE.SphereGeometry(1, 32, 32); // Сфера
+const sphereMaterial = new THREE.ShaderMaterial({
+  uniforms: {
+    cubeMin: { value: new THREE.Vector3(-1.5, -1.5, -1.5) }, // Минимальная граница куба
+    cubeMax: { value: new THREE.Vector3(1.5, 1.5, 1.5) }, // Максимальная граница куба
   },
-  {}
-);
-laptop.setNodeParam((node) => {
-  // Создаем куб
-  const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1), // Размеры куба
-    new THREE.MeshBasicMaterial({ color: 0xff0000 }) // Материал куба
-  );
+  vertexShader: `
+    varying vec3 vWorldPosition;
 
-  // Устанавливаем позицию куба
-  cube.position.set(0, 0, 1);
+    void main() {
+      vec4 worldPosition = modelMatrix * vec4(position, 1.0);
+      vWorldPosition = worldPosition.xyz; // Передаем мировую позицию в фрагментный шейдер
+      gl_Position = projectionMatrix * viewMatrix * worldPosition;
+    }
+  `,
+  fragmentShader: `
+    uniform vec3 cubeMin; // Нижняя граница куба
+    uniform vec3 cubeMax; // Верхняя граница куба
+    varying vec3 vWorldPosition;
 
-  // Обновляем матрицы куба и узла (node), чтобы трансформации учитывались
-  cube.updateMatrix();
-  node.updateMatrix();
+    void main() {
+      // Проверяем, находится ли пиксель внутри границ куба
+      if (vWorldPosition.x > cubeMin.x && vWorldPosition.x < cubeMax.x &&
+          vWorldPosition.y > cubeMin.y && vWorldPosition.y < cubeMax.y &&
+          vWorldPosition.z > cubeMin.z && vWorldPosition.z < cubeMax.z) {
+        discard; // Убираем пиксель, если он внутри куба
+      }
 
-  // Преобразуем куб и узел в CSG
-  const cubeCSG = CSG.fromMesh(cube);
-  const modelCSG = CSG.fromMesh(node);
-
-  // Вычитаем куб из узла
-  const subtractedCSG = modelCSG.subtract(cubeCSG);
-
-  // Преобразуем результат обратно в Mesh
-  const resultMesh = CSG.toMesh(subtractedCSG, node.matrix, node.material);
-
-  // Добавляем результат в сцену
-
-  if (Math.floor((Math.random() * 100) % 2) === 0) {
-    sceneGL.scene.add(resultMesh);
-  }
-
-  // Удаляем оригинальный узел и куб, чтобы они не оставались в сцене
-  sceneGL.scene.remove(node);
-  sceneGL.scene.remove(cube);
-
-  console.log("Операция CSG завершена!");
+      // Если пиксель вне куба, задаем цвет
+      gl_FragColor = vec4(0.0, 0.5, 1.0, 1.0); // Синий цвет
+    }
+  `,
 });
 
-// laptop.customEdit((model) => {
+// Сфера (объект, который будет исчезать в области куба)
+const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+sphere.position.set(0, 1, 0);
+scene.add(sphere);
 
-// });
-// laptop.addToScene(sceneGL.scene);
-
-// Тоже самое, что и со сценами
-const rendererGL = WebGLEngine();
-rendererGL.localClippingEnabled = true;
-rendererGL.setClearColor(0x000000, 0);
-const renderCSS = CSS3DEngine();
-renderCSS.domElement.style.backgroundColor = "grey";
-
-renderCSS.domElement.appendChild(rendererGL.domElement);
-
-const camera = DefaultCameraSettings({ x: 3, y: 0, z: 1 });
-const controlls = OrbitControll(rendererGL, camera);
-
-let css3Object1 = CreateCSS3(sceneCSS.scene, {
-  HTMLElement: document.createElement("div"),
+// Увеличенный полупрозрачный куб
+const cubeGeometry = new THREE.BoxGeometry(3, 3, 3); // Куб 3x3x3
+const cubeMaterial = new THREE.MeshBasicMaterial({
+  color: 0xff0000,
+  transparent: true,
+  opacity: 0.2,
 });
+const cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
+scene.add(cube);
 
-css3Object1.scale.set(0.02, 0.02, 0.02);
-css3Object1.position.set(1, 0, 0);
-//css3Object1.rotation.y = DEGREE * 90;
+// Управление камерой
+const controls = new OrbitControls(camera, renderer.domElement);
 
-document.body.appendChild(renderCSS.domElement);
+// Анимация перемещения куба
+let direction = 1; // Направление движения куба
+const speed = 0.02; // Скорость движения куба
 
 const animate = () => {
-  controlls.update();
-  rendererGL.render(sceneGL.scene, camera);
-  renderCSS.render(sceneCSS.scene, camera);
+  // Двигаем куб вперед и назад
+  cube.position.z += direction * speed;
+  if (cube.position.z > 2 || cube.position.z < -2) {
+    direction *= -1; // Меняем направление при достижении границ
+  }
 
+  // Обновляем границы куба в шейдере
+  sphereMaterial.uniforms.cubeMin.value.set(
+    cube.position.x - 1.5,
+    cube.position.y - 1.5,
+    cube.position.z - 1.5
+  );
+  sphereMaterial.uniforms.cubeMax.value.set(
+    cube.position.x + 1.5,
+    cube.position.y + 1.5,
+    cube.position.z + 1.5
+  );
+
+  controls.update();
+  renderer.render(scene, camera);
   requestAnimationFrame(animate);
 };
 
