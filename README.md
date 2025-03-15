@@ -14,10 +14,30 @@
 - Documentation
 
 
-### Last Update
-Animation creation functions have been added. One of them is custom, with any setting you want, and the second is specifically with the movement of 3D objects on the stage.
+### Next update
+The next update will involve CSS3 and Object3D working in the same or different scenes.
 
-Были добавлены функции для создания анимации. Один из который кастомный, с вашей любой настройкой, а второй с конкретно передвижением объектов Object 3D на сцене
+During normal operation, you most likely encountered the overlap of one of these elements on top of each other due to the rendering features, since these are two different, roughly speaking, scenes.
+
+After tests and improvements, my method will involve analyzing the scene and cutting out unnecessary content using shaders, using the Cutting method, which is commonly used in games to optimize and improve device performance. 
+
+When adding CSS3 To the scene, we will automatically delete the content that is located behind the HTML page, which was overlaid on top of HTML by default (Maybe the other way around, but in this bundle, it is more convenient to control it + the default snippet engines already have a position setting for their overlay)
+
+Below is an example of 2 pictures showing how this method works. It is currently in development and hopefully will be ready soon! As well as the documentation
+> Ru version
+
+Следующее обновление будет подразумевать работу CSS3 и Object3D в одной или разных сценах.
+
+При обычной работе вы скорее всего сталкивались с  наложением одно из данных элементов на друг друга из за особенности рендеринга, т.к. это две разные, грубо говоря, сцены.
+
+После тестов и доработок, мой метод будет подразумевать анализ сцены и вырезку ненужного контента с помощью шейдеров, методом Cutting, который обычно используется в играх для оптимизации и производительности устройств. 
+
+При добавлении CSS3 На сцену, мы автоматически будем удалять контент, который находится за HTML страницей, который по умолчанию накладывался поверх HTML (Может быть и наоборот, но в данной связке, это удобнее контролировать + в сниппетах движках по умолчанию уже есть настройка положения, для их наложения)
+
+Ниже пример из 2 картинок, работы этого метода. На данный момент он в разработке и надеюсь в скором времени будет готов! Так же как и документация
+
+![cutM2](https://github.com/user-attachments/assets/f13f4671-e1aa-4b35-8a7e-8e5cec3b3be7)
+![cutM1](https://github.com/user-attachments/assets/895d72c9-655a-459f-8b21-1b30a26cdbe4)
 
 
 > **NPM** -> https://www.npmjs.com/package/kgengine
