@@ -38,6 +38,7 @@ Below is an example of 2 pictures showing how this method works. It is currently
 
 ![cutM2](https://github.com/user-attachments/assets/f13f4671-e1aa-4b35-8a7e-8e5cec3b3be7)
 ![cutM1](https://github.com/user-attachments/assets/895d72c9-655a-459f-8b21-1b30a26cdbe4)
+![cutS1](https://github.com/user-attachments/assets/0109960f-e1e7-406c-975e-ee92376ab7ef)
 
 
 > **NPM** -> https://www.npmjs.com/package/kgengine
