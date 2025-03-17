@@ -8,24 +8,26 @@ interface planeHelper {
   color: number;
 }
 
-const Plane = (
+function CreatePlane(
   position: PositionObject3D = {
     x: 0,
     y: 0,
     z: 0,
   },
   size: number = 50,
-  helper: planeHelper
-): THREE.Plane => {
+  helper?: planeHelper
+): THREE.Plane {
   let plane = new THREE.Plane(
     new THREE.Vector3(position.x, position.y, position.z).normalize(),
     size
   );
 
-  const help = new THREE.PlaneHelper(plane, helper.size, helper.color);
-  helper.scene.add(help);
+  if (helper) {
+    const help = new THREE.PlaneHelper(plane, helper.size, helper.color);
+    helper.scene.add(help);
+  }
 
   return plane;
-};
+}
 
-export default Plane;
+export default CreatePlane;

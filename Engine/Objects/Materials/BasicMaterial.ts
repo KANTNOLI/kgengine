@@ -33,6 +33,10 @@ interface MaterialAdmin {
   depthWrite: boolean;
 }
 
+interface ShadersParams {
+  size: THREE.Side;
+}
+
 export const BasicMaterial = (
   basicParams: MaterialBasicParams = {
     color: 0x121212,
@@ -49,6 +53,9 @@ export const BasicMaterial = (
     refractionRatio: 0.5,
     wireframe: false,
     vertexColors: false,
+  },
+  Shaders: ShadersParams = {
+    size: THREE.DoubleSide,
   },
   admin: MaterialAdmin = {
     alphaTest: 0,
@@ -73,6 +80,8 @@ export const BasicMaterial = (
     refractionRatio: CustomParams.refractionRatio,
     wireframe: CustomParams.wireframe,
     vertexColors: CustomParams.vertexColors,
+
+    side: Shaders.size,
 
     alphaTest: admin.alphaTest,
     alphaHash: admin.alphaHash,

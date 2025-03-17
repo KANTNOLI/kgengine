@@ -1,112 +1,167 @@
 import * as THREE from "three";
-import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
-import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
-import { BoxGeometry } from "./Engine/Objects/Geometry/BoxGeometry.js";
-import { WebGLEngine } from "./Engine/VisualEngineConfigs/WebGLEngine.js";
-import { BasicMaterial } from "./Engine/Objects/Materials/BasicMaterial.js";
-import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
-import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
-import { CSS3DEngine } from "./Engine/VisualEngineConfigs/CSS3DEngine.js";
-import { OrbitControll } from "./Engine/PlayerActions/OrbitControll.js";
-import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
-import { DEGREE } from "./Engine/Constants.interface.js";
-import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
-import { AmbientLightCfg } from "./Engine/Lighting/AmbientLightCfg.js";
-import { CSG } from "three-csg-ts";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
+import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-// Создаем сцену для размещения CSS и GL
-const sceneGL = new CreateScene();
-sceneGL.scene.background = null;
-const sceneCSS = new CreateScene();
-sceneCSS.scene.background = new THREE.Color(0x808080);
+// Scene
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0xffffff);
 
-ShadowCfg(sceneGL.scene);
-AmbientLightCfg(sceneGL.scene);
+// Camera
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+camera.position.set(0, 0, 5);
 
-DirectionalLightCfg(sceneGL.scene, { x: 0, y: 2, z: 2 });
+// Renderer
+const renderer = new THREE.WebGLRenderer();
+renderer.setSize(window.innerWidth, window.innerHeight);
+document.body.appendChild(renderer.domElement);
 
-let laptop = new CreateModel(
-  "./KGEngine/Models/gaming_laptop.glb",
-  {
-    posX: 0,
-    posY: 0,
-    posZ: 0,
-    scaleHeight: 0.1,
-    scaleLength: 0.1,
-    scaleWidth: 0.1,
+// Controls
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+
+// Lighting
+const light = new THREE.DirectionalLight(0xffffff, 1);
+light.position.set(1, 1, 1).normalize();
+scene.add(light);
+
+// Load 3D Model
+const loader = new GLTFLoader();
+let model;
+
+loader.load(
+  "./KGEngine/Models/default.glb",
+  (gltf) => {
+    model = gltf.scene;
+    model.scale.set(0.1, 0.1, 0.1);
+    model.position.set(0, 0.5, 2);
+
+    // Функция для создания материала
+    const createCustomMaterial = (originalMaterial) => {
+      return new THREE.ShaderMaterial({
+        uniforms: {
+          u_rectStart: { value: new THREE.Vector3(-1, -1, -1) }, // Начало прямоугольника
+          u_rectEnd: { value: new THREE.Vector3(0.5, 0.5, 0.5) }, // Конец прямоугольника
+          u_texture: { value: originalMaterial.map },
+          u_modelMatrix: { value: new THREE.Matrix4() }
+        },
+        vertexShader: `
+          varying vec2 vUv;
+          varying vec3 vWorldPosition;
+          uniform mat4 u_modelMatrix;
+          
+          void main() {
+            vUv = uv;
+            vec4 worldPosition = u_modelMatrix * vec4(position, 1.0);
+            vWorldPosition = worldPosition.xyz;
+            gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+          }
+        `,
+        fragmentShader: `
+          uniform vec3 u_rectStart;
+          uniform vec3 u_rectEnd;
+          uniform sampler2D u_texture;
+          varying vec2 vUv;
+          varying vec3 vWorldPosition;
+
+          void main() {
+            vec3 rectStart = u_rectStart;
+            vec3 rectEnd = u_rectEnd;
+
+            // Проверка, находится ли пиксель внутри прямоугольника
+            bool insideRect = all(greaterThanEqual(vWorldPosition, rectStart)) && all(lessThanEqual(vWorldPosition, rectEnd));
+
+            if (insideRect) {
+              discard;
+            }
+            gl_FragColor = texture2D(u_texture, vUv);
+          }
+        `,
+        transparent: originalMaterial.transparent,
+        side: THREE.DoubleSide
+      });
+    };
+
+    model.traverse((child) => {
+      if (child.isMesh) {
+        const customMaterial = createCustomMaterial(child.material);
+        customMaterial.uniforms.u_modelMatrix.value = child.matrixWorld;
+        child.material = customMaterial;
+        
+        child.addEventListener('added', () => {
+          child.updateMatrixWorld(true);
+        });
+      }
+    });
+
+    scene.add(model);
   },
-  {}
+  undefined,
+  (error) => {
+    console.error("Error loading model:", error);
+  }
 );
-laptop.setNodeParam((node) => {
-  // Создаем куб
-  const cube = new THREE.Mesh(
-    new THREE.BoxGeometry(1, 1, 1), // Размеры куба
-    new THREE.MeshBasicMaterial({ color: 0xff0000 }) // Материал куба
-  );
 
-  // Устанавливаем позицию куба
-  cube.position.set(0, 0, 1);
+// Cube setup
+const cube = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.ShaderMaterial({
+    uniforms: {
+      u_rectStart: { value: new THREE.Vector3(-1, -1, -1) }, // Начало прямоугольника
+      u_rectEnd: { value: new THREE.Vector3(0.5, 0.5, 0.5) } // Конец прямоугольника
+    },
+    vertexShader: `
+      varying vec3 vWorldPosition;
+      void main() {
+        vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 u_rectStart;
+      uniform vec3 u_rectEnd;
+      varying vec3 vWorldPosition;
+      
+      void main() {
+        vec3 rectStart = u_rectStart;
+        vec3 rectEnd = u_rectEnd;
 
-  // Обновляем матрицы куба и узла (node), чтобы трансформации учитывались
-  cube.updateMatrix();
-  node.updateMatrix();
+        // Проверка, находится ли пиксель внутри прямоугольника
+        bool insideRect = all(greaterThanEqual(vWorldPosition, rectStart)) && all(lessThanEqual(vWorldPosition, rectEnd));
 
-  // Преобразуем куб и узел в CSG
-  const cubeCSG = CSG.fromMesh(cube);
-  const modelCSG = CSG.fromMesh(node);
+        if (insideRect) {
+          discard;
+        }
+      }
+    `,
+    transparent: true
+  })
+);
 
-  // Вычитаем куб из узла
-  const subtractedCSG = modelCSG.subtract(cubeCSG);
+scene.add(cube);
 
-  // Преобразуем результат обратно в Mesh
-  const resultMesh = CSG.toMesh(subtractedCSG, node.matrix, node.material);
+// Animation
+let cubeDirection = 1;
+function animate() {
+  requestAnimationFrame(animate);
 
-  // Добавляем результат в сцену
+  cube.position.z += 0.01 * cubeDirection;
+  if (Math.abs(cube.position.z) > 3) cubeDirection *= -1;
 
-  if (Math.floor((Math.random() * 100) % 2) === 0) {
-    sceneGL.scene.add(resultMesh);
+  if (model) {
+    model.traverse((child) => {
+      if (child.isMesh) {
+        child.material.uniforms.u_rectStart.value.copy(new THREE.Vector3(-0.5, -0.5, -0.5).add(cube.position));
+        child.material.uniforms.u_rectEnd.value.copy(new THREE.Vector3(0.5, 0.5, 0.5).add(cube.position));
+        child.material.uniforms.u_modelMatrix.value = child.matrixWorld;
+      }
+    });
   }
 
-  // Удаляем оригинальный узел и куб, чтобы они не оставались в сцене
-  sceneGL.scene.remove(node);
-  sceneGL.scene.remove(cube);
-
-  console.log("Операция CSG завершена!");
-});
-
-// laptop.customEdit((model) => {
-
-// });
-// laptop.addToScene(sceneGL.scene);
-
-// Тоже самое, что и со сценами
-const rendererGL = WebGLEngine();
-rendererGL.localClippingEnabled = true;
-rendererGL.setClearColor(0x000000, 0);
-const renderCSS = CSS3DEngine();
-renderCSS.domElement.style.backgroundColor = "grey";
-
-renderCSS.domElement.appendChild(rendererGL.domElement);
-
-const camera = DefaultCameraSettings({ x: 3, y: 0, z: 1 });
-const controlls = OrbitControll(rendererGL, camera);
-
-let css3Object1 = CreateCSS3(sceneCSS.scene, {
-  HTMLElement: document.createElement("div"),
-});
-
-css3Object1.scale.set(0.02, 0.02, 0.02);
-css3Object1.position.set(1, 0, 0);
-//css3Object1.rotation.y = DEGREE * 90;
-
-document.body.appendChild(renderCSS.domElement);
-
-const animate = () => {
-  controlls.update();
-  rendererGL.render(sceneGL.scene, camera);
-  renderCSS.render(sceneCSS.scene, camera);
-
-  requestAnimationFrame(animate);
-};
+  cube.material.uniforms.u_rectStart.value.copy(new THREE.Vector3(-0.5, -0.5, -0.5).add(cube.position));
+  cube.material.uniforms.u_rectEnd.value.copy(new THREE.Vector3(0.5, 0.5, 0.5).add(cube.position));
+  controls.update();
+  renderer.render(scene, camera);
+}
 
 animate();

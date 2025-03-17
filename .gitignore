@@ -19,6 +19,7 @@ dist-ssr
 .DS_Store
 laptop2.glb
 *.suo
+CopySnippet
 *.ntvs*
 *.njsproj
 *.sln

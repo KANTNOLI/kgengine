@@ -1,15 +1,36 @@
 import * as THREE from "three";
 import { CSS3DObject } from "three/examples/jsm/Addons.js";
+import CreatePlane from "./CreatePlane.js";
+import CustomObject from "./CustomObject.js";
+import { PlaneGeometry } from "../Geometry/PlaneGeometry.js";
+import { BasicMaterial } from "../Materials/BasicMaterial.js";
+import {
+  DEGREE,
+  PositionObject3D,
+  RotationObject3D,
+} from "../../Constants.interface.js";
 
 interface PasteHTMLObject {
   HTMLElement: HTMLElement;
-  classList?: string | string[];
+  classList: string | string[];
+}
+
+interface HTMLObject {
+  HTMLElement: CSS3DObject;
+  HitBox: THREE.Object3D;
+}
+
+interface HTMLObjectSizes {
+  width: number;
+  height: number;
 }
 
 const CreateCSS3 = (
-  scene: THREE.Scene,
+  sceneGL: THREE.Scene,
+  sceneCSS: THREE.Scene,
+  sizes: HTMLObjectSizes = { width: 100, height: 100 },
   params?: PasteHTMLObject
-): CSS3DObject => {
+): HTMLObject => {
   if (params) {
     if (params.classList && !Array.isArray(params.classList)) {
       params.classList = [params.classList];
@@ -21,8 +42,8 @@ const CreateCSS3 = (
         params.HTMLElement?.classList.add(value);
       });
     } else {
-      params.HTMLElement.style.width = "100px";
-      params.HTMLElement.style.height = "50px";
+      params.HTMLElement.style.width = `${sizes.width}px`;
+      params.HTMLElement.style.height = `${sizes.height}px`;
       params.HTMLElement.style.opacity = "1.0";
       params.HTMLElement.style.background = "red";
       params.HTMLElement.style.display = "flex";
@@ -35,15 +56,37 @@ const CreateCSS3 = (
     }
 
     const cssObject = new CSS3DObject(params.HTMLElement);
-    scene.add(cssObject);
-    return cssObject;
+    sceneCSS.add(cssObject);
+
+    let plane = CustomObject(
+      PlaneGeometry(),
+      BasicMaterial({}, {}, { size: THREE.BackSide })
+    );
+
+    sceneGL.add(plane);
+
+    plane.position.set(
+      cssObject.position.x,
+      cssObject.position.y,
+      cssObject.position.z
+    );
+
+    plane.rotation.set(
+      cssObject.rotation.x,
+      cssObject.rotation.y,
+      cssObject.rotation.z
+    );
+
+    plane.scale.set(100 * 0.01, 50 * 0.01, 1);
+
+    return { HTMLElement: cssObject, HitBox: plane };
   } else {
     let div = document.createElement("div");
 
-    div.style.width = "100px";
-    div.style.height = "100px";
+    div.style.width = `${sizes.width}px`;
+    div.style.height = `${sizes.height}px`;
     div.style.opacity = "1.0";
-    div.style.background = "yellow";
+    div.style.background = "blue";
     div.style.display = "flex";
     div.style.alignItems = "center";
     div.style.justifyContent = "center";
@@ -53,9 +96,66 @@ const CreateCSS3 = (
     div.textContent = `Объект Rand`;
 
     const cssObject = new CSS3DObject(div);
-    scene.add(cssObject);
-    return cssObject;
+    cssObject.scale.set(0.02, 0.02, 0.02);
+
+    sceneCSS.add(cssObject);
+    let plane = CustomObject(
+      PlaneGeometry(),
+      BasicMaterial({ color: 0x00011 }, {}, { size: THREE.BackSide })
+    );
+
+    sceneGL.add(plane);
+
+    plane.position.set(
+      cssObject.position.x,
+      cssObject.position.y,
+      cssObject.position.z
+    );
+
+    plane.rotation.set(
+      cssObject.rotation.x,
+      cssObject.rotation.y,
+      cssObject.rotation.z
+    );
+
+    plane.scale.set(sizes.width * 0.02, sizes.height * 0.02, 1);
+
+    return { HTMLElement: cssObject, HitBox: plane };
   }
 };
 
+interface HTMLUpdateSize {
+  width: number;
+  height: number;
+}
+
+const UpdateCSS3 = (
+  HTML: HTMLObject,
+  position: PositionObject3D = {
+    x: 0,
+    y: 0,
+    z: 0,
+  },
+  rotation: RotationObject3D = {
+    x: 0,
+    y: 0,
+    z: 0,
+  },
+  scale: HTMLUpdateSize = {
+    width: 120,
+    height: 120,
+  }
+): HTMLObject => {
+  HTML.HitBox.position.set(position.x, position.y, position.z);
+  HTML.HitBox.rotation.set(rotation.x, rotation.y, rotation.z);
+  HTML.HitBox.scale.set(scale.width * 0.02, scale.height * 0.02, 1);
+
+  HTML.HTMLElement.position.set(position.x, position.y, position.z);
+  HTML.HTMLElement.rotation.set(rotation.x, rotation.y, rotation.z);
+  HTML.HTMLElement.scale.set(scale.width * 0.0002, scale.height * 0.0002, 1);
+
+  return { HTMLElement: HTML.HTMLElement, HitBox: HTML.HitBox };
+};
+
 export default CreateCSS3;
+export { UpdateCSS3 };

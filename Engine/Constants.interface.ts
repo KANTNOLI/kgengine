@@ -5,6 +5,13 @@ export interface PositionObject3D {
   z: number;
 }
 
+export interface RotationObject3D {
+  x: number;
+  y: number;
+  z: number;
+}
+
+
 export type LightingTypes =
   | THREE.AmbientLight
   | THREE.DirectionalLight
