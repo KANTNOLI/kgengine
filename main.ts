@@ -44,7 +44,7 @@ UpdateCSS3(
   { height: 64, width: 64 }
 );
 
-let updateCameras = CamerasCuttingHelper(css3Object1, camera);
+let updateCameras = CamerasCuttingHelper(css3Object1, camera, sceneGL.scene);
 
 // const cube = new THREE.Mesh(
 //   BoxGeometry({ width: 1, depth: 1, height: 1 }),
@@ -55,58 +55,6 @@ let updateCameras = CamerasCuttingHelper(css3Object1, camera);
 // camera.lookAt(cube.position);
 
 document.body.appendChild(renderCSS.domElement);
-
-const vertices = new Float32Array([
-  // Нижняя грань
-  -0.8, -0.8, -0.8, // Вершина 0
-   0.8, -0.8, -0.8, // Вершина 0.8
-   0.8, -0.8,  0.8, // Вершина 2
-  -0.8, -0.8,  0.8, // Вершина 3
-
-  // Верхняя грань
-  -2,  1, -2, // Вершина 4
-   2,  1, -2, // Вершина 5
-   2,  1,  2, // Вершина 6
-  -2,  1,  2 // Вершина 7
-]);
-
-// Индексы для создания граней (12 треугольников)
-const indices = [
-  // Нижняя грань
-  0, 1, 3,
-  0, 2, 3,
-
-  // Верхняя грань
-  4, 5, 6,
-  4, 6, 7,
-
-  // Боковые грани
-  0, 1, 5,
-  0, 5, 4,
-
-  1, 2, 6,
-  1, 6, 5,
-
-  5, 3, 7,
-  2, 7, 6,
-
-  3, 0, 4,
-  3, 4, 7
-];
-
-// Создаем геометрию
-const geometry = new THREE.BufferGeometry();
-geometry.setAttribute('position', new THREE.BufferAttribute(vertices, 3));
-geometry.setIndex(indices);
-geometry.computeVertexNormals(); // Вычисляем нормали
-
-// Создаем материал
-const material = new THREE.MeshBasicMaterial({ color: 0x00ff00, wireframe: true });
-
-// Создаем меш
-const customBox = new THREE.Mesh(geometry, material);
-
-sceneGL.addScene(customBox)
 
 const animate = () => {
   //cube.rotation.y += 0.01;
