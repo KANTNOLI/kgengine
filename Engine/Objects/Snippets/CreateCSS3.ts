@@ -1,6 +1,5 @@
 import * as THREE from "three";
 import { CSS3DObject } from "three/examples/jsm/Addons.js";
-import CreatePlane from "./CreatePlane.js";
 import CustomObject from "./CustomObject.js";
 import { PlaneGeometry } from "../Geometry/PlaneGeometry.js";
 import { BasicMaterial } from "../Materials/BasicMaterial.js";
@@ -52,7 +51,7 @@ const CreateCSS3 = (
       params.HTMLElement.style.color = "white";
       params.HTMLElement.style.fontSize = "14px";
       params.HTMLElement.style.fontFamily = "Arial, sans-serif";
-      params.HTMLElement.textContent = `Объект Rand`;
+      params.HTMLElement.textContent = `Объект HTML`;
     }
 
     const cssObject = new CSS3DObject(params.HTMLElement);
@@ -93,7 +92,7 @@ const CreateCSS3 = (
     div.style.color = "white";
     div.style.fontSize = "14px";
     div.style.fontFamily = "Arial, sans-serif";
-    div.textContent = `Объект Rand`;
+    div.textContent = `Объект HTML`;
 
     const cssObject = new CSS3DObject(div);
     cssObject.scale.set(0.02, 0.02, 0.02);
