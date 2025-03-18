@@ -30,7 +30,7 @@ rendererGL.setClearColor(0x000000, 0);
 // Создание фона для сцены без перерисовки
 renderCSS.domElement.style.backgroundColor = "grey";
 
-const camera = DefaultCameraSettings({ x:2, y: 1, z: 5});
+const camera = DefaultCameraSettings({ x:0, y: 1, z: 5});
 const controlls = OrbitControll(rendererGL, camera);
 
 let css3Object1 = CreateCSS3(sceneGL.scene, sceneCSS.scene);

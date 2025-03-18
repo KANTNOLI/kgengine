@@ -16,28 +16,28 @@ const CamerasCuttingHelper = (
   Object: HTMLObject,
   camera: THREE.Camera,
   scene: THREE.Scene,
-  depth: number = 10
+  depth: number = 100
 ) => {
   const box = new THREE.Box3().setFromObject(Object.HitBox);
 
   let CoordLeftTop: Coordinates = {
-    x: (box.min.x - camera.position.x) * depth,
-    y: (box.max.y - camera.position.y) * depth,
+    x: (box.min.x - camera.position.x) * (depth  + 5),
+    y: (box.max.y - camera.position.y) * (depth  + 5),
     z: (box.max.z - camera.position.z) * depth,
   };
   let CoordRightTop: Coordinates = {
-    x: (box.max.x - camera.position.x) * depth,
-    y: (box.max.y - camera.position.y) * depth,
+    x: (box.max.x - camera.position.x) * (depth  + 5),
+    y: (box.max.y - camera.position.y) * (depth  + 5),
     z: (box.max.z - camera.position.z) * depth,
   };
   let CoordRightBottom: Coordinates = {
-    x: (box.max.x - camera.position.x) * depth,
-    y: (box.min.y - camera.position.y) * depth,
+    x: (box.max.x - camera.position.x) * (depth  + 5),
+    y: (box.min.y - camera.position.y) * (depth  + 5),
     z: (box.max.z - camera.position.z) * depth,
   };
   let CoordLeftBottom: Coordinates = {
-    x: (box.min.x - camera.position.x) * depth,
-    y: (box.min.y - camera.position.y) * depth,
+    x: (box.min.x - camera.position.x) * (depth  + 5),
+    y: (box.min.y - camera.position.y) * (depth  + 5),
     z: (box.max.z - camera.position.z) * depth,
   };
 
@@ -87,15 +87,14 @@ const CamerasCuttingHelper = (
     3, 0, 4, 3, 4, 7,
   ];
 
-  // Создаем геометрию
   const geometry = new THREE.BufferGeometry();
   geometry.setAttribute("position", new THREE.BufferAttribute(vertices, 3));
   geometry.setIndex(indices);
-  geometry.computeVertexNormals(); // Вычисляем нормали
+  geometry.computeVertexNormals();
 
   // Создаем материал
   const material = new THREE.MeshBasicMaterial({
-    color: 0x00ff00,
+    color: 0xfc4747,
     wireframe: true,
   });
 
