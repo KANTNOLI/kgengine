@@ -84,6 +84,7 @@ export const LambertMaterial = (
     refractionRatio: CustomParams.refractionRatio,
     wireframe: CustomParams.wireframe,
     vertexColors: CustomParams.vertexColors,
+  
 
     alphaTest: admin.alphaTest,
     depthTest: admin.depthTest,

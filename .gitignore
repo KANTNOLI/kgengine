@@ -24,3 +24,4 @@ CopySnippet
 *.njsproj
 *.sln
 *.sw?
+.gitignore

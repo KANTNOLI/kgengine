@@ -1,5 +1,6 @@
 import * as THREE from "three";
 import { CSS3DObject } from "three/examples/jsm/Addons.js";
+import { PositionObject3D } from "../../Constants.interface.js";
 
 interface HTMLObject {
   HTMLElement: CSS3DObject;
@@ -12,6 +13,20 @@ interface Coordinates {
   z: number;
 }
 
+interface CustomCube {
+  texture: THREE.Material | THREE.Material[] | null;
+
+  depth: number;
+
+  CoordLT: PositionObject3D;
+  CoordLB: PositionObject3D;
+  CoordRT: PositionObject3D;
+  CoordRB: PositionObject3D;
+
+  startZ: number;
+  endZ: number;
+}
+
 const CamerasCuttingHelper = (
   Object: HTMLObject,
   camera: THREE.Camera,
@@ -19,26 +34,55 @@ const CamerasCuttingHelper = (
   depth: number = 100
 ) => {
   const box = new THREE.Box3().setFromObject(Object.HitBox);
+  const SnippetCoords: CustomCube = {
+    texture: null,
+
+    depth: depth,
+
+    CoordLT: {
+      x: box.min.x - camera.position.x,
+      y: box.max.y - camera.position.y,
+      z: box.max.z - camera.position.z,
+    },
+    CoordLB: {
+      x: box.min.x - camera.position.x,
+      y: box.min.y - camera.position.y,
+      z: box.max.z - camera.position.z,
+    },
+    CoordRT: {
+      x: box.max.x - camera.position.x,
+      y: box.max.y - camera.position.y,
+      z: box.max.z - camera.position.z,
+    },
+    CoordRB: {
+      x: box.max.x - camera.position.x,
+      y: box.min.y - camera.position.y,
+      z: box.max.z - camera.position.z,
+    },
+
+    startZ: box.max.z,
+    endZ: (box.max.z - camera.position.z) * depth,
+  };
 
   let CoordLeftTop: Coordinates = {
-    x: (box.min.x - camera.position.x) * (depth  + 5),
-    y: (box.max.y - camera.position.y) * (depth  + 5),
-    z: (box.max.z - camera.position.z) * depth,
+    x: SnippetCoords.CoordLT.x * (depth + 1),
+    y: SnippetCoords.CoordLT.y * (depth + 1),
+    z: SnippetCoords.CoordLT.z * depth,
   };
   let CoordRightTop: Coordinates = {
-    x: (box.max.x - camera.position.x) * (depth  + 5),
-    y: (box.max.y - camera.position.y) * (depth  + 5),
-    z: (box.max.z - camera.position.z) * depth,
+    x: SnippetCoords.CoordRT.x * (depth + 1),
+    y: SnippetCoords.CoordRT.y * (depth + 1),
+    z: SnippetCoords.CoordRT.z * depth,
   };
   let CoordRightBottom: Coordinates = {
-    x: (box.max.x - camera.position.x) * (depth  + 5),
-    y: (box.min.y - camera.position.y) * (depth  + 5),
-    z: (box.max.z - camera.position.z) * depth,
+    x: SnippetCoords.CoordRB.x * (depth + 1),
+    y: SnippetCoords.CoordRB.y * (depth + 1),
+    z: SnippetCoords.CoordRB.z * depth,
   };
   let CoordLeftBottom: Coordinates = {
-    x: (box.min.x - camera.position.x) * (depth  + 5),
-    y: (box.min.y - camera.position.y) * (depth  + 5),
-    z: (box.max.z - camera.position.z) * depth,
+    x: SnippetCoords.CoordLB.x * (depth + 1),
+    y: SnippetCoords.CoordLB.y * (depth + 1),
+    z: SnippetCoords.CoordLB.z * depth,
   };
 
   const vertices = new Float32Array([
@@ -103,15 +147,20 @@ const CamerasCuttingHelper = (
 
   scene.add(customBox);
 
-  // Вывод: Width: 5, Height: 3, Depth: 2
-
-  return () => {
-    // if (history != camera.position) {
-    //   history = camera.position;
-    //   console.log(history);
-    // }
-    // return camera.position;
-  };
+  return customBox;
 };
 
-export default CamerasCuttingHelper;
+const UpdateCamCutHelper = (
+  former: THREE.Object3D,
+  Object: HTMLObject,
+  camera: THREE.Camera,
+  scene: THREE.Scene,
+  depth: number = 100
+) => {
+  setTimeout(() => {
+    scene.remove(former);
+  }, 1);
+  return CamerasCuttingHelper(Object, camera, scene, depth);
+};
+
+export { CamerasCuttingHelper, UpdateCamCutHelper };
