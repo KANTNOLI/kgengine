@@ -44,12 +44,18 @@ UpdateCSS3(
     HitBox: css3Object1.HitBox,
     HTMLElement: css3Object1.HTMLElement,
   },
-  { x: 0, y: 1, z: 0 },
+  { x: 0, y: 0, z: 0 },
   { x: 0, y: 0, z: 0 },
   { height: 64, width: 64 }
 );
 
-let cumHelper = CamerasCuttingHelper(css3Object1, camera, sceneGL.scene, 50);
+let cumHelper = CamerasCuttingHelper(
+  css3Object1,
+  camera,
+  sceneGL.scene,
+  false,
+  50
+);
 
 let model = new CreateModel(
   "./KGEngine/Models/default.glb",
@@ -99,6 +105,7 @@ const animate = () => {
     css3Object1,
     camera,
     sceneGL.scene,
+    true,
     50
   );
   controlls.update();

@@ -31,9 +31,11 @@ const CamerasCuttingHelper = (
   Object: HTMLObject,
   camera: THREE.Camera,
   scene: THREE.Scene,
+  helper: boolean = false,
   depth: number = 100
 ) => {
   const box = new THREE.Box3().setFromObject(Object.HitBox);
+
   const SnippetCoords: CustomCube = {
     texture: null,
 
@@ -65,24 +67,24 @@ const CamerasCuttingHelper = (
   };
 
   let CoordLeftTop: Coordinates = {
-    x: SnippetCoords.CoordLT.x * (depth + 1),
-    y: SnippetCoords.CoordLT.y * (depth + 1),
-    z: SnippetCoords.CoordLT.z * depth,
+    x: SnippetCoords.CoordLT.x * depth,
+    y: SnippetCoords.CoordLT.y * depth,
+    z: SnippetCoords.CoordLT.z * depth + 1,
   };
   let CoordRightTop: Coordinates = {
-    x: SnippetCoords.CoordRT.x * (depth + 1),
-    y: SnippetCoords.CoordRT.y * (depth + 1),
-    z: SnippetCoords.CoordRT.z * depth,
+    x: SnippetCoords.CoordRT.x * depth,
+    y: SnippetCoords.CoordRT.y * depth,
+    z: SnippetCoords.CoordRT.z * depth + 1,
   };
   let CoordRightBottom: Coordinates = {
-    x: SnippetCoords.CoordRB.x * (depth + 1),
-    y: SnippetCoords.CoordRB.y * (depth + 1),
-    z: SnippetCoords.CoordRB.z * depth,
+    x: SnippetCoords.CoordRB.x * depth,
+    y: SnippetCoords.CoordRB.y * depth,
+    z: SnippetCoords.CoordRB.z * depth + 1,
   };
   let CoordLeftBottom: Coordinates = {
-    x: SnippetCoords.CoordLB.x * (depth + 1),
-    y: SnippetCoords.CoordLB.y * (depth + 1),
-    z: SnippetCoords.CoordLB.z * depth,
+    x: SnippetCoords.CoordLB.x * depth,
+    y: SnippetCoords.CoordLB.y * depth,
+    z: SnippetCoords.CoordLB.z * depth + 1,
   };
 
   const vertices = new Float32Array([
@@ -139,8 +141,11 @@ const CamerasCuttingHelper = (
   // Создаем материал
   const material = new THREE.MeshBasicMaterial({
     color: 0xfc4747,
-    wireframe: true,
+    wireframe: helper,
+    opacity: helper ? 1 : 0,
+    transparent: true,
   });
+  console.log(helper);
 
   // Создаем меш
   const customBox = new THREE.Mesh(geometry, material);
@@ -155,12 +160,12 @@ const UpdateCamCutHelper = (
   Object: HTMLObject,
   camera: THREE.Camera,
   scene: THREE.Scene,
+  helper: boolean = false,
   depth: number = 100
 ) => {
-  setTimeout(() => {
-    scene.remove(former);
-  }, 1);
-  return CamerasCuttingHelper(Object, camera, scene, depth);
+  scene.remove(former);
+
+  return CamerasCuttingHelper(Object, camera, scene, helper, depth);
 };
 
 export { CamerasCuttingHelper, UpdateCamCutHelper };
