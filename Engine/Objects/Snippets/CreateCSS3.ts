@@ -151,7 +151,7 @@ const UpdateCSS3 = (
 
   HTML.HTMLElement.position.set(position.x, position.y, position.z);
   HTML.HTMLElement.rotation.set(rotation.x, rotation.y, rotation.z);
-  HTML.HTMLElement.scale.set(scale.width * 0.0002, scale.height * 0.0002, 1);
+  HTML.HTMLElement.scale.set(scale.width * 0.0004, scale.height * 0.0004, 1);
 
   return { HTMLElement: HTML.HTMLElement, HitBox: HTML.HitBox };
 };

@@ -54,12 +54,12 @@ export class CreateModel {
     });
   }
 
-  setCustomNodeParam(
-    callback: (node: THREE.Object3D, model: THREE.Object3D) => any
-  ) {
+  setCustomNodeParam(callback: (node: any) => any) {
     this.intervalSnippet(() => {
-      this.model.traverse((node: THREE.Object3D) => {
-        callback(node, this.model);
+      this.model.traverse((node) => {
+        if (node.isMesh) {
+          callback(node);
+        }
       });
     });
   }

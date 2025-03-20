@@ -14,8 +14,6 @@ interface Coordinates {
 }
 
 interface CustomCube {
-  texture: THREE.Material | THREE.Material[] | null;
-
   depth: number;
 
   CoordLT: PositionObject3D;
@@ -37,8 +35,6 @@ const CamerasCuttingHelper = (
   const box = new THREE.Box3().setFromObject(Object.HitBox);
 
   const SnippetCoords: CustomCube = {
-    texture: null,
-
     depth: depth,
 
     CoordLT: {
@@ -138,21 +134,19 @@ const CamerasCuttingHelper = (
   geometry.setIndex(indices);
   geometry.computeVertexNormals();
 
-  // Создаем материал
   const material = new THREE.MeshBasicMaterial({
     color: 0xfc4747,
     wireframe: helper,
     opacity: helper ? 1 : 0,
     transparent: true,
   });
-  console.log(helper);
-
-  // Создаем меш
   const customBox = new THREE.Mesh(geometry, material);
-
   scene.add(customBox);
 
-  return customBox;
+  return {
+    object: customBox,
+    Coords: SnippetCoords,
+  };
 };
 
 const UpdateCamCutHelper = (

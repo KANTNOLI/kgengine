@@ -16,12 +16,15 @@ import {
 } from "./Engine/Shaders/Tools/CamerasCuttingHelper.js";
 import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
 import { CuttingCustomBox } from "./Engine/Shaders/Snippets/CuttingCustomBox.js";
+import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
 
 // Создаем сцену для размещения CSS и GL
 const sceneGL = new CreateScene();
 const sceneCSS = new CreateScene();
 // Удаление фона чтобы не перекрывало
 sceneGL.scene.background = null;
+
+DirectionalLightCfg(sceneGL.scene);
 
 // Тоже самое, что и со сценами
 const rendererGL = WebGLEngine();
@@ -38,7 +41,11 @@ renderCSS.domElement.style.backgroundColor = "grey";
 const camera = DefaultCameraSettings({ x: 0, y: 1, z: 5 });
 const controlls = OrbitControll(rendererGL, camera);
 
-let css3Object1 = CreateCSS3(sceneGL.scene, sceneCSS.scene);
+let css3Object1 = CreateCSS3(sceneGL.scene, sceneCSS.scene, {
+  height: 50,
+  width: 50,
+});
+
 UpdateCSS3(
   {
     HitBox: css3Object1.HitBox,
@@ -46,7 +53,7 @@ UpdateCSS3(
   },
   { x: 0, y: 0, z: 0 },
   { x: 0, y: 0, z: 0 },
-  { height: 64, width: 64 }
+  { height: 50, width: 50 }
 );
 
 let cumHelper = CamerasCuttingHelper(
@@ -70,7 +77,25 @@ let model = new CreateModel(
   {}
 );
 
-// model.addToScene(sceneGL.scene);
+model.setCustomNodeParam((node) => {
+  const originalMaterial = node.material;
+
+  let ShaderMaterial = CuttingCustomBox({
+    CoordLB: cumHelper.Coords.CoordLB,
+    CoordLT: cumHelper.Coords.CoordLT,
+    CoordRB: cumHelper.Coords.CoordRB,
+    CoordRT: cumHelper.Coords.CoordRT,
+    depth: cumHelper.Coords.depth,
+    startZ: cumHelper.Coords.startZ,
+    endZ: cumHelper.Coords.endZ,
+    texture: originalMaterial.map,
+    matrix: new THREE.Matrix4(),
+  });
+
+  node.material = ShaderMaterial;
+});
+
+model.addToScene(sceneGL.scene);
 // model.setNodeParam(async (node) => {
 //   let data = await
 //   console.log(data);
@@ -89,19 +114,11 @@ let model = new CreateModel(
 //   node.material = customMaterial;
 // });
 
-// const cube = new THREE.Mesh(
-//   BoxGeometry({ width: 1, depth: 1, height: 1 }),
-//   BasicMaterial({ color: 0x00022 })
-// );
-// cube.position.set(1, 0, 0);
-// sceneGL.addScene(cube);
-// camera.lookAt(cube.position);
-
 document.body.appendChild(renderCSS.domElement);
 
 const animate = () => {
   cumHelper = UpdateCamCutHelper(
-    cumHelper,
+    cumHelper.object,
     css3Object1,
     camera,
     sceneGL.scene,
