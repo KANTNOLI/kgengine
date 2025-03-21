@@ -1,4 +1,4 @@
-## The project is in its prime)
+## The documentation has also been updated today
 
 > Если вам нравится моя задумка, буду рад вашей поддержке ввиде звёздочки) Тем самым Я буду знать, что делаю это не просто для себя, спасибо!
 
