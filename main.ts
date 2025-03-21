@@ -60,24 +60,33 @@ let cumHelper = CamerasCuttingHelper(
   css3Object1,
   camera,
   sceneGL.scene,
-  false,
-  50
+  true,
+  10
 );
+
+// let cumHelper2 = CamerasCuttingHelper(
+//   css3Object1,
+//   camera,
+//   sceneGL.scene,
+//   false,
+//   1
+// );
 
 let model = new CreateModel(
   "./KGEngine/Models/default.glb",
   {
     posX: 0,
     posY: 2,
-    posZ: 0,
+    posZ: 0.5,
     scaleHeight: 0.2,
     scaleLength: 0.2,
     scaleWidth: 0.2,
+    rotateX: 24
   },
   {}
 );
 
-model.setCustomNodeParam((node) => {
+model.setNodeParam((node) => {
   const originalMaterial = node.material;
 
   let ShaderMaterial = CuttingCustomBox({
@@ -89,13 +98,14 @@ model.setCustomNodeParam((node) => {
     startZ: cumHelper.Coords.startZ,
     endZ: cumHelper.Coords.endZ,
     texture: originalMaterial.map,
-    matrix: new THREE.Matrix4(),
+    matrix: node.matrixWorld,
   });
 
   node.material = ShaderMaterial;
 });
 
-model.addToScene(sceneGL.scene);
+ model.addToScene(sceneGL.scene);
+
 // model.setNodeParam(async (node) => {
 //   let data = await
 //   console.log(data);
@@ -125,6 +135,7 @@ const animate = () => {
     true,
     50
   );
+
   controlls.update();
   rendererGL.render(sceneGL.scene, camera);
   renderCSS.render(sceneCSS.scene, camera);

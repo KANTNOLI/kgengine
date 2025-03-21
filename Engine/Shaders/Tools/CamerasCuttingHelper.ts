@@ -21,8 +21,8 @@ interface CustomCube {
   CoordRT: PositionObject3D;
   CoordRB: PositionObject3D;
 
-  startZ: number;
-  endZ: number;
+  startZ: PositionObject3D;
+  endZ: PositionObject3D;
 }
 
 const CamerasCuttingHelper = (
@@ -33,7 +33,7 @@ const CamerasCuttingHelper = (
   depth: number = 100
 ) => {
   const box = new THREE.Box3().setFromObject(Object.HitBox);
-
+  
   const SnippetCoords: CustomCube = {
     depth: depth,
 
@@ -58,8 +58,25 @@ const CamerasCuttingHelper = (
       z: box.max.z - camera.position.z,
     },
 
-    startZ: box.max.z,
-    endZ: (box.max.z - camera.position.z) * depth,
+    //x - width
+    //y - hight
+    //z - depth
+    startZ: {
+      x: box.max.x - box.min.x,
+      y: box.max.y - box.min.y,
+      z: box.max.z,
+    },
+    endZ: {
+      x: 0,
+      y: 0,
+      z: 0,
+    },
+  };
+
+  SnippetCoords.endZ = {
+    x: (SnippetCoords.CoordLT.x * depth) - (SnippetCoords.CoordRT.x * depth),
+    y: (SnippetCoords.CoordLT.y * depth) - (SnippetCoords.CoordRB.y * depth),
+    z: SnippetCoords.CoordLT.z * depth + 1,
   };
 
   let CoordLeftTop: Coordinates = {
@@ -113,20 +130,42 @@ const CamerasCuttingHelper = (
   ]);
 
   const indices = [
-    // Нижняя грань
-    0, 1, 3, 0, 2, 3,
-
-    // Верхняя грань
-    4, 5, 6, 4, 6, 7,
-
-    // Боковые грани
-    0, 1, 5, 0, 5, 4,
-
-    1, 2, 6, 1, 6, 5,
-
-    5, 3, 7, 2, 7, 6,
-
-    3, 0, 4, 3, 4, 7,
+    0,
+    1,
+    2,
+    0,
+    2,
+    3, // Нижняя грань
+    4,
+    5,
+    6,
+    4,
+    6,
+    7, // Верхняя грань
+    0,
+    1,
+    5,
+    0,
+    5,
+    4, // Передняя грань
+    1,
+    2,
+    6,
+    1,
+    6,
+    5, // Правая грань
+    2,
+    3,
+    7,
+    2,
+    7,
+    6, // Задняя грань
+    3,
+    0,
+    4,
+    3,
+    4,
+    7, // Левая грань
   ];
 
   const geometry = new THREE.BufferGeometry();
@@ -135,9 +174,9 @@ const CamerasCuttingHelper = (
   geometry.computeVertexNormals();
 
   const material = new THREE.MeshBasicMaterial({
-    color: 0xfc4747,
+    color: 0x0001111,
     wireframe: helper,
-    opacity: helper ? 1 : 0,
+    opacity: 1,
     transparent: true,
   });
   const customBox = new THREE.Mesh(geometry, material);
