@@ -73,10 +73,10 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
             }
           }
 
-          if(-vWorldPosition.x + (u_startZ.x / 2.0) + positionWorld.x >= u_CoordRB.x * -(vWorldPosition.z / u_CoordRB.z)
-          && -vWorldPosition.x - (u_startZ.x / 2.0) + positionWorld.x <= u_CoordLB.x * -(vWorldPosition.z / u_CoordLB.z)
-          && -vWorldPosition.y - (u_startZ.y / 2.0) + positionWorld.y <= u_CoordRB.y * -(vWorldPosition.z / u_CoordRB.z)
-          && -vWorldPosition.y + (u_startZ.y / 2.0) + positionWorld.y >= u_CoordRT.y * -(vWorldPosition.z / u_CoordRT.z)){
+          if(-vWorldPosition.x + (u_startZ.x / 2.0) + positionWorld.x >= u_CoordRB.x * -((vWorldPosition.z - positionWorld.z) / u_CoordRB.z)
+          && -vWorldPosition.x - (u_startZ.x / 2.0) + positionWorld.x <= u_CoordLB.x * -((vWorldPosition.z - positionWorld.z) / u_CoordLB.z)
+          && -vWorldPosition.y - (u_startZ.y / 2.0) + positionWorld.y <= u_CoordRB.y * -((vWorldPosition.z - positionWorld.z) / u_CoordRB.z)
+          && -vWorldPosition.y + (u_startZ.y / 2.0) + positionWorld.y >= u_CoordRT.y * -((vWorldPosition.z - positionWorld.z) / u_CoordRT.z)){
             discard;
           }
 

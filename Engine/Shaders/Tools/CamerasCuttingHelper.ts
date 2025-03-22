@@ -70,7 +70,7 @@ const CamerasCuttingHelper = (
     startZ: {
       x: box.max.x - box.min.x,
       y: box.max.y - box.min.y,
-      z: box.max.z,
+      z: Object.HitBox.position.z,
     },
     positionWorld: {
       x: Object.HitBox.position.x,
@@ -108,22 +108,22 @@ const CamerasCuttingHelper = (
   let CoordLeftBottom: Coordinates = {
     x: SnippetCoords.CoordLB.x * depth,
     y: SnippetCoords.CoordLB.y * depth,
-    z: SnippetCoords.CoordLB.z * depth + 1,
+    z: SnippetCoords.CoordLB.z * depth + 1 ,
   };
 
   const vertices = new Float32Array([
     box.min.x,
     box.max.y,
-    0, // Вершина 0
+    box.max.z, // Вершина 0
     box.max.x,
     box.max.y,
-    0, // Вершина 1
+    box.max.z, // Вершина 1
     box.max.x,
     box.min.y,
-    0, // Вершина 2
+    box.max.z, // Вершина 2
     box.min.x,
     box.min.y,
-    0, // Вершина 3
+    box.max.z, // Вершина 3
 
     // Верхняя грань
     CoordLeftTop.x,

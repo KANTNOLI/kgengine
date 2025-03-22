@@ -44,7 +44,7 @@ const controlls = OrbitControll(rendererGL, camera);
 let css3Object1 = CreateCSS3(
   sceneGL.scene,
   sceneCSS.scene,
-  { x: 1, y: 0, z: 0 },
+  { x: 0, y: 0, z: 2},
   {
     height: 52,
     width: 102,
