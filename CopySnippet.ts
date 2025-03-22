@@ -97,16 +97,69 @@ loader.load(
     scene.add(model);
   },
   undefined,
-  (error) => {  
+  (error) => {
     console.error("Error loading model:", error);
   }
 );
 
+// Cube setup
+const cube = new THREE.Mesh(
+  new THREE.BoxGeometry(1, 1, 1),
+  new THREE.ShaderMaterial({
+    uniforms: {
+      u_rectStart: { value: new THREE.Vector3(-1, -1, -1) }, // Начало прямоугольника
+      u_rectEnd: { value: new THREE.Vector3(0.5, 0.5, 0.5) } // Конец прямоугольника
+    },
+    vertexShader: `
+      varying vec3 vWorldPosition;
+      void main() {
+        vWorldPosition = (modelMatrix * vec4(position, 1.0)).xyz;
+        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+      }
+    `,
+    fragmentShader: `
+      uniform vec3 u_rectStart;
+      uniform vec3 u_rectEnd;
+      varying vec3 vWorldPosition;
+      
+      void main() {
+        vec3 rectStart = u_rectStart;
+        vec3 rectEnd = u_rectEnd;
 
+        // Проверка, находится ли пиксель внутри прямоугольника
+        bool insideRect = all(greaterThanEqual(vWorldPosition, rectStart)) && all(lessThanEqual(vWorldPosition, rectEnd));
+
+        if (insideRect) {
+          discard;
+        }
+      }
+    `,
+    transparent: true
+  })
+);
+
+scene.add(cube);
 
 // Animation
+let cubeDirection = 1;
 function animate() {
   requestAnimationFrame(animate);
+
+  cube.position.z += 0.01 * cubeDirection;
+  if (Math.abs(cube.position.z) > 3) cubeDirection *= -1;
+
+  if (model) {
+    model.traverse((child) => {
+      if (child.isMesh) {
+        child.material.uniforms.u_rectStart.value.copy(new THREE.Vector3(-0.5, -0.5, -0.5).add(cube.position));
+        child.material.uniforms.u_rectEnd.value.copy(new THREE.Vector3(0.5, 0.5, 0.5).add(cube.position));
+        child.material.uniforms.u_modelMatrix.value = child.matrixWorld;
+      }
+    });
+  }
+
+  cube.material.uniforms.u_rectStart.value.copy(new THREE.Vector3(-0.5, -0.5, -0.5).add(cube.position));
+  cube.material.uniforms.u_rectEnd.value.copy(new THREE.Vector3(0.5, 0.5, 0.5).add(cube.position));
   controls.update();
   renderer.render(scene, camera);
 }

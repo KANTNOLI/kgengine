@@ -83,7 +83,8 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
           //7.5 - startZ
           //endz - startz
 
-          if(-vWorldPosition.x + (u_startZ.x / 2.0) >= u_CoordRB.x * -(vWorldPosition.z / u_CoordRB.z)){
+          if(-vWorldPosition.x + (u_startZ.x / 2.0) >= u_CoordRB.x * -(vWorldPosition.z / u_CoordRB.z)
+          && -vWorldPosition.x - (u_startZ.x / 2.0) <= u_CoordLB.x * -(vWorldPosition.z / u_CoordLB.z)){
             discard;
           }
 
