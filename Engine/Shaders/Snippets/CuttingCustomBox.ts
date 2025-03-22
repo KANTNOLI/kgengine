@@ -70,21 +70,10 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
             }
           }
 
-          float T = (vWorldPosition.z - u_startZ.z) / (u_endZ.z - u_startZ.z);
-
-          float widthT = u_startZ.x + -T * (u_endZ.x - u_startZ.x);
-          float heightT = u_startZ.y + T * (u_endZ.y - u_startZ.y);
-        
-          float minX = -widthT / u_CoordLT.x;
-          float maxX = widthT / (u_CoordRT.x * 0.02);
-          float minY = -heightT / 2.0;
-          float maxY = heightT / 2.0;
-        
-          //7.5 - startZ
-          //endz - startz
-
           if(-vWorldPosition.x + (u_startZ.x / 2.0) >= u_CoordRB.x * -(vWorldPosition.z / u_CoordRB.z)
-          && -vWorldPosition.x - (u_startZ.x / 2.0) <= u_CoordLB.x * -(vWorldPosition.z / u_CoordLB.z)){
+          && -vWorldPosition.x - (u_startZ.x / 2.0) <= u_CoordLB.x * -(vWorldPosition.z / u_CoordLB.z)
+          && -vWorldPosition.y - (u_startZ.y / 2.0) <= u_CoordRB.y * -(vWorldPosition.z / u_CoordRB.z)
+          && -vWorldPosition.y + (u_startZ.y / 2.0) >= u_CoordRT.y * -(vWorldPosition.z / u_CoordRT.z)){
             discard;
           }
 
