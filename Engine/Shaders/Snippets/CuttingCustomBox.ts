@@ -45,6 +45,9 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
         uniform vec3 u_CoordLB;
         uniform vec3 u_CoordRT;
         uniform vec3 u_CoordRB;
+        //x - width
+        //y - hight
+        //z - depth
         uniform vec3 u_startZ;
         uniform vec3 u_endZ;
 
@@ -54,12 +57,37 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
         varying vec3 vWorldPosition;
 
         void main() {
-        
-          if(vWorldPosition.y == u_CoordLT.y){
 
+          if(u_startZ.z > u_endZ.z){
+            if(vWorldPosition.z > u_startZ.z || vWorldPosition.z < u_endZ.z) {
+              gl_FragColor = texture2D(u_texture, vUv);
+              return;
+            }
+          } else {
+             if(vWorldPosition.z < u_startZ.z || vWorldPosition.z > u_endZ.z) {
+              gl_FragColor = texture2D(u_texture, vUv);
+              return;
+            }
+          }
+
+          float T = (vWorldPosition.z - u_startZ.z) / (u_endZ.z - u_startZ.z);
+
+          float widthT = u_startZ.x + -T * (u_endZ.x - u_startZ.x);
+          float heightT = u_startZ.y + T * (u_endZ.y - u_startZ.y);
+        
+          float minX = -widthT / u_CoordLT.x;
+          float maxX = widthT / (u_CoordRT.x * 0.02);
+          float minY = -heightT / 2.0;
+          float maxY = heightT / 2.0;
+        
+          //7.5 - startZ
+          //endz - startz
+
+          if(-vWorldPosition.x + (u_startZ.x / 2.0) >= u_CoordRB.x * -(vWorldPosition.z / u_CoordRB.z)){
             discard;
           }
 
+          //discard;
           //if (insideRect) {
           //  discard;
           //}

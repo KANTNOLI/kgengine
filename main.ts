@@ -61,7 +61,7 @@ let cumHelper = CamerasCuttingHelper(
   camera,
   sceneGL.scene,
   true,
-  10
+  5
 );
 
 // let cumHelper2 = CamerasCuttingHelper(
@@ -135,6 +135,19 @@ const animate = () => {
     true,
     50
   );
+
+  model.setNodeParam((node) => {
+    console.log(cumHelper);
+    
+    node.material.uniforms.u_CoordLT.value = cumHelper.Coords.CoordLT;
+    node.material.uniforms.u_CoordLB.value = cumHelper.Coords.CoordLB;
+    node.material.uniforms.u_CoordRT.value = cumHelper.Coords.CoordRT;
+    node.material.uniforms.u_CoordRB.value = cumHelper.Coords.CoordRB;
+    node.material.uniforms.u_startZ.value = cumHelper.Coords.startZ;
+    node.material.uniforms.u_endZ.value = cumHelper.Coords.endZ;
+
+    node.material.uniforms.u_modelMatrix.value = node.matrixWorld;
+  });
 
   controlls.update();
   rendererGL.render(sceneGL.scene, camera);
