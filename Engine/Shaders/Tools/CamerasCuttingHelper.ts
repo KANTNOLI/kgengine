@@ -36,7 +36,7 @@ const CamerasCuttingHelper = (
   camera: THREE.Camera,
   scene: THREE.Scene,
   helper: boolean = false,
-  depth: number = 100
+  depth: number = 20
 ): Shaders => {
   const box = new THREE.Box3().setFromObject(Object.HitBox);
 
@@ -187,7 +187,7 @@ const CamerasCuttingHelper = (
   const material = new THREE.MeshBasicMaterial({
     color: 0x0001111,
     wireframe: helper,
-    opacity: !helper ? 0 : 1,
+    opacity: helper ? 0 : 1,
     transparent: true,
   });
   const customBox = new THREE.Mesh(geometry, material);

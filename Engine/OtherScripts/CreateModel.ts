@@ -2,6 +2,7 @@ import * as THREE from "three";
 import { GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ModelPosition, ModelShadow } from "./OtherScripts.interface.js";
 import { PositionObject3D } from "../Constants.interface.js";
+import { CuttingCustomBox } from "../Shaders/Snippets/CuttingCustomBox.js";
 
 const DEGREE = Math.PI / 180;
 
@@ -18,6 +19,10 @@ interface CustomCube {
   endZ: PositionObject3D;
 }
 
+interface Shaders {
+  Coords: CustomCube;
+  object: THREE.Mesh;
+}
 export class CreateModel {
   model: THREE.Object3D = new THREE.Object3D();
   modelOriginal: GLTF = {} as GLTF;
@@ -66,6 +71,27 @@ export class CreateModel {
           callback(node);
         }
       });
+    });
+  }
+
+  shaderCreate(cumHelper: Shaders) {
+    this.setNodeParam((node) => {
+      const originalMaterial = node.material;
+
+      let ShaderMaterial = CuttingCustomBox({
+        CoordLB: cumHelper.Coords.CoordLB,
+        CoordLT: cumHelper.Coords.CoordLT,
+        CoordRB: cumHelper.Coords.CoordRB,
+        CoordRT: cumHelper.Coords.CoordRT,
+        depth: cumHelper.Coords.depth,
+        startZ: cumHelper.Coords.startZ,
+        endZ: cumHelper.Coords.endZ,
+        positionWorld: cumHelper.Coords.positionWorld,
+        texture: originalMaterial.map,
+        matrix: node.matrixWorld,
+      });
+
+      node.material = ShaderMaterial;
     });
   }
 

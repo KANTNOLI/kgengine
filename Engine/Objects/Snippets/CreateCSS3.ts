@@ -60,7 +60,7 @@ const CreateCSS3 = (
 
     let plane = CustomObject(
       PlaneGeometry(),
-      BasicMaterial({}, {}, { size: THREE.BackSide })
+      BasicMaterial({visible: false}, {}, { size: THREE.BackSide })
     );
 
     sceneGL.add(plane);
