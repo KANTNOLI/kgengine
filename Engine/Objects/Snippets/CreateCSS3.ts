@@ -27,6 +27,7 @@ interface HTMLObjectSizes {
 const CreateCSS3 = (
   sceneGL: THREE.Scene,
   sceneCSS: THREE.Scene,
+  position: PositionObject3D = {x: 0, y: 2, z: 0},
   sizes: HTMLObjectSizes = { width: 100, height: 100 },
   params?: PasteHTMLObject
 ): HTMLObject => {
@@ -105,10 +106,18 @@ const CreateCSS3 = (
 
     sceneGL.add(plane);
 
+    cssObject.position.set(
+      position.x,
+      position.y,
+      position.z
+    );
+
+
+
     plane.position.set(
-      cssObject.position.x,
-      cssObject.position.y,
-      cssObject.position.z
+      position.x,
+      position.y,
+      position.z
     );
 
     plane.rotation.set(

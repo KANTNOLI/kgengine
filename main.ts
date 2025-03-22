@@ -41,19 +41,14 @@ renderCSS.domElement.style.backgroundColor = "grey";
 const camera = DefaultCameraSettings({ x: 0, y: 1, z: 5 });
 const controlls = OrbitControll(rendererGL, camera);
 
-let css3Object1 = CreateCSS3(sceneGL.scene, sceneCSS.scene, {
-  height: 50,
-  width: 50,
-});
-
-UpdateCSS3(
+let css3Object1 = CreateCSS3(
+  sceneGL.scene,
+  sceneCSS.scene,
+  { x: 1, y: 0, z: 0 },
   {
-    HitBox: css3Object1.HitBox,
-    HTMLElement: css3Object1.HTMLElement,
-  },
-  { x: 0, y: 0, z: 0 },
-  { x: 0, y: 0, z: 0 },
-  { height: 50, width: 50 }
+    height: 52,
+    width: 102,
+  }
 );
 
 let cumHelper = CamerasCuttingHelper(
@@ -81,7 +76,7 @@ let model = new CreateModel(
     scaleHeight: 0.2,
     scaleLength: 0.2,
     scaleWidth: 0.2,
-    rotateX: 24
+    rotateX: 24,
   },
   {}
 );
@@ -97,6 +92,7 @@ model.setNodeParam((node) => {
     depth: cumHelper.Coords.depth,
     startZ: cumHelper.Coords.startZ,
     endZ: cumHelper.Coords.endZ,
+    positionWorld: cumHelper.Coords.positionWorld,
     texture: originalMaterial.map,
     matrix: node.matrixWorld,
   });
@@ -104,7 +100,7 @@ model.setNodeParam((node) => {
   node.material = ShaderMaterial;
 });
 
- model.addToScene(sceneGL.scene);
+model.addToScene(sceneGL.scene);
 
 // model.setNodeParam(async (node) => {
 //   let data = await
@@ -136,18 +132,7 @@ const animate = () => {
     50
   );
 
-  model.setNodeParam((node) => {
-    console.log(cumHelper);
-    
-    node.material.uniforms.u_CoordLT.value = cumHelper.Coords.CoordLT;
-    node.material.uniforms.u_CoordLB.value = cumHelper.Coords.CoordLB;
-    node.material.uniforms.u_CoordRT.value = cumHelper.Coords.CoordRT;
-    node.material.uniforms.u_CoordRB.value = cumHelper.Coords.CoordRB;
-    node.material.uniforms.u_startZ.value = cumHelper.Coords.startZ;
-    node.material.uniforms.u_endZ.value = cumHelper.Coords.endZ;
-
-    node.material.uniforms.u_modelMatrix.value = node.matrixWorld;
-  });
+  model.shaderUpdate(cumHelper.Coords);
 
   controlls.update();
   rendererGL.render(sceneGL.scene, camera);

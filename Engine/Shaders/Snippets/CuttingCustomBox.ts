@@ -10,6 +10,7 @@ interface CustomCube {
   CoordRT: PositionObject3D;
   CoordRB: PositionObject3D;
   startZ: PositionObject3D;
+  positionWorld: PositionObject3D;
   endZ: PositionObject3D;
 }
 
@@ -23,6 +24,7 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
       u_CoordRT: { value: Figure.CoordRT },
       u_CoordRB: { value: Figure.CoordRB },
       u_startZ: { value: Figure.startZ },
+      positionWorld: { value: Figure.positionWorld },
       u_endZ: { value: Figure.endZ },
 
       u_texture: { value: Figure.texture },
@@ -49,6 +51,7 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
         //y - hight
         //z - depth
         uniform vec3 u_startZ;
+        uniform vec3 positionWorld;
         uniform vec3 u_endZ;
 
         // Существующие uniforms
@@ -70,17 +73,13 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
             }
           }
 
-          if(-vWorldPosition.x + (u_startZ.x / 2.0) >= u_CoordRB.x * -(vWorldPosition.z / u_CoordRB.z)
-          && -vWorldPosition.x - (u_startZ.x / 2.0) <= u_CoordLB.x * -(vWorldPosition.z / u_CoordLB.z)
-          && -vWorldPosition.y - (u_startZ.y / 2.0) <= u_CoordRB.y * -(vWorldPosition.z / u_CoordRB.z)
-          && -vWorldPosition.y + (u_startZ.y / 2.0) >= u_CoordRT.y * -(vWorldPosition.z / u_CoordRT.z)){
+          if(-vWorldPosition.x + (u_startZ.x / 2.0) + positionWorld.x >= u_CoordRB.x * -(vWorldPosition.z / u_CoordRB.z)
+          && -vWorldPosition.x - (u_startZ.x / 2.0) + positionWorld.x <= u_CoordLB.x * -(vWorldPosition.z / u_CoordLB.z)
+          && -vWorldPosition.y - (u_startZ.y / 2.0) + positionWorld.y <= u_CoordRB.y * -(vWorldPosition.z / u_CoordRB.z)
+          && -vWorldPosition.y + (u_startZ.y / 2.0) + positionWorld.y >= u_CoordRT.y * -(vWorldPosition.z / u_CoordRT.z)){
             discard;
           }
 
-          //discard;
-          //if (insideRect) {
-          //  discard;
-          //}
           gl_FragColor = texture2D(u_texture, vUv);
         }
       `,

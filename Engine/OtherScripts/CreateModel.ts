@@ -1,8 +1,22 @@
 import * as THREE from "three";
 import { GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ModelPosition, ModelShadow } from "./OtherScripts.interface.js";
+import { PositionObject3D } from "../Constants.interface.js";
 
 const DEGREE = Math.PI / 180;
+
+interface CustomCube {
+  depth: number;
+
+  CoordLT: PositionObject3D;
+  CoordLB: PositionObject3D;
+  CoordRT: PositionObject3D;
+  CoordRB: PositionObject3D;
+
+  startZ: PositionObject3D;
+  positionWorld: PositionObject3D;
+  endZ: PositionObject3D;
+}
 
 export class CreateModel {
   model: THREE.Object3D = new THREE.Object3D();
@@ -19,6 +33,7 @@ export class CreateModel {
     scaleHeight: 1,
     scaleLength: 1,
   };
+  shaderFlag: boolean = false;
   shadow: ModelShadow = {
     shadowCasting: true,
     shadowReceiving: true,
@@ -52,6 +67,26 @@ export class CreateModel {
         }
       });
     });
+  }
+
+  shaderUpdate(Coords: CustomCube) {
+    let waitLoading = setInterval(() => {
+      if (this.model) {
+        this.model.traverse((node: THREE.Object3D) => {
+          if (node instanceof THREE.Mesh && node.material.uniforms) {
+            node.material.uniforms.u_CoordLT.value = Coords.CoordLT;
+            node.material.uniforms.u_CoordLB.value = Coords.CoordLB;
+            node.material.uniforms.u_CoordRT.value = Coords.CoordRT;
+            node.material.uniforms.u_CoordRB.value = Coords.CoordRB;
+            node.material.uniforms.u_startZ.value = Coords.startZ;
+            node.material.uniforms.u_endZ.value = Coords.endZ;
+
+            node.material.uniforms.u_modelMatrix.value = node.matrixWorld;
+          }
+        });
+        clearInterval(waitLoading);
+      }
+    }, 1);
   }
 
   setCustomNodeParam(callback: (node: any) => any) {

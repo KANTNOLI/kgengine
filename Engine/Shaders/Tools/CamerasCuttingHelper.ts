@@ -22,7 +22,13 @@ interface CustomCube {
   CoordRB: PositionObject3D;
 
   startZ: PositionObject3D;
+  positionWorld: PositionObject3D;
   endZ: PositionObject3D;
+}
+
+interface Shaders {
+  Coords: CustomCube;
+  object: THREE.Mesh;
 }
 
 const CamerasCuttingHelper = (
@@ -31,9 +37,9 @@ const CamerasCuttingHelper = (
   scene: THREE.Scene,
   helper: boolean = false,
   depth: number = 100
-) => {
+): Shaders => {
   const box = new THREE.Box3().setFromObject(Object.HitBox);
-  
+
   const SnippetCoords: CustomCube = {
     depth: depth,
 
@@ -66,6 +72,11 @@ const CamerasCuttingHelper = (
       y: box.max.y - box.min.y,
       z: box.max.z,
     },
+    positionWorld: {
+      x: Object.HitBox.position.x,
+      y: Object.HitBox.position.y,
+      z: Object.HitBox.position.z,
+    },
     endZ: {
       x: 0,
       y: 0,
@@ -74,8 +85,8 @@ const CamerasCuttingHelper = (
   };
 
   SnippetCoords.endZ = {
-    x: (SnippetCoords.CoordLT.x * depth) - (SnippetCoords.CoordRT.x * depth),
-    y: (SnippetCoords.CoordLT.y * depth) - (SnippetCoords.CoordRB.y * depth),
+    x: SnippetCoords.CoordLT.x * depth - SnippetCoords.CoordRT.x * depth,
+    y: SnippetCoords.CoordLT.y * depth - SnippetCoords.CoordRB.y * depth,
     z: SnippetCoords.CoordLT.z * depth + 1,
   };
 
@@ -176,16 +187,18 @@ const CamerasCuttingHelper = (
   const material = new THREE.MeshBasicMaterial({
     color: 0x0001111,
     wireframe: helper,
-    opacity: 1,
+    opacity: !helper ? 0 : 1,
     transparent: true,
   });
   const customBox = new THREE.Mesh(geometry, material);
   scene.add(customBox);
 
-  return {
+  let result: Shaders = {
     object: customBox,
     Coords: SnippetCoords,
   };
+
+  return result;
 };
 
 const UpdateCamCutHelper = (
@@ -195,10 +208,18 @@ const UpdateCamCutHelper = (
   scene: THREE.Scene,
   helper: boolean = false,
   depth: number = 100
-) => {
+): Shaders => {
   scene.remove(former);
 
-  return CamerasCuttingHelper(Object, camera, scene, helper, depth);
+  let result: Shaders = CamerasCuttingHelper(
+    Object,
+    camera,
+    scene,
+    helper,
+    depth
+  );
+
+  return result;
 };
 
 export { CamerasCuttingHelper, UpdateCamCutHelper };
