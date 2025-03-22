@@ -23,7 +23,6 @@ After tests and improvements, my method will involve analyzing the scene and cut
 
 When adding CSS3 To the scene, we will automatically delete the content that is located behind the HTML page, which was overlaid on top of HTML by default (Maybe the other way around, but in this bundle, it is more convenient to control it + the default snippet engines already have a position setting for their overlay)
 
-Below is an example of 2 pictures showing how this method works. It is currently in development and hopefully will be ready soon! As well as the documentation
 > Ru version
 
 Следующее обновление будет подразумевать работу CSS3 и Object3D в одной или разных сценах.
@@ -34,10 +33,10 @@ Below is an example of 2 pictures showing how this method works. It is currently
 
 При добавлении CSS3 На сцену, мы автоматически будем удалять контент, который находится за HTML страницей, который по умолчанию накладывался поверх HTML (Может быть и наоборот, но в данной связке, это удобнее контролировать + в сниппетах движках по умолчанию уже есть настройка положения, для их наложения)
 
-Ниже пример из 2 картинок, работы этого метода. На данный момент он в разработке и надеюсь в скором времени будет готов! Так же как и документация
 
-![cutM2](https://github.com/user-attachments/assets/f13f4671-e1aa-4b35-8a7e-8e5cec3b3be7)
-![cutS1](https://github.com/user-attachments/assets/290e965e-18ab-4da7-92f4-29ab3c09952b)
+
+![image](https://github.com/user-attachments/assets/f86be3fa-6efc-4e4c-81f9-5dc223db404b)
+
 
 
 > **NPM** -> https://www.npmjs.com/package/kgengine
