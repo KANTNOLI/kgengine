@@ -112,6 +112,11 @@ const CreateCSS3 = (
       position.z
     );
 
+    cssObject.rotation.set(
+      cssObject.rotation.x + 45,
+      cssObject.rotation.y,
+      cssObject.rotation.z
+    );
 
 
     plane.position.set(

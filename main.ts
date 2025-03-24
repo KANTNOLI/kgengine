@@ -2,7 +2,7 @@ import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js
 import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
 import { WebGLEngine } from "./Engine/VisualEngineConfigs/WebGLEngine.js";
 import { CSS3DEngine } from "./Engine/VisualEngineConfigs/CSS3DEngine.js";
-import { OrbitControll } from "./Engine/PlayerActions/OrbitControll.js";
+import { OrbitControl } from "./Engine/PlayerActions/OrbitControl.js";
 import {
   CamerasCuttingHelper,
   UpdateCamCutHelper,
@@ -10,7 +10,6 @@ import {
 import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
 import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
 import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
-
 // Создаем сцену для размещения CSS и GL
 const sceneGL = new CreateScene();
 const sceneCSS = new CreateScene();
@@ -32,23 +31,19 @@ rendererGL.setClearColor(0x000000, 0);
 renderCSS.domElement.style.backgroundColor = "grey";
 
 const camera = DefaultCameraSettings({ x: 0, y: 1, z: 5 });
-const controlls = OrbitControll(rendererGL, camera);
+const controls = OrbitControl(rendererGL, camera);
 
 let css3Object1 = CreateCSS3(
   sceneGL.scene,
   sceneCSS.scene,
-  { x: 0, y: 0, z: 0},
+  { x: 0, y: 0, z: 0 },
   {
-    height: 50,
-    width: 50,
+    height: 240,
+    width: 240,
   }
 );
 
-let cumHelper = CamerasCuttingHelper(
-  css3Object1,
-  camera,
-  sceneGL.scene,
-);
+let cumHelper = CamerasCuttingHelper(css3Object1, camera, sceneGL.scene, true);
 
 // let cumHelper2 = CamerasCuttingHelper(
 //   css3Object1,
@@ -72,7 +67,7 @@ let model = new CreateModel(
   {}
 );
 
-model.shaderCreate(cumHelper)
+model.shaderCreate(cumHelper);
 
 model.addToScene(sceneGL.scene);
 
@@ -90,7 +85,7 @@ const animate = () => {
 
   model.shaderUpdate(cumHelper.Coords);
 
-  controlls.update();
+  controls.update();
   rendererGL.render(sceneGL.scene, camera);
   renderCSS.render(sceneCSS.scene, camera);
 

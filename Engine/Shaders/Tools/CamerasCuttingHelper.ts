@@ -187,7 +187,7 @@ const CamerasCuttingHelper = (
   const material = new THREE.MeshBasicMaterial({
     color: 0x0001111,
     wireframe: helper,
-    opacity: helper ? 0 : 1,
+    opacity: helper ? 1 : 0,
     transparent: true,
   });
   const customBox = new THREE.Mesh(geometry, material);
