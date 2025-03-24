@@ -11,6 +11,7 @@
     "deploy": "gh-pages -d dist"
   },
   "devDependencies": {
+    "@types/node": "^22.13.12",
     "@types/three": "^0.174.0",
     "gh-pages": "^6.3.0",
     "typescript": "^5.8.2",
@@ -28,5 +29,11 @@
     "three.js",
     "three",
     "active development"
-  ]
+  ],
+  "exports": {
+    "./engine": {
+      "import": "./dist/engine/index.mjs",
+      "require": "./dist/engine/index.cjs"
+    }
+  }
 }
