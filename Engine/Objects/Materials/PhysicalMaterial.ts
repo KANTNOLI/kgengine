@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { MaterialTypes } from "../../Constants.interface.js";
 
-interface MaterialBasicParams {
+export interface MaterialBasicParams {
   color?: number;
   emissive?: number;
   emissiveIntensity?: number;
@@ -25,7 +25,7 @@ interface MaterialBasicParams {
   visible?: boolean;
 }
 
-interface MaterialOtherParams {
+export interface MaterialOtherParams {
   side?: THREE.Side;
   fog?: boolean;
   map?: THREE.Texture | undefined;
@@ -43,7 +43,7 @@ interface MaterialOtherParams {
   vertexColors?: boolean;
 }
 
-interface MaterialAdmin {
+export interface MaterialAdmin {
   alphaTest: number;
   alphaHash: boolean;
   depthTest: boolean;

@@ -9,8 +9,7 @@ import {
   TextShadow,
   TextVisual,
 } from "./OtherScripts.interface.js";
-
-const DEGREE: number = Math.PI / 180;
+import { DEGREE } from "../Constants.interface.js";
 
 export class CreateText {
   textObject: THREE.Mesh = new THREE.Mesh();

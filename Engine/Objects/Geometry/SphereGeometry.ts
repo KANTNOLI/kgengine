@@ -1,17 +1,17 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface SphereSegments {
+export interface SphereSegments {
   widthSegments?: number;
   heightSegments?: number;
 }
 
-interface SpherePhi {
+export interface SpherePhi {
   phiStart?: number;
   phiLength?: number;
 }
 
-interface SphereTheta {
+export interface SphereTheta {
   thetaStart?: number;
   thetaLength?: number;
 }

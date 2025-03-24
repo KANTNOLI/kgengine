@@ -4,22 +4,21 @@ import CustomObject from "./CustomObject.js";
 import { PlaneGeometry } from "../Geometry/PlaneGeometry.js";
 import { BasicMaterial } from "../Materials/BasicMaterial.js";
 import {
-  DEGREE,
   PositionObject3D,
   RotationObject3D,
 } from "../../Constants.interface.js";
 
-interface PasteHTMLObject {
+export interface PasteHTMLObject {
   HTMLElement: HTMLElement;
   classList: string | string[];
 }
 
-interface HTMLObject {
+export interface HTMLObject {
   HTMLElement: CSS3DObject;
   HitBox: THREE.Object3D;
 }
 
-interface HTMLObjectSizes {
+export interface HTMLObjectSizes {
   width: number;
   height: number;
 }

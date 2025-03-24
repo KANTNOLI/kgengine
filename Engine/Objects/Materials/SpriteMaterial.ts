@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-interface SpriteParam {
+export interface SpriteParam {
   texture: THREE.Texture;
   color?: number;
   transparent?: boolean;

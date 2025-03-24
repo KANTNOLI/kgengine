@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface ShapeParams {
+export interface ShapeParams {
   shape?: THREE.Shape;
   curveSegments?: number;
 }

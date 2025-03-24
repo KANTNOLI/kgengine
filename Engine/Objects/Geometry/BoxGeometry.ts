@@ -1,13 +1,13 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface BoxSize {
+export interface BoxSize {
   width?: number;
   height?: number;
   depth?: number;
 }
 
-interface BoxSegments {
+export interface BoxSegments {
   widthSegments?: number;
   heightSegments?: number;
   depthSegments?: number;

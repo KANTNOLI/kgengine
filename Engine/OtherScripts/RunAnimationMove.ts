@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { PositionObject3D } from "../Constants.interface.js";
 
-const CreateAnimation = (
+export const AnimationMove = (
   object: THREE.Object3D,
   posStart: PositionObject3D = { x: 0, y: 0, z: 0 },
   posEnd: PositionObject3D = { x: 2, y: 1, z: 3 },
@@ -30,4 +30,4 @@ const CreateAnimation = (
   }, cycle);
 };
 
-export default CreateAnimation;
+export default AnimationMove;

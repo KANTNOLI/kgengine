@@ -1,11 +1,11 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface CircleSegments {
+export interface CircleSegments {
   segments?: number;
 }
 
-interface CircleTheta {
+export interface CircleTheta {
   thetaStart?: number;
   thetaLength?: number;
 }

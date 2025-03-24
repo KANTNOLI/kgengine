@@ -31,9 +31,45 @@
     "active development"
   ],
   "exports": {
+    ".": {
+      "import": "./dist/es/index.mjs",
+      "require": "./dist/cjs/index.cjs",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./cameras": {
+      "import": "./dist/es/cameras.mjs",
+      "require": "./dist/cjs/cameras.cjs",
+      "types": "./dist/types/cameras.d.ts"
+    },
+    "./lighting": {
+      "import": "./dist/es/lighting.mjs",
+      "require": "./dist/cjs/lighting.cjs",
+      "types": "./dist/types/lighting.d.ts"
+    },
+    "./objects": {
+      "import": "./dist/es/objects.mjs",
+      "require": "./dist/cjs/objects.cjs",
+      "types": "./dist/types/objects.d.ts"
+    },
+    "./otherScripts": {
+      "import": "./dist/es/otherScripts.mjs",
+      "require": "./dist/cjs/otherScripts.cjs",
+      "types": "./dist/types/otherScripts.d.ts"
+    },
+    "./playerActions": {
+      "import": "./dist/es/playerActions.mjs",
+      "require": "./dist/cjs/playerActions.cjs",
+      "types": "./dist/types/playerActions.d.ts"
+    },
+    "./shaders": {
+      "import": "./dist/es/shaders.mjs",
+      "require": "./dist/cjs/shaders.cjs",
+      "types": "./dist/types/shaders.d.ts"
+    },
     "./engine": {
-      "import": "./dist/engine/index.mjs",
-      "require": "./dist/engine/index.cjs"
+      "import": "./dist/es/engine.mjs",
+      "require": "./dist/cjs/engine.cjs",
+      "types": "./dist/types/engine.d.ts"
     }
   }
 }

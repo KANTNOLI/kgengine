@@ -2,7 +2,7 @@
 import * as THREE from "three";
 import { PositionObject3D } from "../../Constants.interface.js";
 
-interface planeHelper {
+export interface planeHelper {
   scene: THREE.Scene;
   size: number;
   color: number;

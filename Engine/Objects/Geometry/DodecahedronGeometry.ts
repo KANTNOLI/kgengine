@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface DodecahedronParams {
+export interface DodecahedronParams {
   radius?: number;
   detail?: number;
 }

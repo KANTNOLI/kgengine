@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface IcosahedronParams {
+export interface IcosahedronParams {
   radius?: number;
   detail?: number;
 }

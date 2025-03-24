@@ -1,17 +1,17 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface CylinderRadius {
+export interface CylinderRadius {
   radiusTop?: number;
   radiusBottom?: number;
 }
 
-interface CylinderSegments {
+export interface CylinderSegments {
   radialSegments?: number;
   heightSegments?: number;
 }
 
-interface CylinderTheta {
+export interface CylinderTheta {
   thetaStart?: number;
   thetaLength?: number;
 }

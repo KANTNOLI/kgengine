@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface PolyhedronParams {
+export interface PolyhedronParams {
   vertices?: number[];
   indices?: number[];
   radius?: number;

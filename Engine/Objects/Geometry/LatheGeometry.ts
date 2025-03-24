@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface LathePhi {
+export interface LathePhi {
   phiStart?: number;
   phiLength?: number;
 }

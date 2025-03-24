@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface ConeTheta {
+export interface ConeTheta {
   thetaStart?: number;
   thetaLength?: number;
 }

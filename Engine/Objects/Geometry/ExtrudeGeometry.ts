@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface ExtrudeOptions {
+export interface ExtrudeOptions {
   depth?: number;
   bevelEnabled?: boolean;
   bevelThickness?: number;

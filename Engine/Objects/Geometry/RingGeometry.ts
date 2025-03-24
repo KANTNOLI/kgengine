@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface RingTheta {
+export interface RingTheta {
   thetaStart?: number;
   thetaLength?: number;
 }

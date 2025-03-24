@@ -10,29 +10,29 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, "src/index.ts"), // Основной экспорт "kgengine"
-        cameras: resolve(__dirname, "src/cameras.ts"), // "kgengine/cameras"
-        lighting: resolve(__dirname, "src/lighting.ts"), // "kgengine/lighting"
-        objects: resolve(__dirname, "src/objects.ts"), // "kgengine/engine"
-        otherScripts: resolve(__dirname, "src/otherScripts.ts"), // "kgengine/engine"
-        playerActions: resolve(__dirname, "src/playerActions.ts"), // "kgengine/utils"
-        shaders: resolve(__dirname, "src/shaders.ts"), // "kgengine/utils"
-        engine: resolve(__dirname, "src/engine.ts"), // "kgengine/engine"
+        cameras: resolve(__dirname, "src/exports/cameras.ts"), // "kgengine/cameras"
+        lighting: resolve(__dirname, "src/exports/lighting.ts"), // "kgengine/lighting"
+        objects: resolve(__dirname, "src/exports/objects.ts"), // "kgengine/engine"
+        otherScripts: resolve(__dirname, "src/exports/otherScripts.ts"), // "kgengine/engine"
+        playerActions: resolve(__dirname, "src/exports/playerActions.ts"), // "kgengine/utils"
+        shaders: resolve(__dirname, "src/exports/shaders.ts"), // "kgengine/utils"
+        engine: resolve(__dirname, "src/exports/engine.ts"), // "kgengine/engine"
       },
       output: {
-        entryFileNames: "[name].js", 
-        chunkFileNames: "shared/[name].js", 
-        assetFileNames: "assets/[name][extname]", 
+        entryFileNames: "[name].js",
+        chunkFileNames: "shared/[name].js",
+        assetFileNames: "assets/[name][extname]",
         globals: {
-          three: "THREE", 
+          three: "THREE",
         },
       },
-      external: ["three"], 
+      external: ["three"],
     },
 
     // Основные настройки библиотеки ▼
     lib: {
       entry: resolve(__dirname, "src/index.ts"),
-      name: "KGEngine", 
+      name: "KGEngine",
       fileName: (format) => {
         switch (format) {
           case "es":
@@ -45,7 +45,7 @@ export default defineConfig({
       },
       formats: ["es", "cjs"], // Форматы сборки
     },
-    
+
     outDir: "dist", // Выходная директория
     emptyOutDir: true, // Очищать перед сборкой
     minify: true, // Минификация кода

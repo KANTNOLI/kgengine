@@ -3,19 +3,19 @@ import { GeometryTypes, MaterialTypes } from "../../Constants.interface.js";
 import { BoxGeometry } from "../Geometry/BoxGeometry.js";
 import { BasicMaterial } from "../Materials/BasicMaterial.js";
 
-interface BoxSize {
+export interface BoxSize {
   width?: number;
   height?: number;
   depth?: number;
 }
 
-interface BoxSegments {
+export interface BoxSegments {
   widthSegments?: number;
   heightSegments?: number;
   depthSegments?: number;
 }
 
-const CreateCustomObject = (
+const CreateBox = (
   Material: MaterialTypes = BasicMaterial({ color: 0x00022 }),
   size: BoxSize = {
     width: 1,
@@ -31,4 +31,4 @@ const CreateCustomObject = (
   return new THREE.Mesh(BoxGeometry(size, segments), Material);
 };
 
-export default CreateCustomObject;
+export default CreateBox;

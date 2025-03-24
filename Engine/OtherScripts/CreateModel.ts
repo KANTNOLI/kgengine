@@ -1,12 +1,10 @@
 import * as THREE from "three";
 import { GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ModelPosition, ModelShadow } from "./OtherScripts.interface.js";
-import { PositionObject3D } from "../Constants.interface.js";
+import { DEGREE, PositionObject3D } from "../Constants.interface.js";
 import { CuttingCustomBox } from "../Shaders/Snippets/CuttingCustomBox.js";
 
-const DEGREE = Math.PI / 180;
-
-interface CustomCube {
+export interface CustomCube {
   depth: number;
 
   CoordLT: PositionObject3D;
@@ -19,7 +17,7 @@ interface CustomCube {
   endZ: PositionObject3D;
 }
 
-interface Shaders {
+export interface Shaders {
   Coords: CustomCube;
   object: THREE.Mesh;
 }

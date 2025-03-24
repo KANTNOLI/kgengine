@@ -3,16 +3,14 @@ import LoadingTextures from "./LoadingTextures.js";
 import SpriteMaterial from "../Objects/Materials/SpriteMaterial.js";
 import { PositionObject3D } from "../Constants.interface.js";
 
-const DEGREE = Math.PI / 180;
-
-interface SpriteParam {
+export interface SpriteParam {
   path: string;
   color?: number;
   transparent?: boolean;
   opacity?: number;
 }
 
-interface Scale {
+export interface Scale {
   x?: number;
   y?: number;
   z?: number;

@@ -5,13 +5,13 @@ import { MaterialTypes } from "../../Constants.interface.js";
 // alphaMap - места прозрч черные проз белые норм png
 // combine THREE.AddOperation .MultiplyOperation .MixOperation
 
-interface MaterialBasicParams {
+export interface MaterialBasicParams {
   color?: number;
   visible?: boolean;
   opacity?: number;
 }
 
-interface MaterialOtherParams {
+export interface MaterialOtherParams {
   fog?: boolean;
   map?: THREE.Texture | undefined;
   envMap?: THREE.Texture | undefined;
@@ -26,14 +26,14 @@ interface MaterialOtherParams {
   vertexColors?: boolean;
 }
 
-interface MaterialAdmin {
+export interface MaterialAdmin {
   alphaTest: number;
   alphaHash: boolean;
   depthTest: boolean;
   depthWrite: boolean;
 }
 
-interface ShadersParams {
+export interface ShadersParams {
   size: THREE.Side;
 }
 

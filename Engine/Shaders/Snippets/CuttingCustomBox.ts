@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { PositionObject3D } from "../../Constants.interface.js";
 
-interface CustomCube {
+export interface CustomCube {
   matrix: any;
   texture: THREE.Material | THREE.Material[] | any;
   depth: number;
@@ -15,8 +15,6 @@ interface CustomCube {
 }
 
 const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
-  console.log(Figure);
-
   return new THREE.ShaderMaterial({
     uniforms: {
       u_CoordLT: { value: Figure.CoordLT },

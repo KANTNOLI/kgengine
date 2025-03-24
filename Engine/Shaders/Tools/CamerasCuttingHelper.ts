@@ -2,18 +2,18 @@ import * as THREE from "three";
 import { CSS3DObject } from "three/examples/jsm/Addons.js";
 import { PositionObject3D } from "../../Constants.interface.js";
 
-interface HTMLObject {
+export interface HTMLObject {
   HTMLElement: CSS3DObject;
   HitBox: THREE.Object3D;
 }
 
-interface Coordinates {
+export interface Coordinates {
   x: number;
   y: number;
   z: number;
 }
 
-interface CustomCube {
+export interface CustomCube {
   depth: number;
 
   CoordLT: PositionObject3D;
@@ -26,7 +26,7 @@ interface CustomCube {
   endZ: PositionObject3D;
 }
 
-interface Shaders {
+export interface Shaders {
   Coords: CustomCube;
   object: THREE.Mesh;
 }
@@ -108,7 +108,7 @@ const CamerasCuttingHelper = (
   let CoordLeftBottom: Coordinates = {
     x: SnippetCoords.CoordLB.x * depth,
     y: SnippetCoords.CoordLB.y * depth,
-    z: SnippetCoords.CoordLB.z * depth + 1 ,
+    z: SnippetCoords.CoordLB.z * depth + 1,
   };
 
   const vertices = new Float32Array([

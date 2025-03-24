@@ -1,12 +1,12 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface PlaneSize {
+export interface PlaneSize {
   width?: number;
   height?: number;
 }
 
-interface PlaneSegments {
+export interface PlaneSegments {
   widthSegments?: number;
   heightSegments?: number;
 }

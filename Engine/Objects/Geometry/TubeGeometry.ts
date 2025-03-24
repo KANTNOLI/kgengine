@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface TubeParams {
+export interface TubeParams {
   path?: THREE.Curve<THREE.Vector3>;
   tubularSegments?: number;
   radius?: number;

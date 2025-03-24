@@ -1,6 +1,6 @@
 import * as THREE from "three";
 
-interface SceneVisual {
+export interface SceneVisual {
   backgroundColor: number;
 }
 

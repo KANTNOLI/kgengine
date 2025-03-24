@@ -1,7 +1,7 @@
 import * as THREE from "three";
 import { GeometryTypes } from "../../Constants.interface.js";
 
-interface TorusSegments {
+export interface TorusSegments {
   radialSegments?: number;
   tubularSegments?: number;
 }

@@ -1,4 +1,4 @@
-const CreateAnimation = (
+export const AnimationCustom = (
   callback: (progress: number) => any,
   time: number = 1
 ) => {
@@ -18,4 +18,4 @@ const CreateAnimation = (
   }, cycle);
 };
 
-export default CreateAnimation;
+export default AnimationCustom;

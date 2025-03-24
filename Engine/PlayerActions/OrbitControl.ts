@@ -2,7 +2,7 @@ import * as THREE from "three";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { CSS3DRenderer } from "three/examples/jsm/Addons.js";
 
-interface Angles {
+export interface Angles {
   min: number;
   max: number;
 }
