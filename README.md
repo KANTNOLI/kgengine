@@ -45,10 +45,10 @@ And in the end, we create a shader for the model without changing its texture, w
 
 > **NPM** -> https://www.npmjs.com/package/kgengine
 >
-> **GitHub** -> https://github.com/KANTNOLI/KGEngine
+> **GitHub** -> https://github.com/KANTNOLI/kgengine
 > 
-> **WIKI documentation** -> https://github.com/KANTNOLI/KGEngine/wiki (Process)
+> **WIKI documentation** -> https://github.com/KANTNOLI/kgengine/wiki (Process)
 > 
-> **Testing site** -> https://kantnoli.github.io/KGEngine/
+> **Testing site** ->  https://kantnoli.github.io/kgengine/
 >
 > **If you have any ideas** -> https://t.me/KANTNOLI
