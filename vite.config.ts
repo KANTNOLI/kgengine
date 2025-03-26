@@ -2,21 +2,14 @@ import { defineConfig } from "vite";
 import path from "path";
 
 export default defineConfig({
-  base: "/kgengine/",
   resolve: {
     alias: {
-      KGEngine: path.resolve(__dirname, "./"),
+      KGEngine: path.resolve(__dirname, "./src"),
     },
   },
   build: {
     rollupOptions: {
-      output: {
-        manualChunks: {
-          vendor: ["three"],
-          kgengine: [".index.ts"],
-        },
-      },
+      external: ["three/examples/jsm/libs/chevrotain.module.min.js"], 
     },
-    chunkSizeWarningLimit: 1000,
   },
 });
