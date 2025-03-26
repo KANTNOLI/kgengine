@@ -1,10 +1,10 @@
-import * as Cameras from "./exports/cameras.js";
-import * as Engine from "./exports/engine.js";
-import * as Lighting from "./exports/lighting.js";
-import * as Objects from "./exports/objects.js";
-import * as OtherScripts from "./exports/otherScripts.js";
-import * as Actions from "./exports/playerActions.js";
-import * as Shaders from "./exports/shaders.js";
+import * as Cameras from "./imports/cameras.js";
+import * as Engine from "./imports/engine.js";
+import * as Lighting from "./imports/lighting.js";
+import * as Objects from "./imports/objects.js";
+import * as OtherScripts from "./imports/otherScripts.js";
+import * as Actions from "./imports/playerActions.js";
+import * as Shaders from "./imports/shaders.js";
 
 export const KGEngine = {
   Cameras,
@@ -16,20 +16,20 @@ export const KGEngine = {
   Shaders,
 };
 
-export * as Cameras from "./exports/cameras.js";
-export * as Engine from "./exports/engine.js";
-export * as Lighting from "./exports/lighting.js";
-export * as Objects from "./exports/objects.js";
-export * as OtherScripts from "./exports/otherScripts.js";
-export * as Actions from "./exports/playerActions.js";
-export * as Shaders from "./exports/shaders.js";
+export * as Cameras from "./imports/cameras.js";
+export * as Engine from "./imports/engine.js";
+export * as Lighting from "./imports/lighting.js";
+export * as Objects from "./imports/objects.js";
+export * as OtherScripts from "./imports/otherScripts.js";
+export * as Actions from "./imports/playerActions.js";
+export * as Shaders from "./imports/shaders.js";
 
 export default {
-  ...Cameras,
-  ...Engine,
-  ...Lighting,
-  ...Objects,
-  ...OtherScripts,
-  ...Actions,
-  ...Shaders,
+  Cameras: require("./imports/cameras").default,
+  Engine: require("./imports/engine").default,
+  Lighting: require("./imports/lighting").default,
+  Objects: require("./imports/objects").default,
+  OtherScripts: require("./imports/otherScripts").default,
+  Actions: require("./imports/playerActions").default,
+  Shaders: require("./imports/shaders").default,
 };

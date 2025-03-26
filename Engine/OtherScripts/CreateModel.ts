@@ -74,7 +74,11 @@ export class CreateModel {
 
   shaderCreate(cumHelper: Shaders) {
     this.setNodeParam((node) => {
-      const originalMaterial = node.material;
+      // const originalMaterial = node.material;
+
+      let texture = Array.isArray(node.material)
+        ? (node.material[0] as THREE.MeshStandardMaterial)?.map
+        : (node.material as THREE.MeshStandardMaterial)?.map;
 
       let ShaderMaterial = CuttingCustomBox({
         CoordLB: cumHelper.Coords.CoordLB,
@@ -85,7 +89,7 @@ export class CreateModel {
         startZ: cumHelper.Coords.startZ,
         endZ: cumHelper.Coords.endZ,
         positionWorld: cumHelper.Coords.positionWorld,
-        texture: originalMaterial.map,
+        texture: texture,
         matrix: node.matrixWorld,
       });
 
@@ -116,7 +120,7 @@ export class CreateModel {
   setCustomNodeParam(callback: (node: any) => any) {
     this.intervalSnippet(() => {
       this.model.traverse((node) => {
-        if (node.isMesh) {
+        if (node instanceof THREE.Mesh) {
           callback(node);
         }
       });

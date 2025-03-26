@@ -1,55 +1,12 @@
 {
   "name": "kgengine",
-  "version": "0.11.2",
+  "version": "0.11.4",
   "type": "module",
-  "main": "./dist/cjs/index.cjs",
-  "module": "./dist/es/index.mjs",
-  "types": "./dist/types/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/es/index.mjs",
-      "require": "./dist/cjs/index.cjs",
-      "types": "./dist/types/index.d.ts"
-    },
-    "./cameras": {
-      "import": "./dist/es/cameras.mjs",
-      "require": "./dist/cjs/cameras.cjs",
-      "types": "./dist/types/cameras.d.ts"
-    },
-    "./engine": {
-      "import": "./dist/es/engine.mjs",
-      "require": "./dist/cjs/engine.cjs",
-      "types": "./dist/types/engine.d.ts"
-    },
-    "./lighting": {
-      "import": "./dist/es/lighting.mjs",
-      "require": "./dist/cjs/lighting.cjs",
-      "types": "./dist/types/lighting.d.ts"
-    },
-    "./objects": {
-      "import": "./dist/es/objects.mjs",
-      "require": "./dist/cjs/objects.cjs",
-      "types": "./dist/types/objects.d.ts"
-    },
-    "./otherScripts": {
-      "import": "./dist/es/otherScripts.mjs",
-      "require": "./dist/cjs/otherScripts.cjs",
-      "types": "./dist/types/otherScripts.d.ts"
-    },
-    "./playerActions": {
-      "import": "./dist/es/playerActions.mjs",
-      "require": "./dist/cjs/playerActions.cjs",
-      "types": "./dist/types/playerActions.d.ts"
-    },
-    "./shaders": {
-      "import": "./dist/es/shaders.mjs",
-      "require": "./dist/cjs/shaders.cjs",
-      "types": "./dist/types/shaders.d.ts"
-    }
-  },
+  "main": "index.ts",
+  "types": "index.d.ts",
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc --emitDeclarationOnly",
+    "build": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
