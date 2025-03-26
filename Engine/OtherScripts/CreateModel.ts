@@ -21,6 +21,15 @@ export interface Shaders {
   Coords: CustomCube;
   object: THREE.Mesh;
 }
+
+interface Mapping {
+  map: any;
+}
+
+interface Meshing {
+  isMesh: any;
+}
+
 export class CreateModel {
   model: THREE.Object3D = new THREE.Object3D();
   modelOriginal: GLTF = {} as GLTF;
@@ -74,7 +83,7 @@ export class CreateModel {
 
   shaderCreate(cumHelper: Shaders) {
     this.setNodeParam((node) => {
-      const originalMaterial = node.material;
+      const originalMaterial = node.material as Mapping;
 
       let ShaderMaterial = CuttingCustomBox({
         CoordLB: cumHelper.Coords.CoordLB,
@@ -116,9 +125,9 @@ export class CreateModel {
   setCustomNodeParam(callback: (node: any) => any) {
     this.intervalSnippet(() => {
       this.model.traverse((node) => {
-        if (node.isMesh) {
+       
           callback(node);
-        }
+        
       });
     });
   }
