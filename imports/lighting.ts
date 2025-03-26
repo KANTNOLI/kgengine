@@ -14,11 +14,4 @@ export const Lighting = {
   SpotLightCfg,
 };
 
-export default {
-  ...AmbientLightCfg,
-  ...DirectionalLightCfg,
-  ...HemisphereLightCfg,
-  ...PointLightCfg,
-  ...ShadowCfg,
-  ...SpotLightCfg,
-};
+export default Lighting;

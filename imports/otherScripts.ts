@@ -16,12 +16,4 @@ export const OtherScripts = {
   AnimationMove,
 };
 
-export default {
-  ...CreateModel,
-  ...CreateScene,
-  ...CreateSprite,
-  ...CreateText,
-  ...LoadingTextures,
-  ...AnimationCustom,
-  ...AnimationMove,
-};
+export default OtherScripts

@@ -10,8 +10,9 @@ export const ShaderSnipped = {
 
 export const ShaderTools = { CamerasCuttingHelper, UpdateCamCutHelper };
 
-export default {
-  ...CuttingCustomBox,
-  ...CamerasCuttingHelper,
-  ...UpdateCamCutHelper,
+export const Shaders = {
+  ...ShaderSnipped,
+  ...ShaderTools,
 };
+
+export default Shaders;

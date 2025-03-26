@@ -5,8 +5,4 @@ export const Cameras = {
   CameraLimitSquare,
   DefaultCameraSettings,
 };
-
-export default {
-  ...CameraLimitSquare,
-  ...DefaultCameraSettings,
-};
+export default Cameras;

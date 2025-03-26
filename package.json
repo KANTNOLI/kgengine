@@ -1,6 +1,6 @@
 {
   "name": "kgengine",
-  "version": "0.11.4",
+  "version": "0.11.5",
   "type": "module",
   "main": "index.ts",
   "types": "index.d.ts",

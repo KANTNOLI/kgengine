@@ -6,7 +6,4 @@ export const Engine = {
   WebGLEngine,
 };
 
-export default {
-  ...CSS3DEngine,
-  ...WebGLEngine,
-};
+export default Engine;

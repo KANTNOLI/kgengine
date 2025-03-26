@@ -8,8 +8,4 @@ export const Action = {
   TrackingClickItems,
 };
 
-export default {
-  ...OrbitControl,
-  ...TrackingClickItem,
-  ...TrackingClickItems,
-};
+export default Action

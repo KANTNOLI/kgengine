@@ -64,35 +64,10 @@ export const Snippets = {
   CustomObject,
 };
 
-export default {
-  ...BoxGeometry,
-  ...CircleGeometry,
-  ...ConeGeometry,
-  ...CylinderGeometry,
-  ...DodecahedronGeometry,
-  ...ExtrudeGeometry,
-  ...IcosahedronGeometry,
-  ...LatheGeometry,
-  ...OctahedronGeometry,
-  ...PlaneGeometry,
-  ...PolyhedronGeometry,
-  ...RingGeometry,
-  ...ShapeGeometry,
-  ...SphereGeometry,
-  ...TetrahedronGeometry,
-  ...TorusGeometry,
-  ...TorusKnotGeometry,
-  ...TubeGeometry,
-  //
-  ...BasicMaterial,
-  ...LambertMaterial,
-  ...PhongMaterial,
-  ...PhysicalMaterial,
-  ...SpriteMaterial,
-  ...StandardMaterial,
-  //
-  ...CreateBox,
-  ...CreateCSS3,
-  ...CreatePlane,
-  ...CustomObject,
+export const Objects = {
+  ...Geometry,
+  ...Materials,
+  ...Snippets,
 };
+
+export default Objects;
