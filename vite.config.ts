@@ -1,4 +1,4 @@
 import { defineConfig } from "vite";
 export default defineConfig({
-  base: "/KGEngine/",
+  base: "/kgengine/",
 });
