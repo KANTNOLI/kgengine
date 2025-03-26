@@ -65,9 +65,9 @@ export const Snippets = {
 };
 
 export const Objects = {
-  ...Geometry,
-  ...Materials,
-  ...Snippets,
+  Geometry,
+  Materials,
+  Snippets,
 };
 
 export default Objects;
