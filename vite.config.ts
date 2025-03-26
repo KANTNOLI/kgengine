@@ -6,7 +6,7 @@ export default defineConfig({
 
   resolve: {
     alias: {
-      KGEngine: path.resolve(__dirname, "./imports"),
+      KGEngine: path.resolve(__dirname, "./"),
     },
   },
 });
