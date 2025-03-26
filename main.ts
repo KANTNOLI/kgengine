@@ -54,7 +54,7 @@ let cumHelper = CamerasCuttingHelper(css3Object1, camera, sceneGL.scene, true);
 // );
 
 let model = new CreateModel(
-  "./KGEngine/Models/default.glb",
+  "./Assets/Models/default.glb",
   {
     posX: 0,
     posY: 2,
