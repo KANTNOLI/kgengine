@@ -1,4 +1,8 @@
 import { defineConfig } from "vite";
 export default defineConfig({
-  base: "/kgengine/",
+  base: "/kgengine/", // Matches GitHub Pages subpath
+  build: {
+    outDir: "dist",
+    assetsDir: "assets",
+  }
 });
