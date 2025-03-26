@@ -1,5 +1,5 @@
-import { CSS3DEngine } from "../Engine/VisualEngineConfigs/CSS3DEngine.js";
-import { WebGLEngine } from "../Engine/VisualEngineConfigs/WebGLEngine.js";
+import { CSS3DEngine } from "./Engine/VisualEngineConfigs/CSS3DEngine.js";
+import { WebGLEngine } from "./Engine/VisualEngineConfigs/WebGLEngine.js";
 
 export const Engine = {
   CSS3DEngine,
