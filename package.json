@@ -1,6 +1,6 @@
 {
   "name": "kgengine",
-  "version": "0.12.2",
+  "version": "0.12.4",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,7 +13,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.13.12",
-    "@types/three": "^0.174.0",
+    "@types/three": "^0.174.0", 
     "gh-pages": "^6.3.0",
     "typescript": "^5.8.2",
     "vite": "^5.4.1",
