@@ -6,7 +6,7 @@ import * as OtherScripts from "./otherScripts.js";
 import * as Actions from "./playerActions.js";
 import * as Shaders from "./shaders.js";
 
-export const KGEngine = {
+export const kgengine = {
   Cameras,
   Engine,
   Lighting,
@@ -16,4 +16,4 @@ export const KGEngine = {
   Shaders,
 };
 
-export default KGEngine;
+export default kgengine;
