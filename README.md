@@ -1,3 +1,5 @@
+
+
 ## BETA Update! CSS3 + WebGL (Object3D), documentation and the ability to work with the engine
 
 ## Обновление БЕТА! CSS3 + WebGL (Object3D), документация и возможность работы с движком
@@ -49,3 +51,12 @@ import { Snippets } from "kgengine/objects";
 > **Testing site** ->  https://kantnoli.github.io/kgengine/
 >
 > **If you have any ideas** -> https://t.me/KANTNOLI
+
+
+# KGEngine
+
+© 2025 KANTNOLI. All rights reserved.  
+© 2025 KANTNOLI. Все права защищены.  
+
+**License:** Dual-licensed under **GNU GPL v3** and **MIT** (see [LICENSE](https://github.com/KANTNOLI/kgengine/blob/main/LICENSE.md)).  
+**Условия:** Производные работы должны указывать авторство и быть открытыми (если используется GPL).  
