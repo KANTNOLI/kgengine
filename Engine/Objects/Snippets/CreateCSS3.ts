@@ -112,7 +112,7 @@ const CreateCSS3 = (
     );
 
     cssObject.rotation.set(
-      cssObject.rotation.x + 45,
+      cssObject.rotation.x,
       cssObject.rotation.y,
       cssObject.rotation.z
     );
