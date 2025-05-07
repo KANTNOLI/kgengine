@@ -38,8 +38,9 @@ Now you can safely use the project in your own examples! The imports are conveni
 import { Snippets } from "kgengine/objects";
 ```
 
-
+SOOOOOOOOOOOOOOOOOOOOOOOOOOOOOON
 ![image](https://github.com/user-attachments/assets/e79434ee-bfad-4107-acf2-90cf293f70fc)
+![image](https://github.com/user-attachments/assets/a74a7fb1-1a9f-4e83-a848-71db12465e22)
 
 
 > **NPM** -> https://www.npmjs.com/package/kgengine
