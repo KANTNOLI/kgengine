@@ -90,22 +90,22 @@ const CamerasCuttingHelper = (
     z: SnippetCoords.CoordLT.z * depth + 1,
   };
 
-  let CoordLeftTop: Coordinates = {
+  const CoordLeftTop: Coordinates = {
     x: SnippetCoords.CoordLT.x * depth,
     y: SnippetCoords.CoordLT.y * depth,
     z: SnippetCoords.CoordLT.z * depth + 1,
   };
-  let CoordRightTop: Coordinates = {
+  const CoordRightTop: Coordinates = {
     x: SnippetCoords.CoordRT.x * depth,
     y: SnippetCoords.CoordRT.y * depth,
     z: SnippetCoords.CoordRT.z * depth + 1,
   };
-  let CoordRightBottom: Coordinates = {
+  const CoordRightBottom: Coordinates = {
     x: SnippetCoords.CoordRB.x * depth,
     y: SnippetCoords.CoordRB.y * depth,
     z: SnippetCoords.CoordRB.z * depth + 1,
   };
-  let CoordLeftBottom: Coordinates = {
+  const CoordLeftBottom: Coordinates = {
     x: SnippetCoords.CoordLB.x * depth,
     y: SnippetCoords.CoordLB.y * depth,
     z: SnippetCoords.CoordLB.z * depth + 1,
@@ -193,12 +193,10 @@ const CamerasCuttingHelper = (
   const customBox = new THREE.Mesh(geometry, material);
   scene.add(customBox);
 
-  let result: Shaders = {
+  return {
     object: customBox,
     Coords: SnippetCoords,
   };
-
-  return result;
 };
 
 const UpdateCamCutHelper = (
@@ -211,15 +209,7 @@ const UpdateCamCutHelper = (
 ): Shaders => {
   scene.remove(former);
 
-  let result: Shaders = CamerasCuttingHelper(
-    Object,
-    camera,
-    scene,
-    helper,
-    depth
-  );
-
-  return result;
+  return CamerasCuttingHelper(Object, camera, scene, helper, depth);
 };
 
 export { CamerasCuttingHelper, UpdateCamCutHelper };

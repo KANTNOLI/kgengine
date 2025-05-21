@@ -11,12 +11,22 @@
   "dependencies": {
     "three": "^0.174.0"
   },
+  
   "devDependencies": {
     "@types/node": "^22.13.12",
-    "@types/three": "^0.174.0", 
+    "@types/three": "^0.174.0",
     "gh-pages": "^6.3.0",
     "typescript": "^5.8.2",
     "vite": "^5.4.1",
     "vite-plugin-node-polyfills": "^0.23.0"
-  }
+  
+  },
+  "contributors": [
+    {
+      "name": "ChunChunMaru",
+      "email": "c4erkaoui@gmail.com",
+      "url": "https://github.com/ChunChunMaruOfficial"
+    }
+  ]
+
 }

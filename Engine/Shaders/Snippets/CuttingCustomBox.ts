@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as THREE from "three";
 import { PositionObject3D } from "../../Constants.interface.js";
 
@@ -14,7 +15,16 @@ export interface CustomCube {
   endZ: PositionObject3D;
 }
 
-const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
+const CuttingCustomBox = (
+  Figure: CustomCube,
+  shadowParams?: {
+    shadowMap?: THREE.Texture;
+    lightMatrix?: THREE.Matrix4;
+    lightPosition?: THREE.Vector3;
+    shadowBias?: number;
+    shadowDarkness?: number;
+  }
+): THREE.ShaderMaterial => {
   return new THREE.ShaderMaterial({
     uniforms: {
       u_CoordLT: { value: Figure.CoordLT },
@@ -27,6 +37,16 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
 
       u_texture: { value: Figure.texture },
       u_modelMatrix: { value: Figure.matrix },
+
+      u_shadowMap: { value: shadowParams?.shadowMap || null },
+      u_lightMatrix: {
+        value: shadowParams?.lightMatrix || new THREE.Matrix4(),
+      },
+      u_lightPosition: {
+        value: shadowParams?.lightPosition || new THREE.Vector3(),
+      },
+      u_shadowBias: { value: shadowParams?.shadowBias || 0.005 },
+      u_shadowDarkness: { value: shadowParams?.shadowDarkness || 0.5 },
     },
     vertexShader: `
         varying vec2 vUv;
@@ -71,11 +91,20 @@ const CuttingCustomBox = (Figure: CustomCube): THREE.ShaderMaterial => {
             }
           }
 
-          if(-vWorldPosition.x + (u_startZ.x / 2.0) + positionWorld.x >= u_CoordRB.x * -((vWorldPosition.z - positionWorld.z) / u_CoordRB.z)
-          && -vWorldPosition.x - (u_startZ.x / 2.0) + positionWorld.x <= u_CoordLB.x * -((vWorldPosition.z - positionWorld.z) / u_CoordLB.z)
-          && -vWorldPosition.y - (u_startZ.y / 2.0) + positionWorld.y <= u_CoordRB.y * -((vWorldPosition.z - positionWorld.z) / u_CoordRB.z)
-          && -vWorldPosition.y + (u_startZ.y / 2.0) + positionWorld.y >= u_CoordRT.y * -((vWorldPosition.z - positionWorld.z) / u_CoordRT.z)){
-            discard;
+          // Вычисляем разницу по оси Z
+          float zDiff = vWorldPosition.z - positionWorld.z;
+            
+          // Вычисляем коэффициенты для интерполяции
+          float coeffRB = -zDiff / u_CoordRB.z;
+          float coeffLB = -zDiff / u_CoordLB.z;
+          float coeffRT = -zDiff / u_CoordRT.z;
+            
+          // Проверяем условия для отбрасывания фрагмента
+          if (-vWorldPosition.x + (u_startZ.x / 2.0) + positionWorld.x >= u_CoordRB.x * coeffRB
+              && -vWorldPosition.x - (u_startZ.x / 2.0) + positionWorld.x <= u_CoordLB.x * coeffLB
+              && -vWorldPosition.y - (u_startZ.y / 2.0) + positionWorld.y <= u_CoordRB.y * coeffRB
+              && -vWorldPosition.y + (u_startZ.y / 2.0) + positionWorld.y >= u_CoordRT.y * coeffRT) {
+              discard;
           }
 
           gl_FragColor = texture2D(u_texture, vUv);

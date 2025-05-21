@@ -1,17 +1,22 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 export const AnimationCustom = (
-  callback: (progress: number) => any,
-  time: number = 1
+  callbackEvenly: (progress: number) => any,
+  callbackClosed: (state: boolean) => any = () => "",
+  time: number = 1,
+  speed: number = 1
 ) => {
-  const cycle = 8.34 * time;
+  const cycle = 16.67 / speed;
 
   let progress = 0;
-  let step = 0.016 / time;
+  const step = 0.016 / time;
 
   const move = setInterval(() => {
     progress += step;
 
-    callback(progress);
+    callbackEvenly(progress);
     if (progress >= 1) {
+      callbackClosed(true);
+
       clearInterval(move);
       return true;
     }

@@ -26,7 +26,7 @@ export interface HTMLObjectSizes {
 const CreateCSS3 = (
   sceneGL: THREE.Scene,
   sceneCSS: THREE.Scene,
-  position: PositionObject3D = {x: 0, y: 2, z: 0},
+  position: PositionObject3D = { x: 0, y: 2, z: 0 },
   sizes: HTMLObjectSizes = { width: 100, height: 100 },
   params?: PasteHTMLObject
 ): HTMLObject => {
@@ -59,7 +59,7 @@ const CreateCSS3 = (
 
     let plane = CustomObject(
       PlaneGeometry(),
-      BasicMaterial({visible: false}, {}, { size: THREE.BackSide })
+      BasicMaterial({ visible: false }, {}, { size: THREE.BackSide })
     );
 
     sceneGL.add(plane);
@@ -105,11 +105,7 @@ const CreateCSS3 = (
 
     sceneGL.add(plane);
 
-    cssObject.position.set(
-      position.x,
-      position.y,
-      position.z
-    );
+    cssObject.position.set(position.x, position.y, position.z);
 
     cssObject.rotation.set(
       cssObject.rotation.x,
@@ -117,12 +113,7 @@ const CreateCSS3 = (
       cssObject.rotation.z
     );
 
-
-    plane.position.set(
-      position.x,
-      position.y,
-      position.z
-    );
+    plane.position.set(position.x, position.y, position.z);
 
     plane.rotation.set(
       cssObject.rotation.x,
@@ -169,5 +160,4 @@ const UpdateCSS3 = (
   return { HTMLElement: HTML.HTMLElement, HitBox: HTML.HitBox };
 };
 
-export default CreateCSS3;
-export { UpdateCSS3 };
+export { UpdateCSS3, CreateCSS3 };
