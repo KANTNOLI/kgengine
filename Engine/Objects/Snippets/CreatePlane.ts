@@ -17,7 +17,7 @@ function CreatePlane(
   size: number = 50,
   helper?: planeHelper
 ): THREE.Plane {
-  let plane = new THREE.Plane(
+  const plane = new THREE.Plane(
     new THREE.Vector3(position.x, position.y, position.z).normalize(),
     size
   );
