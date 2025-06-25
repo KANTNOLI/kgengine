@@ -22,10 +22,12 @@ export const WebGLEngine = (
   css3On: boolean = true
 ): THREE.WebGLRenderer => {
   const renderer = new THREE.WebGLRenderer({
-    antialias: quality.antialias || true,
+    antialias: quality.antialias || true, // ✔️ отключить сглаживание
     precision: quality.precision || "mediump",
     powerPreference: (quality.powerPrfrnc as WebGLPowerPreference) || "default",
-    depth: quality.depth || true,
+    depth: quality.depth || true, // ✔️ если не нужен z-buffer
+    alpha: false, // ✔️ не нужен прозрачный фон
+    stencil: false, // ✔️ если не используете маски
   });
 
   renderer.setSize(sizes.width, sizes.height);
@@ -46,8 +48,8 @@ export const WebGLEngine = (
   }
 
   if (css3On) {
-    renderer.domElement.style.position =  "absolute";
-    renderer.domElement.style.zIndex =  "0";
+    renderer.domElement.style.position = "absolute";
+    renderer.domElement.style.zIndex = "0";
     renderer.domElement.style.top = "0";
   }
 
