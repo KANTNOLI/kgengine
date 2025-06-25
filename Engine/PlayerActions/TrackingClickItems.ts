@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import * as THREE from "three";
 
 export const TrackingClickItems = (
-  scene: THREE.Scene,
-  camera: THREE.PerspectiveCamera,
+  scene: THREE.Scene | any,
+  camera: THREE.PerspectiveCamera | any,
   event: MouseEvent
 ): THREE.Intersection[] => {
   const raycaster = new THREE.Raycaster();
