@@ -4,15 +4,19 @@ import { GLTF, GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { ModelPosition, ModelShadow } from "./OtherScripts.interface.js";
 import { DEGREE, PositionObject3D } from "../Constants.interface.js";
 import { CuttingCustomBox } from "../Shaders/Snippets/CuttingCustomBox.js";
+import { CuttingCustomShadowBox } from "../Shaders/Snippets/CuttingCustomShadowBox.js";
 
+// где-то в вашем коде, где определяется CustomCube:
 export interface CustomCube {
+  matrix: THREE.Matrix4 | any;
+  // Добавляем опциональное поле texture
+  texture?: THREE.Texture | THREE.Material | THREE.Color | null;
+  color?: THREE.Color; // если используете явный цвет
   depth: number;
-
   CoordLT: PositionObject3D;
   CoordLB: PositionObject3D;
   CoordRT: PositionObject3D;
   CoordRB: PositionObject3D;
-
   startZ: PositionObject3D;
   positionWorld: PositionObject3D;
   endZ: PositionObject3D;
@@ -23,8 +27,16 @@ export interface Shaders {
   object: THREE.Mesh;
 }
 
-interface Mapping {
-  map: any;
+// interface Mapping {
+//   map: any;
+// }
+
+interface ShadowParams {
+  shadowMap: THREE.Texture;
+  lightMatrix: THREE.Matrix4;
+  lightPosition: THREE.Vector3;
+  shadowBias?: number;
+  shadowDarkness?: number;
 }
 
 export class CreateModel {
@@ -79,9 +91,102 @@ export class CreateModel {
     });
   }
 
+  async shaderUpdate(
+    TYPE_RENDER: boolean,
+    Coords: CustomCube,
+    shadowParams?: ShadowParams | any
+  ): Promise<void> {
+    return new Promise((resolve) => {
+      const waitLoading = setInterval(() => {
+        if (TYPE_RENDER) {
+          if (this.model) {
+            this.model.traverse((node: THREE.Object3D) => {
+              if (node instanceof THREE.Mesh) {
+                const mat = node.material as THREE.ShaderMaterial;
+                if (!mat.uniforms) return;
+
+                mat.uniforms.u_CoordLT.value = Coords.CoordLT;
+                mat.uniforms.u_CoordLB.value = Coords.CoordLB;
+                mat.uniforms.u_CoordRT.value = Coords.CoordRT;
+                mat.uniforms.u_CoordRB.value = Coords.CoordRB;
+                mat.uniforms.u_startZ.value = Coords.startZ;
+                mat.uniforms.u_endZ.value = Coords.endZ;
+                mat.uniforms.positionWorld.value = Coords.positionWorld;
+                mat.uniforms.u_modelMatrix.value = node.matrixWorld;
+
+                // Texture / Color
+                // let useTex = false;
+                // let tex: THREE.Texture | null = null;
+                // let color = new THREE.Color(0xffffff);
+                // if (Coords.texture) {
+                //   if ((Coords.texture as THREE.Texture).isTexture) {
+                //     useTex = true;
+                //     tex = Coords.texture as THREE.Texture;
+                //   } else if ((Coords.texture as THREE.Material).isMaterial) {
+                //     const mat = Coords.texture as any;
+                //     if (mat.map?.isTexture) {
+                //       useTex = true;
+                //       tex = mat.map;
+                //     } else if (mat.color instanceof THREE.Color) {
+                //       color = mat.color;
+                //     }
+                //   } else if (Coords.texture instanceof THREE.Color) {
+                //     color = Coords.texture;
+                //   }
+                // }
+                // if (Coords.color instanceof THREE.Color) {
+                //   color = Coords.color;
+                //   useTex = false;
+                //   tex = null;
+                // }
+
+                // mat.uniforms.u_useTexture.value = useTex;
+                // mat.uniforms.u_texture.value = tex;
+                // mat.uniforms.u_color.value = color;
+
+                // Shadow
+                if (shadowParams) {
+                  mat.uniforms.u_shadowMap.value = shadowParams.shadowMap;
+                  mat.uniforms.u_lightMatrix.value = shadowParams.lightMatrix;
+                  mat.uniforms.u_lightDirection.value =
+                    shadowParams.lightDirection.clone().normalize();
+                  mat.uniforms.u_shadowBias.value =
+                    shadowParams.shadowBias ?? 0.005;
+                  mat.uniforms.u_shadowDarkness.value =
+                    shadowParams.shadowDarkness ?? 0.5;
+                }
+              }
+            });
+            clearInterval(waitLoading);
+            resolve();
+          }
+        } else {
+          if (this.model) {
+            this.model.traverse((node: THREE.Object3D) => {
+              if (node instanceof THREE.Mesh) {
+                const mat = node.material as THREE.ShaderMaterial;
+                if (!mat.uniforms) return;
+
+                mat.uniforms.u_CoordLT.value = Coords.CoordLT;
+                mat.uniforms.u_CoordLB.value = Coords.CoordLB;
+                mat.uniforms.u_CoordRT.value = Coords.CoordRT;
+                mat.uniforms.u_CoordRB.value = Coords.CoordRB;
+                mat.uniforms.u_startZ.value = Coords.startZ;
+                mat.uniforms.u_endZ.value = Coords.endZ;
+                mat.uniforms.positionWorld.value = Coords.positionWorld;
+                mat.uniforms.u_modelMatrix.value = node.matrixWorld;
+              }
+            });
+            clearInterval(waitLoading);
+            resolve();
+          }
+        }
+      }, 50);
+    });
+  }
   shaderCreate(cumHelper: Shaders) {
     this.setNodeParam((node) => {
-      const originalMaterial = node.material as Mapping;
+      const originalMaterial = node.material as any;
 
       const ShaderMaterial = CuttingCustomBox({
         CoordLB: cumHelper.Coords.CoordLB,
@@ -92,7 +197,7 @@ export class CreateModel {
         startZ: cumHelper.Coords.startZ,
         endZ: cumHelper.Coords.endZ,
         positionWorld: cumHelper.Coords.positionWorld,
-        texture: originalMaterial.map,
+        texture: originalMaterial,
         matrix: node.matrixWorld,
       });
 
@@ -100,26 +205,47 @@ export class CreateModel {
     });
   }
 
-  async shaderUpdate(Coords: CustomCube): Promise<void> {
-    return new Promise((resolve) => {
-      const waitLoading = setInterval(() => {
-        if (this.model) {
-          this.model.traverse((node: THREE.Object3D) => {
-            if (node instanceof THREE.Mesh && node.material.uniforms) {
-              node.material.uniforms.u_CoordLT.value = Coords.CoordLT;
-              node.material.uniforms.u_CoordLB.value = Coords.CoordLB;
-              node.material.uniforms.u_CoordRT.value = Coords.CoordRT;
-              node.material.uniforms.u_CoordRB.value = Coords.CoordRB;
-              node.material.uniforms.u_startZ.value = Coords.startZ;
-              node.material.uniforms.u_endZ.value = Coords.endZ;
+  shaderCreateLigth(cumHelper: Shaders) {
+    this.setNodeParam((node) => {
+      const material = node.material as any;
+      let textureOrMaterial:
+        | THREE.Texture
+        | THREE.Material
+        | THREE.Color
+        | null = null;
 
-              node.material.uniforms.u_modelMatrix.value = node.matrixWorld;
-            }
-          });
-          clearInterval(waitLoading);
-        }
-      }, 1);
-      resolve();
+      console.log(material.opacity);
+      console.log(material.transparent);
+
+      if (Array.isArray(material)) {
+        // Для мультиматериалов выберите первый материал с текстурой или первый материал
+        textureOrMaterial =
+          material.find((m: any) => m.map && m.map.isTexture) ||
+          material[0] ||
+          null;
+      } else {
+        textureOrMaterial = material; // Передайте сам материал
+      }
+
+      if (!textureOrMaterial) {
+        console.warn(`❌ Меш без материала: "${node.name}"`);
+        textureOrMaterial = new THREE.Color(0xffaa66); // Используйте цвет по умолчанию
+      }
+
+      const ShaderMaterial = CuttingCustomShadowBox({
+        CoordLB: cumHelper.Coords.CoordLB,
+        CoordLT: cumHelper.Coords.CoordLT,
+        CoordRB: cumHelper.Coords.CoordRB,
+        CoordRT: cumHelper.Coords.CoordRT,
+        depth: cumHelper.Coords.depth,
+        startZ: cumHelper.Coords.startZ,
+        endZ: cumHelper.Coords.endZ,
+        positionWorld: cumHelper.Coords.positionWorld,
+        texture: textureOrMaterial,
+        matrix: node.matrixWorld,
+      });
+
+      node.material = ShaderMaterial;
     });
   }
 
