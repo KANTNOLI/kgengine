@@ -57,11 +57,12 @@ const CreateCSS3 = (
     const cssObject = new CSS3DObject(params.HTMLElement);
     sceneCSS.add(cssObject);
 
-    let plane = CustomObject(
+    const plane = CustomObject(
       PlaneGeometry(),
       BasicMaterial({ visible: false }, {}, { size: THREE.BackSide })
     );
 
+    plane.userData = { test: "test" };
     sceneGL.add(plane);
 
     plane.position.set(
@@ -80,7 +81,7 @@ const CreateCSS3 = (
 
     return { HTMLElement: cssObject, HitBox: plane };
   } else {
-    let div = document.createElement("div");
+    const div = document.createElement("div");
 
     div.style.width = `${sizes.width}px`;
     div.style.height = `${sizes.height}px`;
@@ -98,11 +99,12 @@ const CreateCSS3 = (
     cssObject.scale.set(0.02, 0.02, 0.02);
 
     sceneCSS.add(cssObject);
-    let plane = CustomObject(
+    const plane = CustomObject(
       PlaneGeometry(),
       BasicMaterial({ color: 0x00011 }, {}, { size: THREE.BackSide })
     );
 
+    plane.userData = { test: "test" };
     sceneGL.add(plane);
 
     cssObject.position.set(position.x, position.y, position.z);
