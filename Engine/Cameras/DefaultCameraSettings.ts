@@ -19,7 +19,7 @@ export const DefaultCameraSettings = (
   );
   camera.position.x = position.x;
   camera.position.y = position.y;
-  camera.position.z = position.z;
+  camera.position.z = position.z; 
 
   return camera;
 };
