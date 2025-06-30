@@ -31,13 +31,13 @@ export interface Shaders {
 //   map: any;
 // }
 
-interface ShadowParams {
-  shadowMap: THREE.Texture;
-  lightMatrix: THREE.Matrix4;
-  lightPosition: THREE.Vector3;
-  shadowBias?: number;
-  shadowDarkness?: number;
-}
+// interface ShadowParams {
+//   shadowMap: THREE.Texture;
+//   lightMatrix: THREE.Matrix4;
+//   lightPosition: THREE.Vector3;
+//   shadowBias?: number;
+//   shadowDarkness?: number;
+// }
 
 export class CreateModel {
   model: THREE.Object3D = new THREE.Object3D();
@@ -91,99 +91,32 @@ export class CreateModel {
     });
   }
 
-  async shaderUpdate(
-    TYPE_RENDER: boolean,
-    Coords: CustomCube,
-    shadowParams?: ShadowParams | any
-  ): Promise<void> {
+  async shaderUpdate(Coords: CustomCube): Promise<void> {
     return new Promise((resolve) => {
       const waitLoading = setInterval(() => {
-        if (TYPE_RENDER) {
-          if (this.model) {
-            this.model.traverse((node: THREE.Object3D) => {
-              if (node instanceof THREE.Mesh) {
-                const mat = node.material as THREE.ShaderMaterial;
-                if (!mat.uniforms) return;
+        if (this.model) {
+          this.model.traverse((node: THREE.Object3D) => {
+            if (node instanceof THREE.Mesh) {
+              const mat = node.material as THREE.ShaderMaterial;
+              if (!mat.uniforms) return;
 
-                mat.uniforms.u_CoordLT.value = Coords.CoordLT;
-                mat.uniforms.u_CoordLB.value = Coords.CoordLB;
-                mat.uniforms.u_CoordRT.value = Coords.CoordRT;
-                mat.uniforms.u_CoordRB.value = Coords.CoordRB;
-                mat.uniforms.u_startZ.value = Coords.startZ;
-                mat.uniforms.u_endZ.value = Coords.endZ;
-                mat.uniforms.positionWorld.value = Coords.positionWorld;
-                mat.uniforms.u_modelMatrix.value = node.matrixWorld;
-
-                // Texture / Color
-                // let useTex = false;
-                // let tex: THREE.Texture | null = null;
-                // let color = new THREE.Color(0xffffff);
-                // if (Coords.texture) {
-                //   if ((Coords.texture as THREE.Texture).isTexture) {
-                //     useTex = true;
-                //     tex = Coords.texture as THREE.Texture;
-                //   } else if ((Coords.texture as THREE.Material).isMaterial) {
-                //     const mat = Coords.texture as any;
-                //     if (mat.map?.isTexture) {
-                //       useTex = true;
-                //       tex = mat.map;
-                //     } else if (mat.color instanceof THREE.Color) {
-                //       color = mat.color;
-                //     }
-                //   } else if (Coords.texture instanceof THREE.Color) {
-                //     color = Coords.texture;
-                //   }
-                // }
-                // if (Coords.color instanceof THREE.Color) {
-                //   color = Coords.color;
-                //   useTex = false;
-                //   tex = null;
-                // }
-
-                // mat.uniforms.u_useTexture.value = useTex;
-                // mat.uniforms.u_texture.value = tex;
-                // mat.uniforms.u_color.value = color;
-
-                // Shadow
-                if (shadowParams) {
-                  mat.uniforms.u_shadowMap.value = shadowParams.shadowMap;
-                  mat.uniforms.u_lightMatrix.value = shadowParams.lightMatrix;
-                  mat.uniforms.u_lightDirection.value =
-                    shadowParams.lightDirection.clone().normalize();
-                  mat.uniforms.u_shadowBias.value =
-                    shadowParams.shadowBias ?? 0.005;
-                  mat.uniforms.u_shadowDarkness.value =
-                    shadowParams.shadowDarkness ?? 0.5;
-                }
-              }
-            });
-            clearInterval(waitLoading);
-            resolve();
-          }
-        } else {
-          if (this.model) {
-            this.model.traverse((node: THREE.Object3D) => {
-              if (node instanceof THREE.Mesh) {
-                const mat = node.material as THREE.ShaderMaterial;
-                if (!mat.uniforms) return;
-
-                mat.uniforms.u_CoordLT.value = Coords.CoordLT;
-                mat.uniforms.u_CoordLB.value = Coords.CoordLB;
-                mat.uniforms.u_CoordRT.value = Coords.CoordRT;
-                mat.uniforms.u_CoordRB.value = Coords.CoordRB;
-                mat.uniforms.u_startZ.value = Coords.startZ;
-                mat.uniforms.u_endZ.value = Coords.endZ;
-                mat.uniforms.positionWorld.value = Coords.positionWorld;
-                mat.uniforms.u_modelMatrix.value = node.matrixWorld;
-              }
-            });
-            clearInterval(waitLoading);
-            resolve();
-          }
+              mat.uniforms.u_CoordLT.value = Coords.CoordLT;
+              mat.uniforms.u_CoordLB.value = Coords.CoordLB;
+              mat.uniforms.u_CoordRT.value = Coords.CoordRT;
+              mat.uniforms.u_CoordRB.value = Coords.CoordRB;
+              mat.uniforms.u_startZ.value = Coords.startZ;
+              mat.uniforms.u_endZ.value = Coords.endZ;
+              mat.uniforms.u_posWorld.value = Coords.positionWorld;
+              mat.uniforms.u_modelMatrix.value = node.matrixWorld;
+            }
+          });
+          clearInterval(waitLoading);
+          resolve();
         }
-      }, 50);
+      }, 10);
     });
   }
+
   shaderCreate(cumHelper: Shaders) {
     this.setNodeParam((node) => {
       const originalMaterial = node.material as any;
