@@ -38,15 +38,15 @@ const CamerasCuttingHelper = (
   camera: THREE.Camera,
   scene: THREE.Scene,
   helper: boolean = false,
-  depth: number = 20
+  depth: number = 40
 ): Shaders => {
   // Получаем BoundingBox по HitBox
   const box = new THREE.Box3().setFromObject(Object.HitBox);
 
   // Собираем координаты относительно камеры
   const SnippetCoords: CustomCube = {
-    matrix: Object.HitBox.matrixWorld,    // добавляем matrix
-    texture: null,                        // по умолчанию нет текстуры; при необходимости можно передавать нужную
+    matrix: Object.HitBox.matrixWorld, // добавляем matrix
+    texture: null, // по умолчанию нет текстуры; при необходимости можно передавать нужную
     // color: new THREE.Color(0xffffff),  // при желании можно задать
     depth: depth,
 
@@ -149,12 +149,42 @@ const CamerasCuttingHelper = (
   ]);
 
   const indices = [
-    0, 1, 2, 0, 2, 3, // Нижняя грань
-    4, 5, 6, 4, 6, 7, // Верхняя грань
-    0, 1, 5, 0, 5, 4, // Передняя грань
-    1, 2, 6, 1, 6, 5, // Правая грань
-    2, 3, 7, 2, 7, 6, // Задняя грань
-    3, 0, 4, 3, 4, 7, // Левая грань
+    0,
+    1,
+    2,
+    0,
+    2,
+    3, // Нижняя грань
+    4,
+    5,
+    6,
+    4,
+    6,
+    7, // Верхняя грань
+    0,
+    1,
+    5,
+    0,
+    5,
+    4, // Передняя грань
+    1,
+    2,
+    6,
+    1,
+    6,
+    5, // Правая грань
+    2,
+    3,
+    7,
+    2,
+    7,
+    6, // Задняя грань
+    3,
+    0,
+    4,
+    3,
+    4,
+    7, // Левая грань
   ];
 
   const geometry = new THREE.BufferGeometry();
