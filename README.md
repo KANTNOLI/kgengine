@@ -1,4 +1,4 @@
-  ## Work will continue soon.
+## Work will continue soon.
 
 ## BETA Update! CSS3 + WebGL (Object3D), documentation and the ability to work with the engine
 
