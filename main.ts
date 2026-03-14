@@ -1,94 +1,27 @@
-import { DefaultCameraSettings } from "./Engine/Cameras/DefaultCameraSettings.js";
-import { CreateScene } from "./Engine/OtherScripts/CreateScene.js";
-import { WebGLEngine } from "./Engine/VisualEngineConfigs/WebGLEngine.js";
-import { CSS3DEngine } from "./Engine/VisualEngineConfigs/CSS3DEngine.js";
-import { OrbitControl } from "./Engine/PlayerActions/OrbitControl.js";
-import {
-  CamerasCuttingHelper,
-  UpdateCamCutHelper,
-} from "./Engine/Shaders/Tools/CamerasCuttingHelper.js";
-import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
-import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
-import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
-// Создаем сцену для размещения CSS и GL
-const sceneGL = new CreateScene();
-const sceneCSS = new CreateScene();
-// Удаление фона чтобы не перекрывало
-sceneGL.scene.background = null;
+import Cameras from "./cameras.js";
+import OtherScripts from "./otherScripts.js";
+import Engine from "./engine.js";
 
-DirectionalLightCfg(sceneGL.scene);
+const scene = new OtherScripts.CreateScene();
+// The scene is needed to display our models, where we will transfer them to after creation
+// Сцена нужна для отображения наших моделей, куда в дальнейшем мы будем их передавать после создания
+const camera = Cameras.DefaultCameraSettings();
+// The camera is needed to view the scene, control the user, and everything like that
+// Камера нужна для просмотра сцены, управления пользователем и все в этом духе
 
-// Тоже самое, что и со сценами
-const rendererGL = WebGLEngine();
-const renderCSS = CSS3DEngine();
-// Положение сцен, чтобы модели перерисовывали HTML
-renderCSS.domElement.appendChild(rendererGL.domElement);
+const renderer = Engine.WebGLEngine();
+// A visual engine, it is needed to customize the scene rendering, WebGL is needed in 99.9% of cases with a ready-made setup.
+// Визуальный движок, он нужен для настройки рендера сцены, WebGL нужен в 99.9% случаев с готовой настройкой
 
-rendererGL.localClippingEnabled = true;
-rendererGL.setClearColor(0x000000, 0);
-
-// Создание фона для сцены без перерисовки
-renderCSS.domElement.style.backgroundColor = "grey";
-
-const camera = DefaultCameraSettings({ x: 0, y: 1, z: 5 });
-const controls = OrbitControl(rendererGL, camera);
-
-let css3Object1 = CreateCSS3(
-  sceneGL.scene,
-  sceneCSS.scene,
-  { x: 0, y: 0, z: 0 },
-  {
-    height: 240,
-    width: 240,
-  }
-);
-
-let cumHelper = CamerasCuttingHelper(css3Object1, camera, sceneGL.scene, true);
-
-// let cumHelper2 = CamerasCuttingHelper(
-//   css3Object1,
-//   camera,
-//   sceneGL.scene,
-//   false,
-//   1
-// );
-
-let model = new CreateModel(
-  "./Assets/Models/default.glb",
-  {
-    posX: 0,
-    posY: 2,
-    posZ: 0.5,
-    scaleHeight: 0.2,
-    scaleLength: 0.2,
-    scaleWidth: 0.2,
-    rotateX: 24,
-  },
-  {}
-);
-
-model.shaderCreate(cumHelper);
-
-model.addToScene(sceneGL.scene);
-
-document.body.appendChild(renderCSS.domElement);
+document.body.appendChild(renderer.domElement);
+// Adding rendering to the website
+// Добавляем рендеринг на сайт
 
 const animate = () => {
-  cumHelper = UpdateCamCutHelper(
-    cumHelper.object,
-    css3Object1,
-    camera,
-    sceneGL.scene,
-    true,
-    50
-  );
+  // A function that updates every 1/1000 of a second, by default we just update the scene.
+  // Функция которая обновляется каждые 1/1000 секунды, по умолчанию просто обновляем сцену
 
-  model.shaderUpdate(cumHelper.Coords);
-
-  controls.update();
-  rendererGL.render(sceneGL.scene, camera);
-  renderCSS.render(sceneCSS.scene, camera);
-
+  renderer.render(scene.scene, camera);
   requestAnimationFrame(animate);
 };
 
