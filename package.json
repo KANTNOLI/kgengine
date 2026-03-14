@@ -1,7 +1,15 @@
 {
   "name": "kgengine",
-  "version": "0.12.8",
+  "description": "This project was created for the convenience of working with 3D elements. The project is based on THREE.js is a more generalized and simpler version to work with",
+  "version": "0.12.9",
   "type": "module",
+  "author": {"name": "KANTNOLI", "email": "kantnoli@tuta.io", "url": "https://github.com/KANTNOLI"},
+  "license": "GPL-3.0-only",
+
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/KANTNOLI/kgengine"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
@@ -20,13 +28,6 @@
     "vite": "^5.4.1",
     "vite-plugin-node-polyfills": "^0.23.0"
   
-  },
-  "contributors": [
-    {
-      "name": "ChunChunMaru",
-      "email": "c4erkaoui@gmail.com",
-      "url": "https://github.com/ChunChunMaruOfficial"
-    }
-  ]
+  }
 
 }
