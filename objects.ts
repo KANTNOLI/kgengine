@@ -23,7 +23,7 @@ import { PhysicalMaterial } from "./Engine/Objects/Materials/PhysicalMaterial.js
 import SpriteMaterial from "./Engine/Objects/Materials/SpriteMaterial.js";
 import { StandardMaterial } from "./Engine/Objects/Materials/StandardMaterial.js";
 import CreateBox from "./Engine/Objects/Snippets/CreateBox.js";
-import CreateCSS3 from "./Engine/Objects/Snippets/CreateCSS3.js";
+import { CreateCSS3 } from "./Engine/Objects/Snippets/CreateCSS3.js";
 import CreatePlane from "./Engine/Objects/Snippets/CreatePlane.js";
 import CustomObject from "./Engine/Objects/Snippets/CustomObject.js";
 
