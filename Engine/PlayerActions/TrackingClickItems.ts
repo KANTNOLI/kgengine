@@ -1,18 +1,1 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-import * as THREE from "three";
-
-export const TrackingClickItems = (
-  scene: THREE.Scene | any,
-  camera: THREE.PerspectiveCamera | any,
-  event: MouseEvent
-): THREE.Intersection[] => {
-  const raycaster = new THREE.Raycaster();
-  const mouse = new THREE.Vector2();
-
-  mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
-  mouse.y = -(event.clientY / window.innerHeight) * 2 + 1;
-
-  raycaster.setFromCamera(mouse, camera);
-  const intersects = raycaster.intersectObjects(scene.children);
-  return intersects;
-};
+import*as THREE from"three";export const TrackingClickItems=(a:THREE.Scene|any,b:THREE.PerspectiveCamera|any,c:MouseEvent):THREE.Intersection[]=>{const d=new THREE.Raycaster;const e=new THREE.Vector2;e.x=(c.clientX/window.innerWidth)*2-1;e.y=-(c.clientY/window.innerHeight)*2+1;d.setFromCamera(e,b);const f=d.intersectObjects(a.children);return f};

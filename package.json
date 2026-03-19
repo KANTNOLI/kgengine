@@ -1,11 +1,14 @@
 {
   "name": "kgengine",
-  "description": "This project was created for the convenience of working with 3D elements. The project is based on THREE.js is a more generalized and simpler version to work with",
+  "description": "A simplified 3D engine built on THREE.js for easy integration of 3D elements with HTML/CSS3 support. Perfect for interactive web experiences and 3D UI.",
   "version": "0.12.9",
   "type": "module",
-  "author": {"name": "KANTNOLI", "email": "kantnoli@tuta.io", "url": "https://github.com/KANTNOLI"},
+  "author": {
+    "name": "KANTNOLI",
+    "email": "kantnoli@tuta.io",
+    "url": "https://github.com/KANTNOLI"
+  },
   "license": "GPL-3.0-only",
-
   "repository": {
     "type": "git",
     "url": "https://github.com/KANTNOLI/kgengine"
@@ -19,7 +22,6 @@
   "dependencies": {
     "three": "^0.174.0"
   },
-  
   "devDependencies": {
     "@types/node": "^22.13.12",
     "@types/three": "^0.174.0",
@@ -27,7 +29,38 @@
     "typescript": "^5.8.2",
     "vite": "^5.4.1",
     "vite-plugin-node-polyfills": "^0.23.0"
-  
-  }
-
+  },
+  "homepage": "https://wiki.kantnoli.wtf/wiki?s=0&p=1",
+  "bugs": {
+    "url": "https://github.com/KANTNOLI/kgengine/issues"
+  },
+  "contributors": [
+    {
+      "name": "KANTNOLI",
+      "email": "kantnoli@tuta.io",
+      "url": "https://github.com/KANTNOLI"
+    }
+  ],
+  "keywords": [
+    "Web Engine",
+    "Engine",
+    "3D",
+    "3D Engine",
+    "HTML + 3D",
+    "CSS3 + GL",
+    "THREE.JS + KGEngine",
+    "KGE",
+    "KGEngine",
+    "kge",
+    "Free",
+    "GPL-3.0-only",
+    "threejs",
+    "webgl",
+    "css3d",
+    "3d-framework",
+    "interactive",
+    "ui",
+    "3d-ui",
+    "web-development"
+  ]
 }
