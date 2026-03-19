@@ -1,5 +1,5 @@
-Copyright (c) 2025 KANTNOLI. Все права защищены.  
-Copyright (c) 2025 KANTNOLI. All rights reserved.
+Copyright (c) 2026 KANTNOLI. Все права защищены.  
+Copyright (c) 2026 KANTNOLI. All rights reserved.
 
 ==================================================
 ДВОЙНАЯ ЛИЦЕНЗИЯ: GNU GPL v3 + MIT License  
@@ -16,11 +16,11 @@ You may use this project under either:
 ОБЩИЕ УСЛОВИЯ / COMMON TERMS:
 ------------------------------------------
 1. Авторство должно быть явно указано в файле README.md:  
-   - "© 2025 KANTNOLI. Все права защищены."  
+   - "© 2026 KANTNOLI. Все права защищены."  
    - Ссылка на оригинальный репозиторий.  
    
    Attribution must be clearly stated in README.md:  
-   - "© 2025 KANTNOLI. All rights reserved."  
+   - "© 2026 KANTNOLI. All rights reserved."  
    - Link to original repository.
 
 2. При использовании GPL-3.0 производные работы должны быть открытыми.  
@@ -31,7 +31,7 @@ You may use this project under either:
 ------------------------------------------
 MIT License (English):
 
-Copyright (c) 2025 KANTNOLI
+Copyright (c) 2026 KANTNOLI
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -54,7 +54,7 @@ SOFTWARE.
 
 Лицензия MIT (Русский):
 
-Copyright (c) 2025 KANTNOLI
+Copyright (c) 2026 KANTNOLI
 
 Настоящим предоставляется бесплатное разрешение любому лицу, получившему копию
 данного программного обеспечения и сопутствующей документации ("Программное Обеспечение"),
