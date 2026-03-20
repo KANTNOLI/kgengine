@@ -1,7 +1,7 @@
 {
   "name": "kgengine",
-  "description": "A simplified 3D engine built on THREE.js for easy integration of 3D elements with HTML/CSS3 support. Perfect for interactive web experiences and 3D UI.",
-  "version": "0.15.0",
+  "description": "KGEngine — удобная надстройка над Three.js. Убирает десятки строк кода, даёт готовые сниппеты и умеет встраивать HTML/CSS прямо в 3D-сцену",
+  "version": "0.15.1",
   "type": "module",
   "author": {
     "name": "KANTNOLI",
