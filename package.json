@@ -15,7 +15,7 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
+    "build": "vite build",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
