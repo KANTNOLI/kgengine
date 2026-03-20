@@ -1,7 +1,7 @@
 {
   "name": "kgengine",
   "description": "KGEngine — удобная надстройка над Three.js. Убирает десятки строк кода, даёт готовые сниппеты и умеет встраивать HTML/CSS прямо в 3D-сцену",
-  "version": "0.15.1",
+  "version": "0.15.2",
   "type": "module",
   "author": {
     "name": "KANTNOLI",
@@ -22,6 +22,7 @@
   "dependencies": {
     "three": "^0.174.0"
   },
+  "readme": "README.md",
   "devDependencies": {
     "@types/node": "^22.13.12",
     "@types/three": "^0.174.0",
