@@ -1,5 +1,7 @@
 ![KGE3](https://github.com/user-attachments/assets/16b0e83e-d965-4d83-84b1-8b175fdc3afd)
 
+https://github.com/user-attachments/assets/f4a5ce75-711e-42af-8383-1fe7f3b1fdd6
+
 # KGEngine
 
 **3D движок на базе THREE.js - пиши меньше, создавай больше.**
