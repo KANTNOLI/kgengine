@@ -1,14 +1,14 @@
 {
   "name": "kgengine",
   "description": "This project was created for the convenience of working with 3D elements. The project is based on THREE.js is a more generalized and simpler version to work with",
-  "version": "0.15.6",
+  "version": "1.0.0",
   "type": "module",
   "main": "./dist/kgengine.js",
   "module": "./dist/kgengine.js",
   "types": "./dist/types/index.d.ts",
   "exports": {
     ".": {
-      "import": "./dist/kgengine.js",
+      "import": "./dist/index.js",
       "types": "./dist/types/index.d.ts"
     },
     "./cameras": {
@@ -19,6 +19,10 @@
       "import": "./dist/engine.js",
       "types": "./dist/types/engine.d.ts"
     },
+    "./otherScripts": {
+      "import": "./dist/otherScripts.js",
+      "types": "./dist/types/otherScripts.d.ts"
+    },
     "./lighting": {
       "import": "./dist/lighting.js",
       "types": "./dist/types/lighting.d.ts"
@@ -26,6 +30,10 @@
     "./objects": {
       "import": "./dist/objects.js",
       "types": "./dist/types/objects.d.ts"
+    },
+    "./playerActions": {
+      "import": "./dist/playerActions.js",
+      "types": "./dist/types/playerActions.d.ts"
     },
     "./shaders": {
       "import": "./dist/shaders.js",
@@ -50,10 +58,8 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
-    "build:lib": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "prepublishOnly": "npm run build:lib"
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "three": "^0.174.0"
@@ -66,6 +72,34 @@
     "vite": "^5.4.1",
     "vite-plugin-node-polyfills": "^0.23.0"
   },
-  "keywords": ["threejs", "3d", "engine", "webgl"],
+  "keywords": [
+    "threejs",
+    "3d",
+    "engine",
+    "webgl",
+    "three",
+    "3d-engine",
+    "webgl-engine",
+    "graphics",
+    "game",
+    "rendering",
+    "typescript",
+    "gamedev",
+    "javascript",
+    "animation",
+    "kgengine",
+    "3d-graphics",
+    "webgl2",
+    "real-time",
+    "canvas",
+    "3d-rendering",
+    "scene",
+    "camera",
+    "lighting",
+    "shaders",
+    "geometry",
+    "models",
+    "loader"
+  ],
   "sideEffects": false
 }
