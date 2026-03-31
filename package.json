@@ -1,11 +1,48 @@
 {
   "name": "kgengine",
   "description": "This project was created for the convenience of working with 3D elements. The project is based on THREE.js is a more generalized and simpler version to work with",
-  "version": "0.12.9",
+  "version": "0.15.6",
   "type": "module",
-  "author": {"name": "KANTNOLI", "email": "kantnoli@tuta.io", "url": "https://github.com/KANTNOLI"},
+  "main": "./dist/kgengine.js",
+  "module": "./dist/kgengine.js",
+  "types": "./dist/types/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/kgengine.js",
+      "types": "./dist/types/index.d.ts"
+    },
+    "./cameras": {
+      "import": "./dist/cameras.js",
+      "types": "./dist/types/cameras.d.ts"
+    },
+    "./engine": {
+      "import": "./dist/engine.js",
+      "types": "./dist/types/engine.d.ts"
+    },
+    "./lighting": {
+      "import": "./dist/lighting.js",
+      "types": "./dist/types/lighting.d.ts"
+    },
+    "./objects": {
+      "import": "./dist/objects.js",
+      "types": "./dist/types/objects.d.ts"
+    },
+    "./shaders": {
+      "import": "./dist/shaders.js",
+      "types": "./dist/types/shaders.d.ts"
+    }
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE.md"
+  ],
+  "author": {
+    "name": "KANTNOLI",
+    "email": "kantnoli@tuta.io",
+    "url": "https://github.com/KANTNOLI"
+  },
   "license": "GPL-3.0-only",
-
   "repository": {
     "type": "git",
     "url": "https://github.com/KANTNOLI/kgengine"
@@ -13,13 +50,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
+    "build:lib": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "prepublishOnly": "npm run build:lib"
   },
   "dependencies": {
     "three": "^0.174.0"
   },
-  
   "devDependencies": {
     "@types/node": "^22.13.12",
     "@types/three": "^0.174.0",
@@ -27,7 +65,7 @@
     "typescript": "^5.8.2",
     "vite": "^5.4.1",
     "vite-plugin-node-polyfills": "^0.23.0"
-  
-  }
-
+  },
+  "keywords": ["threejs", "3d", "engine", "webgl"],
+  "sideEffects": false
 }

@@ -30,103 +30,59 @@ const CreateCSS3 = (
   sizes: HTMLObjectSizes = { width: 100, height: 100 },
   params?: PasteHTMLObject
 ): HTMLObject => {
+  const div = document.createElement("div");
+  
+  div.style.width = `${sizes.width}px`;
+  div.style.height = `${sizes.height}px`;
+  div.style.opacity = "1.0";
+  div.style.display = "flex";
+  div.style.alignItems = "center";
+  div.style.justifyContent = "center";
+  
   if (params) {
-    if (params.classList && !Array.isArray(params.classList)) {
-      params.classList = [params.classList];
-      params.classList.map((value) => {
-        params.HTMLElement?.classList.add(value);
-      });
-    } else if (params.classList && Array.isArray(params.classList)) {
-      params.classList.map((value) => {
-        params.HTMLElement?.classList.add(value);
-      });
-    } else {
-      params.HTMLElement.style.width = `${sizes.width}px`;
-      params.HTMLElement.style.height = `${sizes.height}px`;
-      params.HTMLElement.style.opacity = "1.0";
-      params.HTMLElement.style.background = "red";
-      params.HTMLElement.style.display = "flex";
-      params.HTMLElement.style.alignItems = "center";
-      params.HTMLElement.style.justifyContent = "center";
-      params.HTMLElement.style.color = "white";
-      params.HTMLElement.style.fontSize = "14px";
-      params.HTMLElement.style.fontFamily = "Arial, sans-serif";
-      params.HTMLElement.textContent = `Объект HTML`;
+    if (params.HTMLElement) {
+      div.innerHTML = '';
+      div.appendChild(params.HTMLElement);
     }
-
-    const cssObject = new CSS3DObject(params.HTMLElement);
-    sceneCSS.add(cssObject);
-
-    const plane = CustomObject(
-      PlaneGeometry(),
-      BasicMaterial({ visible: false }, {}, { size: THREE.BackSide })
-    );
-
-    plane.userData = { test: "test" };
-    sceneGL.add(plane);
-
-    plane.position.set(
-      cssObject.position.x,
-      cssObject.position.y,
-      cssObject.position.z
-    );
-
-    plane.rotation.set(
-      cssObject.rotation.x,
-      cssObject.rotation.y,
-      cssObject.rotation.z
-    );
-
-    plane.scale.set(100 * 0.01, 50 * 0.01, 1);
-
-    return { HTMLElement: cssObject, HitBox: plane };
+    
+    if (params.classList) {
+      const classes = Array.isArray(params.classList) ? params.classList : [params.classList];
+      classes.forEach((value) => {
+        div.classList.add(value);
+      });
+    }
+    div.style.background = params.HTMLElement?.style.background || "rgba(0,0,0,0.7)";
+    div.style.color = params.HTMLElement?.style.color || "white";
+    div.style.fontSize = params.HTMLElement?.style.fontSize || "14px";
+    div.style.fontFamily = params.HTMLElement?.style.fontFamily || "Arial, sans-serif";
   } else {
-    const div = document.createElement("div");
-
-    div.style.width = `${sizes.width}px`;
-    div.style.height = `${sizes.height}px`;
-    div.style.opacity = "1.0";
     div.style.background = "blue";
-    div.style.display = "flex";
-    div.style.alignItems = "center";
-    div.style.justifyContent = "center";
     div.style.color = "white";
     div.style.fontSize = "14px";
     div.style.fontFamily = "Arial, sans-serif";
     div.textContent = `Объект HTML`;
-
-    const cssObject = new CSS3DObject(div);
-    cssObject.scale.set(0.02, 0.02, 0.02);
-
-    sceneCSS.add(cssObject);
-    const plane = CustomObject(
-      PlaneGeometry(),
-      BasicMaterial({ color: 0x00011 }, {}, { size: THREE.BackSide })
-    );
-
-    plane.userData = { test: "test" };
-    sceneGL.add(plane);
-
-    cssObject.position.set(position.x, position.y, position.z);
-
-    cssObject.rotation.set(
-      cssObject.rotation.x,
-      cssObject.rotation.y,
-      cssObject.rotation.z
-    );
-
-    plane.position.set(position.x, position.y, position.z);
-
-    plane.rotation.set(
-      cssObject.rotation.x,
-      cssObject.rotation.y,
-      cssObject.rotation.z
-    );
-
-    plane.scale.set(sizes.width * 0.02, sizes.height * 0.02, 1);
-
-    return { HTMLElement: cssObject, HitBox: plane };
   }
+  
+  const cssObject = new CSS3DObject(div);
+  cssObject.scale.set(0.02, 0.02, 0.02);
+  sceneCSS.add(cssObject);
+  
+  const plane = CustomObject(
+    PlaneGeometry(),
+    BasicMaterial({ visible: false }, {}, { size: THREE.BackSide })
+  );
+  
+  plane.userData = { test: "test" };
+  sceneGL.add(plane);
+  
+  cssObject.position.set(position.x, position.y, position.z);
+  cssObject.rotation.set(0, 0, 0);
+  
+  plane.position.set(position.x, position.y, position.z);
+  plane.rotation.set(0, 0, 0);
+  plane.scale.set(sizes.width * 0.02, sizes.height * 0.02, 1);
+  
+  return { HTMLElement: cssObject, HitBox: plane };
 };
 
 interface HTMLUpdateSize {

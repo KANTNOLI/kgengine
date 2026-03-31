@@ -1,28 +1,72 @@
-import Cameras from "./cameras.js";
+import { ShadowCfg } from "./Engine/Lighting/ShadowCfg.js";
+import { DirectionalLightCfg } from "./Engine/Lighting/DirectionalLightCfg.js";
+import { OrbitControl } from "./Engine/PlayerActions/OrbitControl.js";
+import { CreateModel } from "./Engine/OtherScripts/CreateModel.js";
+import * as THREE from "three";
 import OtherScripts from "./otherScripts.js";
+import Cameras from "./cameras.js";
 import Engine from "./engine.js";
+import { PointLightCfg } from "./Engine/Lighting/PointLightCfg.js";
 
 const scene = new OtherScripts.CreateScene();
-// The scene is needed to display our models, where we will transfer them to after creation
-// Сцена нужна для отображения наших моделей, куда в дальнейшем мы будем их передавать после создания
-const camera = Cameras.DefaultCameraSettings();
-// The camera is needed to view the scene, control the user, and everything like that
-// Камера нужна для просмотра сцены, управления пользователем и все в этом духе
-
+const camera = Cameras.DefaultCameraSettings({ x: 0, y: 4, z: 5 });
 const renderer = Engine.WebGLEngine();
-// A visual engine, it is needed to customize the scene rendering, WebGL is needed in 99.9% of cases with a ready-made setup.
-// Визуальный движок, он нужен для настройки рендера сцены, WebGL нужен в 99.9% случаев с готовой настройкой
+
+const shadow = ShadowCfg(scene.scene);
+shadow.position.y = -0.5;
+
+const PointLight = PointLightCfg(
+  scene.scene,
+  {
+    x: 0,
+    y: 5,
+    z: 3,
+  },
+  {
+    color: 0xf0f000,
+    intensity: 5,
+  },
+);
+
+const MODEL = new CreateModel(
+  "test2.glb",
+  {
+    posX: 0,
+    posY: 0,
+    posZ: 0,
+    rotateY: 0,
+    scaleHeight: 2,
+    scaleLength: 2,
+    scaleWidth: 2,
+  },
+  { shadowCasting: true, shadowReceiving: true },
+);
+
+(async () => {
+  await MODEL.modelLoading();
+  MODEL.addToScene(scene.scene);
+
+  if (MODEL.getAnimations().length > 0) {
+    MODEL.createMixer();
+    MODEL.playAnimation(3);
+  }
+})();
+
+PointLight.lookAt(MODEL.model.position);
+camera.lookAt(
+  MODEL.model.position.x,
+  MODEL.model.position.y + 2,
+  MODEL.model.position.z,
+);
 
 document.body.appendChild(renderer.domElement);
-// Adding rendering to the website
-// Добавляем рендеринг на сайт
 
-const animate = () => {
-  // A function that updates every 1/1000 of a second, by default we just update the scene.
-  // Функция которая обновляется каждые 1/1000 секунды, по умолчанию просто обновляем сцену
+const clock = new THREE.Clock();
 
-  renderer.render(scene.scene, camera);
+function animate() {
   requestAnimationFrame(animate);
-};
+  MODEL.updateAnimations(clock.getDelta() + 0.005);
+  renderer.render(scene.scene, camera);
+}
 
 animate();

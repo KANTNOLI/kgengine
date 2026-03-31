@@ -6,12 +6,10 @@ import { DEGREE, PositionObject3D } from "../Constants.interface.js";
 import { CuttingCustomBox } from "../Shaders/Snippets/CuttingCustomBox.js";
 import { CuttingCustomShadowBox } from "../Shaders/Snippets/CuttingCustomShadowBox.js";
 
-// где-то в вашем коде, где определяется CustomCube:
 export interface CustomCube {
   matrix: THREE.Matrix4 | any;
-  // Добавляем опциональное поле texture
   texture?: THREE.Texture | THREE.Material | THREE.Color | null;
-  color?: THREE.Color; // если используете явный цвет
+  color?: THREE.Color;
   depth: number;
   CoordLT: PositionObject3D;
   CoordLB: PositionObject3D;
@@ -27,21 +25,11 @@ export interface Shaders {
   object: THREE.Mesh;
 }
 
-// interface Mapping {
-//   map: any;
-// }
-
-// interface ShadowParams {
-//   shadowMap: THREE.Texture;
-//   lightMatrix: THREE.Matrix4;
-//   lightPosition: THREE.Vector3;
-//   shadowBias?: number;
-//   shadowDarkness?: number;
-// }
-
 export class CreateModel {
   model: THREE.Object3D = new THREE.Object3D();
   modelOriginal: GLTF = {} as GLTF;
+  animations: THREE.AnimationClip[] = [];
+  mixer: THREE.AnimationMixer | null = null;
   path = "./KGEngine/Models/default.glb";
   position: ModelPosition = {
     posX: 0,
@@ -64,15 +52,9 @@ export class CreateModel {
     this.path = path || this.path;
     this.position = { ...this.position, ...position };
     this.shadow = { ...this.shadow, ...shadow };
-
-    // this.modelLoading();
-    // this.load
   }
 
   intervalSnippet(callback: () => any) {
-    // Нужно для ожидания загрузки модельки
-    // без ожидания функции будут выполняться перед
-    // вообще возможностью работать с моделью
     const waitLoading = setInterval(() => {
       if (this.model) {
         callback();
@@ -147,22 +129,18 @@ export class CreateModel {
         | THREE.Color
         | null = null;
 
-      console.log(material.opacity);
-      console.log(material.transparent);
-
       if (Array.isArray(material)) {
-        // Для мультиматериалов выберите первый материал с текстурой или первый материал
         textureOrMaterial =
           material.find((m: any) => m.map && m.map.isTexture) ||
           material[0] ||
           null;
       } else {
-        textureOrMaterial = material; // Передайте сам материал
+        textureOrMaterial = material;
       }
 
       if (!textureOrMaterial) {
         console.warn(`❌ Меш без материала: "${node.name}"`);
-        textureOrMaterial = new THREE.Color(0xffaa66); // Используйте цвет по умолчанию
+        textureOrMaterial = new THREE.Color(0xffaa66);
       }
 
       const ShaderMaterial = CuttingCustomShadowBox({
@@ -200,12 +178,12 @@ export class CreateModel {
           try {
             this.model = model.scene;
             this.modelOriginal = model;
+            this.animations = model.animations || [];
 
             if (!this.model) {
               throw new Error("Failed to load model");
             }
 
-            // Настройка позиции, вращения и масштаба
             this.model.position.set(
               this.position.posX,
               this.position.posY,
@@ -224,7 +202,6 @@ export class CreateModel {
               this.position.scaleLength || 1
             );
 
-            // Настройка теней
             this.setNodeParam((node: THREE.Mesh) => {
               node.castShadow =
                 this.shadow.shadowCasting !== undefined
@@ -236,7 +213,7 @@ export class CreateModel {
                   : true;
             });
 
-            resolve(); // Успешная загрузка
+            resolve();
           } catch (error) {
             console.error("Error processing model:", error);
             reject(error);
@@ -301,5 +278,82 @@ export class CreateModel {
       node.castShadow = !this.shadow.shadowCasting;
       node.receiveShadow = !this.shadow.shadowReceiving;
     });
+  }
+
+  // ========== НОВЫЕ МЕТОДЫ ДЛЯ АНИМАЦИЙ ==========
+
+  /**
+   * Получить все анимации модели
+   */
+  getAnimations(): THREE.AnimationClip[] {
+    return this.animations;
+  }
+
+  /**
+   * Создать миксер для анимаций
+   */
+  createMixer(): THREE.AnimationMixer | null {
+    if (!this.model) return null;
+    this.mixer = new THREE.AnimationMixer(this.model);
+    return this.mixer;
+  }
+
+  /**
+   * Воспроизвести анимацию по имени или индексу
+   * @param nameOrIndex - имя анимации или индекс
+   * @param crossfadeTime - время перехода (сек)
+   */
+  playAnimation(
+    nameOrIndex: string | number,
+    crossfadeTime: number = 0.2
+  ): THREE.AnimationAction | null {
+    if (!this.mixer) {
+      this.createMixer();
+    }
+
+    if (!this.mixer) return null;
+
+    let clip: THREE.AnimationClip | undefined;
+
+    if (typeof nameOrIndex === "string") {
+      clip = this.animations.find((a) => a.name === nameOrIndex);
+    } else {
+      clip = this.animations[nameOrIndex];
+    }
+
+    if (!clip) {
+      console.warn(`❌ Анимация "${nameOrIndex}" не найдена`);
+      return null;
+    }
+
+    const action = this.mixer.clipAction(clip);
+    action.reset().fadeIn(crossfadeTime).play();
+    console.log(`🎬 Анимация "${clip.name}" запущена`);
+    return action;
+  }
+
+  /**
+   * Остановить все анимации
+   */
+  stopAllAnimations(): void {
+    if (!this.mixer) return;
+    this.mixer.stopAllAction();
+  }
+
+  /**
+   * Обновить анимации (вызывать в цикле анимации)
+   * @param delta - время между кадрами (в секундах)
+   */
+  updateAnimations(delta: number): void {
+    if (this.mixer) {
+      this.mixer.update(delta);
+    }
+  }
+
+  /**
+   * Получить миксер для кастомной работы с анимациями
+   */
+  getMixer(): THREE.AnimationMixer | null {
+    return this.mixer;
   }
 }

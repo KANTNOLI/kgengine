@@ -7,21 +7,50 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Dependencies
 node_modules
 dist
 dist-ssr
 *.local
+Assets
 
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
 .idea
 .DS_Store
-laptop2.glb
 *.suo
-CopySnippet
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
-.gitignore
+
+# Build outputs (но npm публикует dist через files в package.json)
+dist/
+
+# Large 3D files
+*.glb
+*.blend
+*.blend1
+laptop2.glb
+test2.glb
+Untitled.blend
+Untitled.blend1
+
+# Temporary files
+CopySnippet
+*.tmp
+*.temp
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# System files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# TypeScript cache
+*.tsbuildinfo
