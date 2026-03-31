@@ -1,45 +1,11 @@
 {
   "name": "kgengine",
-  "description": "This project was created for the convenience of working with 3D elements. The project is based on THREE.js is a more generalized and simpler version to work with",
-  "version": "1.0.0",
+  "description": "KGEngine - удобная надстройка над Three.js. Убирает десятки строк кода, даёт готовые сниппеты и умеет встраивать HTML/CSS прямо в 3D-сцену",
+  "version": "1.0.1",
   "type": "module",
-  "main": "./dist/kgengine.js",
-  "module": "./dist/kgengine.js",
-  "types": "./dist/types/index.d.ts",
-  "exports": {
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/types/index.d.ts"
-    },
-    "./cameras": {
-      "import": "./dist/cameras.js",
-      "types": "./dist/types/cameras.d.ts"
-    },
-    "./engine": {
-      "import": "./dist/engine.js",
-      "types": "./dist/types/engine.d.ts"
-    },
-    "./otherScripts": {
-      "import": "./dist/otherScripts.js",
-      "types": "./dist/types/otherScripts.d.ts"
-    },
-    "./lighting": {
-      "import": "./dist/lighting.js",
-      "types": "./dist/types/lighting.d.ts"
-    },
-    "./objects": {
-      "import": "./dist/objects.js",
-      "types": "./dist/types/objects.d.ts"
-    },
-    "./playerActions": {
-      "import": "./dist/playerActions.js",
-      "types": "./dist/types/playerActions.d.ts"
-    },
-    "./shaders": {
-      "import": "./dist/shaders.js",
-      "types": "./dist/types/shaders.d.ts"
-    }
-  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "dist",
     "README.md",
@@ -55,9 +21,20 @@
     "type": "git",
     "url": "https://github.com/KANTNOLI/kgengine"
   },
+  "homepage": "https://wiki.kantnoli.wtf/wiki?s=0&p=1",
+  "bugs": {
+    "url": "https://github.com/KANTNOLI/kgengine/issues"
+  },
+  "contributors": [
+    {
+      "name": "KANTNOLI",
+      "email": "kantnoli@tuta.io",
+      "url": "https://github.com/KANTNOLI"
+    }
+  ],
   "scripts": {
     "dev": "vite",
-    "build": "vite build && tsc --emitDeclarationOnly --project tsconfig.declarations.json",
+    "build": "tsc",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist"
   },
@@ -73,6 +50,26 @@
     "vite-plugin-node-polyfills": "^0.23.0"
   },
   "keywords": [
+    "Web Engine",
+    "Engine",
+    "3D",
+    "3D Engine",
+    "HTML + 3D",
+    "CSS3 + GL",
+    "THREE.JS + KGEngine",
+    "KGE",
+    "KGEngine",
+    "kge",
+    "Free",
+    "GPL-3.0-only",
+    "threejs",
+    "webgl",
+    "css3d",
+    "3d-framework",
+    "interactive",
+    "ui",
+    "3d-ui",
+    "web-development",
     "threejs",
     "3d",
     "engine",
